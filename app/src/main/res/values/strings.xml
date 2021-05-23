@@ -12,6 +12,6 @@
   <string name="social_box">Social Box</string>
   <string name="social">Social</string>
   <string name="sign_in">Sign In</string>
-  <string name="sign_up">Sign up</string>
-  <string name="title_activity_main">MainActivity</string>
+  <string name="sign_up">Sign Up</string>
+  <string name="title_activity_main">Social Box</string>
 </resources>

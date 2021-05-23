@@ -1,5 +1,6 @@
 package com.socialbox
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,10 +20,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.socialbox.ui.login.LoginActivity
 import com.socialbox.ui.theme.SocialBoxTheme
 import com.socialbox.ui.theme.logoSansFamily
 
@@ -61,23 +64,31 @@ fun Greeting() {
           .height(470.dp)
       )
     }
-    Column(modifier = Modifier
-      .fillMaxWidth()
-      .fillMaxHeight()) {
-      Row() {
-        SignButton(text = "Sign In")
-        SignButton(text = "Sign Up")
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight()
+    ) {
+      Row {
+        SignButton(text = "Sign In", LoginActivity::class.java)
+        SignButton(text = "Sign Up", LoginActivity::class.java)
       }
     }
   }
 }
 
 @Composable
-fun SignButton(
-  text: String
+fun <T> SignButton(
+  text: String,
+  clazz: Class<T>
 ) {
+  val currentContext = LocalContext.current
+  val intent = Intent(currentContext, clazz)
+
   Button(
-    onClick = { /*TODO*/ },
+    onClick = {
+      currentContext.startActivity(intent)
+    },
     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF26C6DA)),
     modifier = Modifier
       .width(200.dp)
