@@ -5,10 +5,14 @@
       <map>
         <entry key="../../../../layout/compose-model-1621764764789.xml" value="0.20692567567567569" />
         <entry key="../../../../layout/compose-model-1621764864031.xml" value="0.165" />
+        <entry key="../../../../layout/compose-model-1621887864343.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1621890462612.xml" value="0.25" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/register_button.xml" value="0.12916666666666668" />
         <entry key="app/src/main/res/drawable/sign_in_button.xml" value="0.12916666666666668" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18611111111111112" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/log.xml" value="0.165" />
       </map>
     </option>
   </component>

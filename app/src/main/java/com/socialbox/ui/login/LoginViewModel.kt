@@ -1,13 +1,12 @@
 package com.socialbox.ui.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
+import com.socialbox.R
 import com.socialbox.data.LoginRepository
 import com.socialbox.data.Result
-
-import com.socialbox.R
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -17,10 +16,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
   private val _loginResult = MutableLiveData<LoginResult>()
   val loginResult: LiveData<LoginResult> = _loginResult
 
-  fun login(
-    username: String,
-    password: String
-  ) {
+  fun login(username: String, password: String) {
     // can be launched in a separate asynchronous job
     val result = loginRepository.login(username, password)
 
@@ -32,10 +28,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
   }
 
-  fun loginDataChanged(
-    username: String,
-    password: String
-  ) {
+  fun loginDataChanged(username: String, password: String) {
     if (!isUserNameValid(username)) {
       _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
     } else if (!isPasswordValid(password)) {
@@ -46,16 +39,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
   }
 
   // A placeholder username validation check
-  private fun isUserNameValid(username: String): Boolean {
-    return if (username.contains('@')) {
+  private fun isUserNameValid(username: String) =
+    if (username.contains('@')) {
       Patterns.EMAIL_ADDRESS.matcher(username).matches()
     } else {
       username.isNotBlank()
     }
-  }
 
   // A placeholder password validation check
-  private fun isPasswordValid(password: String): Boolean {
-    return password.length > 5
-  }
+  private fun isPasswordValid(password: String) = password.length > 5
 }
