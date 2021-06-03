@@ -8,12 +8,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.socialbox.R
+import com.socialbox.WelcomeScreen
+import com.socialbox.ui.theme.SocialBoxTheme
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,7 +27,13 @@ class LoginActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setContentView(R.layout.activity_login)
+    setContent {
+      SocialBoxTheme {
+        Surface(color = MaterialTheme.colors.background) {
+          LoginScreen()
+        }
+      }
+    }
 
     val username = findViewById<EditText>(R.id.username)
     val password = findViewById<EditText>(R.id.password)

@@ -38,3 +38,7 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 `
 0app/src/main/java/com/socialbox/WelcomeScreen.kt,b/1/b1c186409f975d6f435f8311deec404962c44926
+g
+7app/src/main/java/com/socialbox/data/LoginRepository.kt,c/b/cb3337427a014df70390b8e6e5f6d3b2a88b2995
+^
+.app/src/main/java/com/socialbox/data/Result.kt,8/3/83c7ab8a47eeafb6ddc86842c5480df660f7cdbf
