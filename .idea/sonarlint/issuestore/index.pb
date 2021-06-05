@@ -42,3 +42,5 @@ g
 7app/src/main/java/com/socialbox/data/LoginRepository.kt,c/b/cb3337427a014df70390b8e6e5f6d3b2a88b2995
 ^
 .app/src/main/java/com/socialbox/data/Result.kt,8/3/83c7ab8a47eeafb6ddc86842c5480df660f7cdbf
+g
+7app/src/main/java/com/socialbox/ui/login/LoginScreen.kt,8/5/857d30259d67775b7b79e2a1d265ba7575b4e6b9

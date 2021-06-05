@@ -1,6 +1,7 @@
 package com.socialbox.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -16,9 +17,19 @@ import androidx.compose.material.Surface
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.socialbox.R
-import com.socialbox.WelcomeScreen
+import com.socialbox.group.GroupActivity
 import com.socialbox.ui.theme.SocialBoxTheme
+import android.util.Log
+
+import com.google.android.gms.common.api.ApiException
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+
+import com.google.android.gms.tasks.Task
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,10 +38,29 @@ class LoginActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    val gso = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      .requestId()
+      .requestEmail()
+      .build()
+    val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    val account = GoogleSignIn.getLastSignedInAccount(this)
+
+    account?.let {
+      val user = User(id = it.id, userName = it.displayName, userEmail = it.email)
+      val intent = Intent(this, GroupActivity::class.java)
+      intent.putParcelableArrayListExtra("user", arrayListOf(user))
+      startActivity(intent)
+    }
+
+    val loginFunction = {
+      val signInIntent: Intent = mGoogleSignInClient.signInIntent
+      startActivityForResult(signInIntent, 1)
+    }
+
     setContent {
       SocialBoxTheme {
         Surface(color = MaterialTheme.colors.background) {
-          LoginScreen()
+          LoginScreen(loginFunction)
         }
       }
     }
@@ -103,6 +133,36 @@ class LoginActivity : AppCompatActivity() {
         loading.visibility = View.VISIBLE
         loginViewModel.login(username.text.toString(), password.text.toString())
       }
+    }
+  }
+
+  override fun onActivityResult(
+    requestCode: Int,
+    resultCode: Int,
+    data: Intent?
+  ) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+    if (requestCode == 1) {
+      // The Task returned from this call is always completed, no need to attach
+      // a listener.
+      val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+      handleSignInResult(task)
+    }
+  }
+
+  private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+    try {
+      val account = completedTask.getResult(ApiException::class.java)
+
+      // Signed in successfully, show authenticated UI.
+      val user = User(id = account?.id, userName = account?.displayName, userEmail = account?.email)
+      val intent = Intent(this, GroupActivity::class.java)
+      intent.putParcelableArrayListExtra("user", arrayListOf(user))
+      startActivity(intent)
+    } catch (e: ApiException) {
+      Toast.makeText(this, "Please try again later.", Toast.LENGTH_LONG).show()
     }
   }
 

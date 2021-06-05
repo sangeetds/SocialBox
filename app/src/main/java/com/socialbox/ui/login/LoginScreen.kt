@@ -34,7 +34,7 @@ import com.socialbox.R.drawable
 import com.socialbox.ui.theme.logoSansFamily
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(loginFunction: () -> Unit) {
   Image(
     painter = painterResource(drawable.app_logo),
     contentDescription = "Social Box Logo",
@@ -101,7 +101,7 @@ fun LoginScreen() {
         Text(text = "Login", fontSize = 20.sp)
       }
       Button(
-        onClick = { /*TODO*/ },
+        onClick = { loginFunction() },
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEC407A)),
         modifier = Modifier
           .padding(top = 10.dp)
@@ -114,8 +114,3 @@ fun LoginScreen() {
   }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  LoginScreen()
-}
