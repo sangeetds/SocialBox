@@ -16,6 +16,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,10 +32,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.socialbox.R.drawable
+import com.socialbox.login.data.model.User
 import com.socialbox.login.ui.theme.logoSansFamily
 
 @Composable
-fun LoginScreen(loginFunction: () -> Unit) {
+fun LoginScreen(
+  loginFunction: () -> Unit,
+  loginViewModel: LoginViewModel
+) {
   Image(
     painter = painterResource(drawable.app_logo),
     contentDescription = "Social Box Logo",
@@ -44,7 +50,11 @@ fun LoginScreen(loginFunction: () -> Unit) {
       .alpha(0.2f)
       .padding(start = 25.dp, end = 25.dp)
   )
-  Column(modifier = Modifier.fillMaxHeight().fillMaxWidth()) {
+  Column(
+    modifier = Modifier
+      .fillMaxHeight()
+      .fillMaxWidth()
+  ) {
     Column(
       modifier = Modifier.padding(start = 25.dp, end = 25.dp),
       verticalArrangement = Arrangement.Center,
@@ -54,6 +64,7 @@ fun LoginScreen(loginFunction: () -> Unit) {
         text = "Social Box", fontSize = 80.sp, fontFamily = logoSansFamily,
         modifier = Modifier.padding(top = 55.dp)
       )
+      val loginFormState by loginViewModel.loginFormState.observeAsState()
       val emailState = remember { mutableStateOf(TextFieldValue()) }
       val passwordState = remember { mutableStateOf(TextFieldValue()) }
       val passwordVisibility = remember { mutableStateOf(false) }
@@ -64,16 +75,23 @@ fun LoginScreen(loginFunction: () -> Unit) {
 
       TextField(
         value = emailState.value,
-        onValueChange = { emailState.value = it },
+        onValueChange = {
+          emailState.value = it
+          loginViewModel.loginDataChanged(it.text, passwordState.value.text)
+        },
         label = { Text("Email Id") },
         placeholder = { Text("Email-Id") },
         modifier = Modifier
           .fillMaxWidth()
-          .padding(top = 100.dp)
+          .padding(top = 100.dp),
+        isError = loginFormState?.usernameError != null,
       )
       TextField(
         value = passwordState.value,
-        onValueChange = { passwordState.value = it },
+        onValueChange = {
+          passwordState.value = it
+          loginViewModel.loginDataChanged(emailState.value.text, it.text)
+        },
         label = { Text("Password") },
         placeholder = { Text("Password") },
         visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
@@ -87,11 +105,17 @@ fun LoginScreen(loginFunction: () -> Unit) {
         },
         modifier = Modifier
           .fillMaxWidth()
-          .padding(top = 50.dp)
+          .padding(top = 50.dp),
+        isError = loginFormState?.passwordError != null
       )
       Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+          loginViewModel.login(
+            User(userEmail = emailState.value.text, userPassword = passwordState.value.text)
+          )
+        },
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF26C6DA)),
+        enabled = loginFormState?.isDataValid != null,
         modifier = Modifier
           .padding(top = 100.dp)
           .height(50.dp)

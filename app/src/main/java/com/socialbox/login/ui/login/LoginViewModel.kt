@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.socialbox.R
 import com.socialbox.login.data.LoginRepository
 import com.socialbox.login.data.Result
+import com.socialbox.login.data.model.User
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber

@@ -3,7 +3,7 @@ package com.socialbox.login.data
 import com.socialbox.login.data.service.UserService
 import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
-import com.socialbox.login.ui.login.User
+import com.socialbox.login.data.model.User
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.net.SocketTimeoutException
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository @Inject constructor(val userService: UserService) {
+class LoginRepository @Inject constructor(private val userService: UserService) {
 
   fun login(user: User) = flow {
     emit(loginUser(user))
