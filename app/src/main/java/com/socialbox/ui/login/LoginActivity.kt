@@ -24,16 +24,19 @@ import com.socialbox.R
 import com.socialbox.group.GroupActivity
 import com.socialbox.ui.theme.SocialBoxTheme
 import android.util.Log
+import androidx.activity.viewModels
 
 import com.google.android.gms.common.api.ApiException
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 import com.google.android.gms.tasks.Task
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-  private lateinit var loginViewModel: LoginViewModel
+  private val loginViewModel: LoginViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -69,10 +72,7 @@ class LoginActivity : AppCompatActivity() {
     val password = findViewById<EditText>(R.id.password)
     val login = findViewById<Button>(R.id.login)
     val loading = findViewById<ProgressBar>(R.id.loading)
-
-    loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-      .get(LoginViewModel::class.java)
-
+    
     loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
       val loginState = it ?: return@Observer
 

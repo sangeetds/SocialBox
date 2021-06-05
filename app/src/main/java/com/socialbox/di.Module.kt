@@ -1,7 +1,5 @@
 package com.socialbox
 
-import com.isdb.login.data.api.LoginService
-import com.isdb.tracks.data.api.SongService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -45,11 +43,11 @@ class Module {
 
   @Provides
   @Singleton
-  fun provideLoginService(retrofit: Retrofit): LoginService =
-    retrofit.create(LoginService::class.java)
+  fun provideUserService(retrofit: Retrofit): UserService =
+    retrofit.create(UserService::class.java)
 
   @Provides
   @Singleton
-  fun providesSongService(retrofit: Retrofit): SongService =
-    retrofit.create(SongService::class.java)
+  fun provideGroupService(retrofit: Retrofit): GroupService =
+    retrofit.create(GroupService::class.java)
 }
