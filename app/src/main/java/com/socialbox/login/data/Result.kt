@@ -1,4 +1,4 @@
-package com.socialbox.data
+package com.socialbox.login.data
 
 /**
  * A generic class that holds a value with its loading status.

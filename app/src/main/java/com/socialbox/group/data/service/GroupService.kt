@@ -1,5 +1,6 @@
-package com.socialbox
+package com.socialbox.group.data.service
 
+import com.socialbox.group.data.dto.GroupDTO
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

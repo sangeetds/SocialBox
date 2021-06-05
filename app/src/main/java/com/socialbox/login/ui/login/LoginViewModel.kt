@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.socialbox.R
-import com.socialbox.data.LoginRepository
-import com.socialbox.data.Result
+import com.socialbox.login.data.LoginRepository
+import com.socialbox.login.data.Result
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber

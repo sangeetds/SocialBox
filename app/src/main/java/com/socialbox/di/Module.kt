@@ -1,5 +1,7 @@
-package com.socialbox
+package com.socialbox.di
 
+import com.socialbox.group.data.service.GroupService
+import com.socialbox.login.data.service.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -16,7 +18,7 @@ import javax.inject.Singleton
 class Module {
 
   @Provides
-  fun getBaseUrl() = "https://pure-ridge-30175.herokuapp.com"
+  fun getBaseUrl() = "https://murmuring-spire-01887.herokuapp.com"
 
   @Provides
   @Singleton

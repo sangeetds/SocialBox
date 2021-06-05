@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 /**
  * Authentication result : success (user details) or error message.

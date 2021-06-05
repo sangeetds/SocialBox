@@ -1,9 +1,9 @@
-package com.socialbox.data
+package com.socialbox.login.data
 
-import com.socialbox.UserService
-import com.socialbox.data.Result.Error
-import com.socialbox.data.Result.Success
-import com.socialbox.ui.login.User
+import com.socialbox.login.data.service.UserService
+import com.socialbox.login.data.Result.Error
+import com.socialbox.login.data.Result.Success
+import com.socialbox.login.ui.login.User
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.net.SocketTimeoutException

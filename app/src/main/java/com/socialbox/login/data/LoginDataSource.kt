@@ -1,7 +1,10 @@
-package com.socialbox.data
+package com.socialbox.login.data
 
-import com.socialbox.data.model.LoggedInUser
+import com.socialbox.login.data.model.LoggedInUser
+import com.socialbox.login.data.Result.Error
+import com.socialbox.login.data.Result.Success
 import java.io.IOException
+import java.util.UUID
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -14,10 +17,10 @@ class LoginDataSource {
   ): Result<LoggedInUser> {
     try {
       // TODO: handle loggedInUser authentication
-      val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-      return Result.Success(fakeUser)
+      val fakeUser = LoggedInUser(UUID.randomUUID().toString(), "Jane Doe")
+      return Success(fakeUser)
     } catch (e: Throwable) {
-      return Result.Error(IOException("Error logging in", e))
+      return Error(IOException("Error logging in", e))
     }
   }
 

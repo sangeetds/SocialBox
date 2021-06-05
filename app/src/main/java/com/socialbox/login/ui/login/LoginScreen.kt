@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +27,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.socialbox.R.drawable
-import com.socialbox.ui.theme.logoSansFamily
+import com.socialbox.login.ui.theme.logoSansFamily
 
 @Composable
 fun LoginScreen(loginFunction: () -> Unit) {

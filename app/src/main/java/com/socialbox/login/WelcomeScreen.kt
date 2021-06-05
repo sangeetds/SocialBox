@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.socialbox.R.drawable
-import com.socialbox.ui.login.LoginActivity
-import com.socialbox.ui.theme.logoSansFamily
+import com.socialbox.login.ui.login.LoginActivity
+import com.socialbox.login.ui.theme.logoSansFamily
 
 @Composable
 fun WelcomeScreen() {

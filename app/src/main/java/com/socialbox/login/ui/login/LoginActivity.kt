@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 import android.app.Activity
 import android.content.Intent
@@ -16,14 +16,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.socialbox.R
-import com.socialbox.group.GroupActivity
-import com.socialbox.ui.theme.SocialBoxTheme
-import android.util.Log
+import com.socialbox.group.ui.GroupActivity
+import com.socialbox.login.ui.theme.SocialBoxTheme
 import androidx.activity.viewModels
 
 import com.google.android.gms.common.api.ApiException
@@ -72,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
     val password = findViewById<EditText>(R.id.password)
     val login = findViewById<Button>(R.id.login)
     val loading = findViewById<ProgressBar>(R.id.loading)
-    
+
     loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
       val loginState = it ?: return@Observer
 

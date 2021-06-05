@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 /**
  * Data validation state of the login form.

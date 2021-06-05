@@ -1,4 +1,4 @@
-package com.socialbox
+package com.socialbox.group.data.dto
 
 data class GroupDTO (
   private val groupId: String = "",

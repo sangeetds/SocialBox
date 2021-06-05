@@ -1,4 +1,4 @@
-package com.socialbox.group
+package com.socialbox.group.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

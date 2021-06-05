@@ -1,4 +1,4 @@
-package com.socialbox.ui.login
+package com.socialbox.login.ui.login
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

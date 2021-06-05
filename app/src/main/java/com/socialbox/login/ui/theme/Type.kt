@@ -1,4 +1,4 @@
-package com.socialbox.ui.theme
+package com.socialbox.login.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
