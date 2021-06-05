@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-  def kotlinCoroutineVersion = '1.4.3'
+  def kotlinCoroutineVersion = '1.5.0'
   def moshiVersion = "1.12.0"
   def retrofitVersion = "2.9.0"
   def hiltVersion = "2.36"
