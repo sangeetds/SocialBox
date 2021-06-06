@@ -35,6 +35,9 @@ class GroupActivity : AppCompatActivity() {
     recyclerView.setHasFixedSize(true)
     Timber.i("Recycler view laid out.")
 
+    recyclerView.visibility = View.GONE
+    emptyText.visibility = View.VISIBLE
+
     getGroups()
   }
 
@@ -44,6 +47,8 @@ class GroupActivity : AppCompatActivity() {
       Timber.i("New songs loaded up.")
 
       if (groups.isNotEmpty()) {
+        recyclerView.visibility = View.VISIBLE
+        emptyText.visibility = View.GONE
         Timber.i("New songs load up: ${groups.joinToString(",") { s -> s.groupName }}")
         groupAdapter.groupList.addAll(groups)
         groupAdapter.notifyDataSetChanged()
