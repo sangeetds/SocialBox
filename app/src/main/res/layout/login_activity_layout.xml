@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".login.ui.login.LoginActivity"
     >
 
@@ -23,12 +22,11 @@
       />
 
   <ImageView
-      android:id="@+id/imageView"
+      android:id="@+id/app_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      android:src="@drawable/app_logo"
       android:alpha="0.6"
       android:contentDescription="@string/app_image"
       />
@@ -95,13 +93,12 @@
 
   <com.google.android.gms.common.SignInButton
       android:id="@+id/sign_in_button"
-      android:layout_width="205dp"
+      android:layout_width="210dp"
       android:layout_height="50dp"
-      android:layout_marginTop="20dp"
+      android:layout_marginBottom="136dp"
+      app:layout_constraintBottom_toBottomOf="@+id/app_image"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/imageView"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

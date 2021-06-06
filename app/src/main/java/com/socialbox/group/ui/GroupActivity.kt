@@ -28,7 +28,11 @@ class GroupActivity : AppCompatActivity() {
 
     val user: User? = intent.extras?.getParcelable("user")
 
+    groupViewModel.getGroupsForUser(user?.id!!)
+    getGroups()
+
     groupAdapter = GroupAdapter(context = this, user)
+    emptyText = findViewById(id.place_holder)
     recyclerView = findViewById(id.group_recycler_view)
     recyclerView.adapter = groupAdapter
     recyclerView.layoutManager = LinearLayoutManager(this)
@@ -38,7 +42,6 @@ class GroupActivity : AppCompatActivity() {
     recyclerView.visibility = View.GONE
     emptyText.visibility = View.VISIBLE
 
-    getGroups()
   }
 
   private fun getGroups() {

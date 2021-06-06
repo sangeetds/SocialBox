@@ -1,9 +1,11 @@
 package com.socialbox.login.ui.login
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -24,6 +26,7 @@ import com.socialbox.R
 import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -34,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
   private lateinit var username: EditText
   private lateinit var password: TextInputEditText
   private lateinit var loginButton: MaterialButton
+  private lateinit var appImage: ImageView
   private lateinit var googleLoginButton: SignInButton
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +62,12 @@ class LoginActivity : AppCompatActivity() {
     password = findViewById(R.id.input_password)
     loginButton = findViewById(R.id.btn_login)
     googleLoginButton = findViewById(R.id.sign_in_button)
+    appImage = findViewById(R.id.app_image)
+
+    when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+      Configuration.UI_MODE_NIGHT_YES -> Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
+      Configuration.UI_MODE_NIGHT_NO -> Picasso.get().load(R.drawable.app_logo).into(appImage)
+    }
 
     setUpObserver()
     setUpButtons(mGoogleSignInClient)
@@ -66,16 +76,12 @@ class LoginActivity : AppCompatActivity() {
   private fun setUpObserver() {
     loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
       val loginState = it ?: return@Observer
-      Timber.i("Change in login form state.")
-      // disable login button unless both username / password is valid
       loginButton.isEnabled = loginState.isDataValid
 
       loginState.usernameError?.let {
-        Timber.d("Username not correct")
         username.error = getString(loginState.usernameError)
       }
       loginState.passwordError?.let {
-        Timber.d("Password not correct")
         password.error = getString(loginState.passwordError)
       }
     })
@@ -131,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
     loginButton.setOnClickListener {
       Timber.i("User requested log in")
       loginButton.isEnabled = false
-      Toast.makeText(this, "Signing in Please Wait", Toast.LENGTH_LONG).show()
+      Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_LONG).show()
       loginViewModel.login(
         User(
           userEmail = username.text.toString(),
