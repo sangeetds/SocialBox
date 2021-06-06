@@ -14,4 +14,8 @@
   <string name="sign_in">Sign In</string>
   <string name="sign_up">Sign Up</string>
   <string name="title_activity_main">Social Box</string>
+  <string name="password">Password</string>
+  <string name="email">Email</string>
+  <string name="app_image">App Image</string>
+  <string name="error_google_sign">Error on loging with Google</string>
 </resources>

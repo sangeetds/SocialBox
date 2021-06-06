@@ -1,28 +1,40 @@
 package com.socialbox.login.ui.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.textfield.TextInputEditText
 import com.socialbox.R
+import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
   private val loginViewModel: LoginViewModel by viewModels()
+  private lateinit var username: EditText
+  private lateinit var password: TextInputEditText
+  private lateinit var loginButton: Button
+  private lateinit var googleLoginButton: SignInButton
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -41,26 +53,127 @@ class LoginActivity : AppCompatActivity() {
       startActivity(intent)
     }
 
-    val loginFunction = {
-      val signInIntent: Intent = mGoogleSignInClient.signInIntent
-      startActivityForResult(signInIntent, 1)
-    }
+    username = findViewById(R.id.input_username)
+    password = findViewById(R.id.input_password)
+    loginButton = findViewById(R.id.btn_login)
+    googleLoginButton = findViewById(R.id.sign_in_button)
 
+    setUpObserver()
+    setUpButtons(mGoogleSignInClient)
+  }
+
+  private fun setUpObserver() {
+    loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+      val loginState = it ?: return@Observer
+      Timber.i("Change in login form state.")
+      // disable login button unless both username / password is valid
+      loginButton.isEnabled = loginState.isDataValid
+
+      loginState.usernameError?.let {
+        Timber.d("Username not correct")
+        username.error = getString(loginState.usernameError)
+      }
+      loginState.passwordError?.let {
+        Timber.d("Password not correct")
+        password.error = getString(loginState.passwordError)
+      }
+    })
 
     loginViewModel.loginResult.observe(this@LoginActivity, Observer {
       val loginResult = it ?: return@Observer
+      Timber.i("Change in login result state.")
 
-      if (loginResult.error != null) {
+      loginResult.error?.let {
+        Timber.e("Login not successful")
         showLoginFailed(loginResult.error)
       }
-      if (loginResult.success != null) {
+      loginResult.success?.let {
+        Timber.i("Successfully logged in")
         updateUiWithUser(loginResult.success)
       }
-      setResult(Activity.RESULT_OK)
-
-      //Complete and destroy login activity once successful
-      finish()
+      setResult(RESULT_OK)
     })
+  }
+
+  private fun setUpButtons(mGoogleSignInClient: GoogleSignInClient) {
+    username.doOnTextChanged { text, _, _, _ ->
+      loginViewModel.loginDataChanged(
+        text.toString(),
+        password.text.toString()
+      )
+    }
+
+    password.apply {
+      doOnTextChanged { text, _, _, _ ->
+        loginViewModel.loginDataChanged(
+          username.text.toString(),
+          text.toString()
+        )
+      }
+
+      setOnEditorActionListener { _, actionId, _ ->
+        when (actionId) {
+          EditorInfo.IME_ACTION_DONE -> {
+            Timber.i("User requested log in")
+            loginViewModel.login(
+              User(
+                userEmail = username.text.toString(),
+                userPassword = password.text.toString()
+              )
+            )
+          }
+        }
+        false
+      }
+    }
+
+    loginButton.setOnClickListener {
+      Timber.i("User requested log in")
+      loginViewModel.login(
+        User(
+          userEmail = username.text.toString(),
+          userPassword = password.text.toString()
+        )
+      )
+    }
+
+    googleLoginButton.setOnClickListener {
+      val signInIntent: Intent = mGoogleSignInClient.signInIntent
+      startActivityForResult(signInIntent, 1)
+    }
+  }
+
+  /**
+   * To go back to the screen
+   */
+  override fun onBackPressed() {
+    Timber.i("User chose to close the screen")
+    super.onBackPressed()
+    finish()
+  }
+
+  private fun updateUiWithUser(model: User) {
+    val welcome = getString(R.string.welcome)
+    val displayName = model.userName
+    Timber.i("Login successful for $model")
+
+    Toast.makeText(
+      applicationContext,
+      "$welcome $displayName",
+      Toast.LENGTH_LONG
+    ).show()
+
+    Timber.i("Starting HomeScreenActivity")
+    val songsActivity = Intent(this, GroupActivity::class.java)
+    songsActivity.putExtra("user", model)
+    startActivity(songsActivity)
+    finish()
+  }
+
+  private fun showLoginFailed(@StringRes errorString: Int) {
+    Timber.d("Logging failed.")
+    Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
+    loginButton.isEnabled = true
   }
 
   override fun onActivityResult(
@@ -70,10 +183,7 @@ class LoginActivity : AppCompatActivity() {
   ) {
     super.onActivityResult(requestCode, resultCode, data)
 
-    // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
     if (requestCode == 1) {
-      // The Task returned from this call is always completed, no need to attach
-      // a listener.
       val task = GoogleSignIn.getSignedInAccountFromIntent(data)
       handleSignInResult(task)
     }
@@ -81,33 +191,14 @@ class LoginActivity : AppCompatActivity() {
 
   private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
     try {
-      val account = completedTask.getResult(ApiException::class.java)
+      val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
 
-      // Signed in successfully, show authenticated UI.
       val user = User(id = account?.id, userName = account?.displayName, userEmail = account?.email)
-      val intent = Intent(this, GroupActivity::class.java)
-      intent.putParcelableArrayListExtra("user", arrayListOf(user))
-      startActivity(intent)
+      loginViewModel.login(user)
+      updateUiWithUser(user)
     } catch (e: ApiException) {
-      Toast.makeText(this, "Please try again later.", Toast.LENGTH_LONG).show()
+      Timber.e("signInResult:failed code=%s", e.statusCode)
+      showLoginFailed(string.error_google_sign)
     }
-  }
-
-  private fun updateUiWithUser(model: User) {
-    val welcome = getString(R.string.welcome)
-    val displayName = model.userName
-    Toast.makeText(
-      applicationContext,
-      "$welcome $displayName",
-      Toast.LENGTH_LONG
-    ).show()
-    val user = User(id = model.id, userName = model.userName, userEmail = model.userEmail)
-    val intent = Intent(this, GroupActivity::class.java)
-    intent.putParcelableArrayListExtra("user", arrayListOf(user))
-    startActivity(intent)
-  }
-
-  private fun showLoginFailed(@StringRes errorString: Int) {
-    Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
   }
 }

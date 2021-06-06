@@ -28,6 +28,8 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18611111111111112" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/log.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/login_activity_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/main_activity_layout.xml" value="0.165" />
       </map>
     </option>
   </component>
