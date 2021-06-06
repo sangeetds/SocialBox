@@ -24,4 +24,6 @@
   <string name="group_name_which_can_be_very_big">Group name which can be very big</string>
   <string name="s_members">%s Members</string>
   <string name="login">Login</string>
+  <string name="your_movies">Your Movies</string>
+  <string name="create_new_group">Create New Group</string>
 </resources>
