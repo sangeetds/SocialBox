@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -20,7 +17,6 @@ import com.google.android.gms.tasks.Task
 import com.socialbox.R
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
-import com.socialbox.theme.SocialBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,13 +46,6 @@ class LoginActivity : AppCompatActivity() {
       startActivityForResult(signInIntent, 1)
     }
 
-    setContent {
-      SocialBoxTheme {
-        Surface(color = MaterialTheme.colors.background) {
-          LoginScreen(loginFunction, loginViewModel)
-        }
-      }
-    }
 
     loginViewModel.loginResult.observe(this@LoginActivity, Observer {
       val loginResult = it ?: return@Observer

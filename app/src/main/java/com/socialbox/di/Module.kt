@@ -3,7 +3,7 @@ package com.socialbox.di
 import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.service.UserService
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+// import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +27,7 @@ class Module {
   @Provides
   @Singleton
   fun provideMoshi(): Moshi = Moshi.Builder()
-    .addLast(KotlinJsonAdapterFactory())
+    // .addLast(KotlinJsonAdapterFactory())
     .build()
 
   @Provides
