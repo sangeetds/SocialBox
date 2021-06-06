@@ -1,12 +1,15 @@
 package com.socialbox.group.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
+import com.socialbox.R.id
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -16,6 +19,8 @@ class GroupActivity : AppCompatActivity() {
 
   private val groupViewModel: GroupViewModel by viewModels()
   private lateinit var groupAdapter: GroupAdapter
+  private lateinit var emptyText: TextView
+  private lateinit var recyclerView: RecyclerView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -24,7 +29,7 @@ class GroupActivity : AppCompatActivity() {
     val user: User? = intent.extras?.getParcelable("user")
 
     groupAdapter = GroupAdapter(context = this, user)
-    val recyclerView = findViewById<RecyclerView>(com.socialbox.R.id.group_recycler_view)
+    recyclerView = findViewById(id.group_recycler_view)
     recyclerView.adapter = groupAdapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
@@ -42,6 +47,10 @@ class GroupActivity : AppCompatActivity() {
         Timber.i("New songs load up: ${groups.joinToString(",") { s -> s.groupName }}")
         groupAdapter.groupList.addAll(groups)
         groupAdapter.notifyDataSetChanged()
+      }
+      else {
+        recyclerView.visibility = View.GONE
+        emptyText.visibility = View.VISIBLE
       }
     })
   }
