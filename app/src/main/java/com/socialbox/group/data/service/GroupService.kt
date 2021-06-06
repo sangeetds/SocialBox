@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface GroupService {
 
   @GET("/groups")
-  fun getGroupsForUser(@Query("userId") userId: String): Response<GroupDTO>
+  suspend fun getGroupsForUser(@Query("userId") userId: String): Response<List<GroupDTO>>
 }

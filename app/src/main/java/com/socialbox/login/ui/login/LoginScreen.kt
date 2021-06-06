@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.socialbox.R.drawable
 import com.socialbox.login.data.model.User
-import com.socialbox.login.ui.theme.logoSansFamily
+import com.socialbox.theme.logoSansFamily
 
 @Composable
 fun LoginScreen(

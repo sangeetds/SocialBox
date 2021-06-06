@@ -1,4 +1,4 @@
-package com.socialbox
+package com.socialbox.login
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.socialbox.R.drawable
 import com.socialbox.login.ui.login.LoginActivity
-import com.socialbox.login.ui.theme.logoSansFamily
+import com.socialbox.theme.logoSansFamily
 
 @Composable
 fun WelcomeScreen() {

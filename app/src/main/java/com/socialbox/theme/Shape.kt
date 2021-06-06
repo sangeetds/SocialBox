@@ -1,4 +1,4 @@
-package com.socialbox.login.ui.theme
+package com.socialbox.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

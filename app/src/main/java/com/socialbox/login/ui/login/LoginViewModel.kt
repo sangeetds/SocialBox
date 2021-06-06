@@ -9,11 +9,13 @@ import com.socialbox.R
 import com.socialbox.login.data.LoginRepository
 import com.socialbox.login.data.Result
 import com.socialbox.login.data.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
 
   private val _loginForm = MutableLiveData<LoginFormState>()
@@ -25,11 +27,10 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
   fun login(user: User) = viewModelScope.launch {
     Timber.i("Making request to the server for user: $user")
     loginRepository.login(user).collect { result ->
-      if (result is Result.Success) {
-        _loginResult.value =
-          LoginResult(success = result.data)
+      _loginResult.value = if (result is Result.Success) {
+        LoginResult(success = result.data)
       } else {
-        _loginResult.value = LoginResult(error = R.string.login_failed)
+        LoginResult(error = R.string.login_failed)
       }
     }
   }

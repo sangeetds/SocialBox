@@ -1,4 +1,4 @@
-package com.socialbox.login.ui.theme
+package com.socialbox.theme
 
 import androidx.compose.ui.graphics.Color
 

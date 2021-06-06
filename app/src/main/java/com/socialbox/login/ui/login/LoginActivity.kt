@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.Task
 import com.socialbox.R
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
-import com.socialbox.login.ui.theme.SocialBoxTheme
+import com.socialbox.theme.SocialBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
