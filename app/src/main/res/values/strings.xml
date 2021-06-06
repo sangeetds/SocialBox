@@ -18,4 +18,7 @@
   <string name="email">Email</string>
   <string name="app_image">App Image</string>
   <string name="error_google_sign">Error on loging with Google</string>
+  <string name="notification">Notification</string>
+  <string name="search">search</string>
+  <string name="user">user</string>
 </resources>
