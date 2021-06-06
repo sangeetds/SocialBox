@@ -11,7 +11,7 @@ import com.socialbox.R
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.login.data.model.User
 import com.socialbox.group.ui.GroupAdapter.SongSearchViewHolder
-import timber.log.Timber
+import com.squareup.picasso.Picasso
 
 class GroupAdapter(
   val context: Context,
@@ -19,12 +19,12 @@ class GroupAdapter(
 ) :
   RecyclerView.Adapter<SongSearchViewHolder>() {
 
-  var songList = mutableListOf<GroupDTO>()
+  var groupList = mutableListOf<GroupDTO>()
 
   class SongSearchViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
-    val image: ImageView = cardView.findViewById(R.id.small_song_image)
-    val groupName: TextView = cardView.findViewById(R.id.search_song_name)
-    val memberCount: TextView = cardView.findViewById(R.id.search_album_name)
+    val image: ImageView = cardView.findViewById(R.id.shapeableImageView)
+    val groupName: TextView = cardView.findViewById(R.id.group_name)
+    val memberCount: TextView = cardView.findViewById(R.id.members)
   }
 
   override fun onCreateViewHolder(
@@ -33,7 +33,7 @@ class GroupAdapter(
   ): SongSearchViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
-      .inflate(R.layout.search_song_list_view, parent, false)
+      .inflate(R.layout.group_card_layout, parent, false)
 
     return SongSearchViewHolder(view)
   }
@@ -42,25 +42,16 @@ class GroupAdapter(
     holder: SongSearchViewHolder,
     position: Int
   ) {
-    val song = songList[position]
+    val group = groupList[position]
 
     holder.itemView.setOnClickListener {
-      Timber.i("Rating song ${song.name} and opening up the rating dialog")
-      val rateDialog =
-        RatingsDialog(
-          context = this.context, song = song, associatedFunction = update, user = user!!,
-          removeRatingsButton = null
-        )
-      rateDialog.show()
+
     }
 
-    holder.groupName.text = song.name
-    holder.memberCount.text = song.album
-
-    val smallestResolutionImage = song.image.minByOrNull { (_, height, width) -> height / width }!!
-
-    Picasso.get().load(smallestResolutionImage.url).into(holder.image)
+    holder.groupName.text = group.groupName
+    holder.memberCount.text = String.format(holder.memberCount.text.toString(), group.memberCount)
+    Picasso.get().load(group.groupPhotoURL).into(holder.image)
   }
 
-  override fun getItemCount(): Int = this.songList.size
+  override fun getItemCount(): Int = this.groupList.size
 }

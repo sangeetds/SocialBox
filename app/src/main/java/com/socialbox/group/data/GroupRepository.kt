@@ -1,8 +1,6 @@
 package com.socialbox.group.data
 
-import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.service.GroupService
-import com.socialbox.login.data.Result
 import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
 import kotlinx.coroutines.flow.flow

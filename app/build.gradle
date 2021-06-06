@@ -89,6 +89,9 @@ dependencies {
   // Junit for test
   testImplementation 'junit:junit:4.13.2'
 
+  // Picasso
+  implementation 'com.squareup.picasso:picasso:2.8'
+
   // Android tests
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

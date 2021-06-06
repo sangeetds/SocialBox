@@ -21,4 +21,6 @@
   <string name="notification">Notification</string>
   <string name="search">search</string>
   <string name="user">user</string>
+  <string name="group_name_which_can_be_very_big">Group name which can be very big</string>
+  <string name="s_members">%s Members</string>
 </resources>

@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
     account?.let {
       val user = User(id = it.id, userName = it.displayName, userEmail = it.email)
       val intent = Intent(this, GroupActivity::class.java)
-      intent.putParcelableArrayListExtra("user", arrayListOf(user))
+      intent.putExtra("user", user)
       startActivity(intent)
     }
 
