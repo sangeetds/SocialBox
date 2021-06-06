@@ -3,7 +3,6 @@ package com.socialbox.login.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -131,6 +130,8 @@ class LoginActivity : AppCompatActivity() {
 
     loginButton.setOnClickListener {
       Timber.i("User requested log in")
+      loginButton.isEnabled = false
+      Toast.makeText(this, "Signing in Please Wait", Toast.LENGTH_LONG).show()
       loginViewModel.login(
         User(
           userEmail = username.text.toString(),
