@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.socialbox.R
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -18,6 +19,8 @@ class GroupActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setContentView(R.layout.group_activity_layout)
+
     val user: User? = intent.extras?.getParcelable("user")
 
     groupAdapter = GroupAdapter(context = this, user)

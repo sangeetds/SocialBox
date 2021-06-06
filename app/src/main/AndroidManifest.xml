@@ -23,7 +23,11 @@
     </activity>
     <activity
         android:name=".login.ui.login.LoginActivity"
-        android:label="@string/title_activity_login" />
+        android:label="@string/title_activity_login"
+        android:theme="@style/Theme.SocialBox.NoActionBar" />
+    <activity
+        android:name=".group.ui.GroupActivity"
+        android:theme="@style/Theme.SocialBox.NoActionBar" />
   </application>
 
   <uses-permission android:name="android.permission.INTERNET" />

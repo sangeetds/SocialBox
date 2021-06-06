@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_logo"
     tools:context=".login.MainActivity"
     >
   <TextView
@@ -20,6 +19,17 @@
       app:layout_constraintTop_toTopOf="parent"
       android:layout_marginTop="40dp"
       />
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:src="@drawable/app_logo"
+      android:contentDescription="@string/app_image"
+      />
+
   <com.google.android.material.button.MaterialButton
       android:id="@+id/sign_in_button"
       android:layout_width="match_parent"

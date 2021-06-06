@@ -12,7 +12,7 @@ data class User(
   val userPassword: String? = null,
   val personalMovieList: List<String> = listOf(),
   val sharedMovieList: List<String> = listOf(),
-  val groupsId: HashSet<String> = hashSetOf(),
+  val groupsId: Set<String> = setOf(),
   val userPhotoURL: String? = null,
   val userEmail: String? = null,
 ) : Parcelable

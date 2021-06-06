@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.socialbox.R
 import com.socialbox.R.string
@@ -33,11 +34,12 @@ class LoginActivity : AppCompatActivity() {
   private val loginViewModel: LoginViewModel by viewModels()
   private lateinit var username: EditText
   private lateinit var password: TextInputEditText
-  private lateinit var loginButton: Button
+  private lateinit var loginButton: MaterialButton
   private lateinit var googleLoginButton: SignInButton
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setContentView(R.layout.login_activity_layout)
 
     val gso = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
       .requestId()
@@ -154,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
 
   private fun updateUiWithUser(model: User) {
     val welcome = getString(R.string.welcome)
-    val displayName = model.userName
+    val displayName = model.userEmail
     Timber.i("Login successful for $model")
 
     Toast.makeText(
