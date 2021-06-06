@@ -1,6 +1,6 @@
 package com.socialbox.group.data.dto
 
-data class GroupDTO (
+data class GroupDTO(
   val groupId: String = "",
   val groupName: String = "",
   val groupPhotoURL: String = "",

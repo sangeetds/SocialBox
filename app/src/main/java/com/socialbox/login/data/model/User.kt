@@ -3,7 +3,6 @@ package com.socialbox.login.data.model
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
-import java.util.HashSet
 
 @Parcelize
 data class User(

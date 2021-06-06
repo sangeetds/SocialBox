@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.dto.GroupDTO
-import com.socialbox.login.data.model.User
 import com.socialbox.group.ui.GroupAdapter.SongSearchViewHolder
+import com.socialbox.login.data.model.User
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 class GroupAdapter(
   val context: Context,
@@ -34,6 +35,7 @@ class GroupAdapter(
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
       .inflate(R.layout.group_card_layout, parent, false)
+    Timber.i("Group adapter set up.")
 
     return SongSearchViewHolder(view)
   }
@@ -45,7 +47,7 @@ class GroupAdapter(
     val group = groupList[position]
 
     holder.itemView.setOnClickListener {
-
+      Timber.i("Opening groups ${group.groupName}")
     }
 
     holder.groupName.text = group.groupName

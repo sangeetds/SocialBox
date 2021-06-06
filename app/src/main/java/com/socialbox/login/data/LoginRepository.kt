@@ -1,19 +1,17 @@
 package com.socialbox.login.data
 
-import com.socialbox.login.data.service.UserService
 import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
 import com.socialbox.login.data.model.User
+import com.socialbox.login.data.service.UserService
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 /**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
+ * Class that requests authentication and user information from the remote data source.
  */
-
 class LoginRepository @Inject constructor(private val userService: UserService) {
 
   fun login(user: User) = flow {

@@ -9,11 +9,13 @@ import com.google.android.material.button.MaterialButton
 import com.socialbox.R
 import com.socialbox.login.ui.login.LoginActivity
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main_activity_layout)
+    Timber.i("Main Screen set up.")
 
     val loginButton = findViewById<MaterialButton>(R.id.sign_in_button)
     loginButton.setOnClickListener {
