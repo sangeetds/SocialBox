@@ -42,3 +42,21 @@ m
 =app/src/main/java/com/socialbox/login/ui/login/LoginScreen.kt,8/a/8af5c767bc367417eef9a564d1df7cc8550a76f6
 g
 7app/src/main/java/com/socialbox/group/ui/GroupScreen.kt,a/7/a70e7e84e5b5d3972d6dc399ca40f3cd4b8225a9
+^
+.app/src/main/java/com/socialbox/theme/Shape.kt,1/6/160f64e12b121b310de3baea2ba8ec6a45530572
+^
+.app/src/main/java/com/socialbox/theme/Color.kt,6/b/6b8601ab188face45fa9a6ef105aabd3eed6a73f
+^
+.app/src/main/java/com/socialbox/theme/Theme.kt,3/7/371329ca2074ee312891c3b281269cc1400eccba
+]
+-app/src/main/java/com/socialbox/theme/Type.kt,a/c/acfdef1b587e3866619a65f99af9a786226baf2e
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+r
+Bapp/src/main/java/com/socialbox/group/data/service/GroupService.kt,f/4/f472bc4c399adbeded39eb8758e674e25cc697fb
+m
+=app/src/main/java/com/socialbox/group/data/GroupRepository.kt,a/2/a2fc8c8f88479f966019e85dc86a74a3701215fb
+h
+8app/src/main/java/com/socialbox/group/ui/GroupAdapter.kt,c/9/c91532a72e7586fd23710e127ab1de205748d3a5
+j
+:app/src/main/java/com/socialbox/group/ui/GroupViewModel.kt,7/7/776c6a488f18e8934c19369fee84f31bcfd1eabd

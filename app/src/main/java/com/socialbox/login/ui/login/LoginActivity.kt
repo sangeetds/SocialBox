@@ -3,6 +3,7 @@ package com.socialbox.login.ui.login
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -21,6 +22,8 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialDialogs
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
 import com.socialbox.R
 import com.socialbox.R.string
@@ -39,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
   private lateinit var loginButton: MaterialButton
   private lateinit var appImage: ImageView
   private lateinit var googleLoginButton: SignInButton
+  private lateinit var progressIndicator: CircularProgressIndicator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -63,6 +67,7 @@ class LoginActivity : AppCompatActivity() {
     loginButton = findViewById(R.id.btn_login)
     googleLoginButton = findViewById(R.id.sign_in_button)
     appImage = findViewById(R.id.app_image)
+    progressIndicator = findViewById(R.id.loading_icon)
 
     when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
       Configuration.UI_MODE_NIGHT_YES -> Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
@@ -128,6 +133,8 @@ class LoginActivity : AppCompatActivity() {
                 userPassword = password.text.toString()
               )
             )
+            MaterialDialogs.getDialogBackgroundInsets(this@LoginActivity)
+            progressIndicator.visibility = View.VISIBLE
           }
         }
         false
@@ -144,6 +151,7 @@ class LoginActivity : AppCompatActivity() {
           userPassword = password.text.toString()
         )
       )
+      progressIndicator.visibility = View.VISIBLE
     }
 
     googleLoginButton.setOnClickListener {
@@ -183,6 +191,7 @@ class LoginActivity : AppCompatActivity() {
     Timber.d("Logging failed.")
     Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
     loginButton.isEnabled = true
+    progressIndicator.visibility = View.GONE
   }
 
   override fun onActivityResult(
