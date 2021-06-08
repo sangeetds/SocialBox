@@ -145,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
       Timber.i("User requested log in")
       loginButton.isEnabled = false
       Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_SHORT).show()
-      updateUiWithUser(User())
+      updateUiWithUser(User(id = "someId"))
       // loginViewModel.login(
       //   User(
       //     userEmail = username.text.toString(),

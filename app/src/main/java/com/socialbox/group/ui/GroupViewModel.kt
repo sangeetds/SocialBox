@@ -16,12 +16,15 @@ import javax.inject.Inject
 @HiltViewModel
 class GroupViewModel @Inject constructor(private val groupRepository: GroupRepository) : ViewModel() {
 
-  private val _groupState = MutableLiveData<List<GroupDTO>>()
-  val groupState: LiveData<List<GroupDTO>> = _groupState
+  private val _groupListState = MutableLiveData<List<GroupDTO>>()
+  val groupListState: LiveData<List<GroupDTO>> = _groupListState
+
+  private val _group = MutableLiveData<Group>()
+  val group: LiveData<Group> = _group
 
   fun getGroupsForUser(userId: String) = viewModelScope.launch {
     groupRepository.getGroupsForUser(userId).collect { groups ->
-      _groupState.value =
+      _groupListState.value =
         if (groups is Success) groups.data
         else listOf()
     }
@@ -30,5 +33,13 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   fun addGroup(group: Group) = viewModelScope.launch {
     groupRepository.createGroup(group)
     getGroupsForUser(group.groupAdminId)
+  }
+
+  fun getGroup(groupId: String) = viewModelScope.launch {
+    groupRepository.getGroup(groupId).collect { result ->
+      if (result is Success) {
+        _group.value = result.data
+      }
+    }
   }
 }

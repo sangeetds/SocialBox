@@ -118,7 +118,7 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun getGroups() {
-    groupViewModel.groupState.observe(this@GroupActivity, Observer {
+    groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
 
       if (groups.isNotEmpty()) {

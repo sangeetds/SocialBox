@@ -30,4 +30,5 @@
   <string name="group_image_placeholder">Group Image Placeholder</string>
   <string name="add_group_name">Add group name</string>
   <string name="create_a_new_group">Create a new Group</string>
+  <string name="go_to_chatbox">Go to Chatbox</string>
 </resources>

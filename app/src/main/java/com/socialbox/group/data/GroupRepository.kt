@@ -39,4 +39,21 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
   suspend fun createGroup(group: Group) {
     groupService.saveGroup(group)
   }
+
+  fun getGroup(groupId: String) = flow {
+    emit(getGroupDetails(groupId))
+  }
+
+  private suspend fun getGroupDetails(groupId: String) = try {
+    groupService.getGroup(groupId).run {
+      if (isSuccessful && body() != null) {
+        Success(body()!!)
+      }
+      else {
+        Error(Exception(errorString))
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    Error(Exception("Error fetching groups"))
+  }
 }

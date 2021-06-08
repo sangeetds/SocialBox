@@ -1,5 +1,9 @@
 package com.socialbox.group.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Group(
   val groupId: String = "",
   val groupName: String,
@@ -8,4 +12,4 @@ data class Group(
   val memberCount: Int,
   val groupPhotoURL: String = "",
   val groupAdminId: String,
-)
+) : Parcelable

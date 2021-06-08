@@ -1,6 +1,7 @@
 package com.socialbox.group.ui
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,8 @@ import com.socialbox.R
 import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
-@AndroidEntryPoint
 class AddMovieDialog(
   private val viewModel: GroupViewModel,
   private val userId: String
@@ -40,9 +41,13 @@ class AddMovieDialog(
     val createNewGroupButton = inflate.findViewById<MaterialButton>(R.id.add_movie)
     val groupName = inflate.findViewById<EditText>(R.id.group_name)
     createNewGroupButton.setOnClickListener {
-      viewModel.addGroup(
-        Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
-      )
+      Timber.i("New Group $groupName formed")
+      val group = Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
+      viewModel.addGroup(group)
+      val intent = Intent(context, GroupDetailsActivity::class.java)
+      intent.putExtra("group", group)
+      startActivity(intent)
+      dismiss()
     }
     return inflate
   }
