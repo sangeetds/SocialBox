@@ -127,13 +127,13 @@ class LoginActivity : AppCompatActivity() {
         when (actionId) {
           EditorInfo.IME_ACTION_DONE -> {
             Timber.i("User requested log in")
-            loginViewModel.login(
-              User(
-                userEmail = username.text.toString(),
-                userPassword = password.text.toString()
-              )
-            )
-            MaterialDialogs.getDialogBackgroundInsets(this@LoginActivity)
+            updateUiWithUser(User())
+            // loginViewModel.login(
+            //   User(
+            //     userEmail = username.text.toString(),
+            //     userPassword = password.text.toString()
+            //   )
+            // )
             progressIndicator.visibility = View.VISIBLE
           }
         }
@@ -144,13 +144,14 @@ class LoginActivity : AppCompatActivity() {
     loginButton.setOnClickListener {
       Timber.i("User requested log in")
       loginButton.isEnabled = false
-      Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_LONG).show()
-      loginViewModel.login(
-        User(
-          userEmail = username.text.toString(),
-          userPassword = password.text.toString()
-        )
-      )
+      Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_SHORT).show()
+      updateUiWithUser(User())
+      // loginViewModel.login(
+      //   User(
+      //     userEmail = username.text.toString(),
+      //     userPassword = password.text.toString()
+      //   )
+      // )
       progressIndicator.visibility = View.VISIBLE
     }
 

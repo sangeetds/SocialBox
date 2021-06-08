@@ -1,15 +1,23 @@
 package com.socialbox.group.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.socialbox.R
+import androidx.transition.TransitionManager
+import com.google.android.material.appbar.MaterialToolbar
 import com.socialbox.R.id
+import com.socialbox.R.menu.top_app_bar
+import com.socialbox.R.layout
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -21,10 +29,16 @@ class GroupActivity : AppCompatActivity() {
   private lateinit var groupAdapter: GroupAdapter
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
+  private lateinit var notificationBell: MenuItem
+  private lateinit var userIcon: MenuItem
+  private lateinit var mToolbar: MaterialToolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.group_activity_layout)
+    setContentView(layout.group_activity_layout)
+    mToolbar = findViewById(id.topAppBar)
+    setSupportActionBar(mToolbar)
+    supportActionBar?.setDisplayShowTitleEnabled(true)
 
     val user: User? = intent.extras?.getParcelable("user")
 
@@ -41,22 +55,70 @@ class GroupActivity : AppCompatActivity() {
 
     recyclerView.visibility = View.GONE
     emptyText.visibility = View.VISIBLE
+  }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(top_app_bar, menu)
+    val searchView: SearchView = menu!!.findItem(id.search).actionView as SearchView
+    val closeButton = searchView.findViewById<ImageView>(id.search_close_btn)
+    notificationBell = menu.findItem(id.notification)
+    userIcon = menu.findItem(id.user)
+
+    searchView.setOnClickListener {
+      TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))
+      notificationBell.isVisible = false
+      Timber.i("${notificationBell.isVisible}")
+      userIcon.isVisible = false
+    }
+
+
+    searchView.queryHint = "Search Groups.."
+    searchView.setOnQueryTextListener(object : OnQueryTextListener {
+
+      override fun onQueryTextChange(newText: String): Boolean {
+        return false
+      }
+
+      override fun onQueryTextSubmit(query: String): Boolean {
+     //   task HERE
+        return false
+      }
+    })
+
+    closeButton.setOnClickListener {
+      notificationBell.isVisible = true
+      notificationBell.isVisible = true
+      searchView.onActionViewCollapsed()
+    }
+
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      id.search -> {
+        TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))
+        item.expandActionView()
+        notificationBell.isVisible = false
+        Timber.i("${notificationBell.isVisible}")
+        userIcon.isVisible = false
+        return true
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 
   private fun getGroups() {
     groupViewModel.groupState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
-      Timber.i("New songs loaded up.")
 
       if (groups.isNotEmpty()) {
         recyclerView.visibility = View.VISIBLE
         emptyText.visibility = View.GONE
-        Timber.i("New songs load up: ${groups.joinToString(",") { s -> s.groupName }}")
+        Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.groupName }}")
         groupAdapter.groupList.addAll(groups)
         groupAdapter.notifyDataSetChanged()
-      }
-      else {
+      } else {
         recyclerView.visibility = View.GONE
         emptyText.visibility = View.VISIBLE
       }
