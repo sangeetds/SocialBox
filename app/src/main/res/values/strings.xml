@@ -27,4 +27,7 @@
   <string name="your_movies">Your Movies</string>
   <string name="create_new_group">Create New Group</string>
   <string name="make_new_friends_form_a_new_group">Make new friends. Form a new group.</string>
+  <string name="group_image_placeholder">Group Image Placeholder</string>
+  <string name="add_group_name">Add group name</string>
+  <string name="create_a_new_group">Create a new Group</string>
 </resources>

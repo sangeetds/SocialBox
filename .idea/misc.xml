@@ -24,11 +24,12 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="../../.gradle/caches/transforms-3/1dad11eaaa16358bbbd3427a103b1da8/transformed/material-1.3.0/res/drawable/design_ic_visibility.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/drawable/register_button.xml" value="0.12916666666666668" />
-        <entry key="app/src/main/res/drawable/sign_in_button.xml" value="0.12916666666666668" />
+        <entry key="app/src/main/res/drawable/sign_in_button.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18611111111111112" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/add_movie_dialog.xml" value="0.25092592592592594" />
         <entry key="app/src/main/res/layout/group_acitivity_layout.xml" value="0.21484375" />
-        <entry key="app/src/main/res/layout/group_activity_layout.xml" value="0.21484375" />
+        <entry key="app/src/main/res/layout/group_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/group_card_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/log.xml" value="0.165" />
         <entry key="app/src/main/res/layout/login_activity_layout.xml" value="0.165" />

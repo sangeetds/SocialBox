@@ -1,6 +1,7 @@
 package com.socialbox.group.data
 
 import com.socialbox.group.data.dto.GroupDTO
+import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.Result
 import com.socialbox.login.data.Result.Error
@@ -33,5 +34,9 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Timber.e(errorString)
       Error(Exception(errorString))
     }
+  }
+
+  suspend fun createGroup(group: Group) {
+    groupService.saveGroup(group)
   }
 }

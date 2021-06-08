@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.socialbox.R.id
-import com.socialbox.R.menu.top_app_bar
 import com.socialbox.R.layout
+import com.socialbox.R.menu.top_app_bar
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -27,6 +28,7 @@ class GroupActivity : AppCompatActivity() {
 
   private val groupViewModel: GroupViewModel by viewModels()
   private lateinit var groupAdapter: GroupAdapter
+  private lateinit var newMovieButton: ExtendedFloatingActionButton
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var notificationBell: MenuItem
@@ -48,6 +50,7 @@ class GroupActivity : AppCompatActivity() {
     groupAdapter = GroupAdapter(context = this, user)
     emptyText = findViewById(id.place_holder)
     recyclerView = findViewById(id.group_recycler_view)
+    newMovieButton = findViewById(id.new_group_button)
     recyclerView.adapter = groupAdapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
@@ -55,6 +58,12 @@ class GroupActivity : AppCompatActivity() {
 
     recyclerView.visibility = View.GONE
     emptyText.visibility = View.VISIBLE
+
+    newMovieButton.setOnClickListener {
+      AddMovieDialog(viewModel = groupViewModel, userId = user.id).show(
+        supportFragmentManager.beginTransaction(), "MovieDialog"
+      )
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,7 +89,7 @@ class GroupActivity : AppCompatActivity() {
       }
 
       override fun onQueryTextSubmit(query: String): Boolean {
-     //   task HERE
+        //   task HERE
         return false
       }
     })

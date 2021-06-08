@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.dto.GroupDTO
+import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.Result.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -24,5 +25,10 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
         if (groups is Success) groups.data
         else listOf()
     }
+  }
+
+  fun addGroup(group: Group) = viewModelScope.launch {
+    groupRepository.createGroup(group)
+    getGroupsForUser(group.groupAdminId)
   }
 }

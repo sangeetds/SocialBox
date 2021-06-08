@@ -127,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
         when (actionId) {
           EditorInfo.IME_ACTION_DONE -> {
             Timber.i("User requested log in")
-            updateUiWithUser(User())
+            updateUiWithUser(User(id = "id"))
             // loginViewModel.login(
             //   User(
             //     userEmail = username.text.toString(),
