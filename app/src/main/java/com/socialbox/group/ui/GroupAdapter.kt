@@ -35,7 +35,6 @@ class GroupAdapter(
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
       .inflate(R.layout.group_card_layout, parent, false)
-    Timber.i("Group adapter set up.")
 
     return SongSearchViewHolder(view)
   }

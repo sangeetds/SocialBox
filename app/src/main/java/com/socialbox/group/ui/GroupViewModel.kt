@@ -19,8 +19,8 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   private val _groupListState = MutableLiveData<List<GroupDTO>>()
   val groupListState: LiveData<List<GroupDTO>> = _groupListState
 
-  private val _group = MutableLiveData<Group>()
-  val group: LiveData<Group> = _group
+  private val _groupState = MutableLiveData<Group>()
+  val groupState: LiveData<Group> = _groupState
 
   fun getGroupsForUser(userId: String) = viewModelScope.launch {
     groupRepository.getGroupsForUser(userId).collect { groups ->
@@ -38,7 +38,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   fun getGroup(groupId: String) = viewModelScope.launch {
     groupRepository.getGroup(groupId).collect { result ->
       if (result is Success) {
-        _group.value = result.data
+        _groupState.value = result.data
       }
     }
   }
