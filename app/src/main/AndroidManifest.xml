@@ -12,6 +12,7 @@
       android:theme="@style/Theme.SocialBox">
     <activity
         android:name=".user.ui.UserActivity"
+        android:theme="@style/Theme.SocialBox.NoActionBar"
         android:exported="true" />
     <activity
         android:name=".group.ui.GroupDetailsActivity"
@@ -34,6 +35,10 @@
     <activity
         android:name=".group.ui.GroupActivity"
         android:theme="@style/Theme.SocialBox.NoActionBar" />
+
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
   </application>
   <uses-permission android:name="android.permission.INTERNET" />
 

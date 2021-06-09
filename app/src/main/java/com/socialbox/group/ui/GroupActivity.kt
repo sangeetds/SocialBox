@@ -1,9 +1,13 @@
 package com.socialbox.group.ui
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -20,13 +24,9 @@ import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
 import com.socialbox.login.data.model.User
+import com.socialbox.user.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import android.R
-
-import android.app.SearchManager
-import android.content.Context
-import kotlin.Int.Companion
 
 @AndroidEntryPoint
 class GroupActivity : AppCompatActivity() {
@@ -39,6 +39,7 @@ class GroupActivity : AppCompatActivity() {
   private lateinit var notificationBell: MenuItem
   private lateinit var userIcon: MenuItem
   private lateinit var mToolbar: MaterialToolbar
+  private lateinit var user: User
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,9 +48,9 @@ class GroupActivity : AppCompatActivity() {
     setSupportActionBar(mToolbar)
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
-    val user: User? = intent.extras?.getParcelable("user")
+    user = intent.extras?.getParcelable("user") ?: User()
 
-    groupViewModel.getGroupsForUser(user?.id!!)
+    groupViewModel.getGroupsForUser(user.id!!)
     getGroups()
 
     groupAdapter = GroupAdapter(context = this, user)
@@ -65,7 +66,7 @@ class GroupActivity : AppCompatActivity() {
     emptyText.visibility = View.VISIBLE
 
     newMovieButton.setOnClickListener {
-      AddMovieDialog(viewModel = groupViewModel, userId = user.id).show(
+      AddMovieDialog(viewModel = groupViewModel, userId = user.id!!).show(
         supportFragmentManager.beginTransaction(), "MovieDialog"
       )
     }
@@ -74,6 +75,7 @@ class GroupActivity : AppCompatActivity() {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(top_app_bar, menu)
     val searchView: SearchView = menu!!.findItem(id.search).actionView as SearchView
+    val userView: Button = menu.findItem(id.user).actionView as Button
     val closeButton = searchView.findViewById<ImageView>(id.search_close_btn)
     notificationBell = menu.findItem(id.notification)
     userIcon = menu.findItem(id.user)
@@ -83,6 +85,12 @@ class GroupActivity : AppCompatActivity() {
       searchManager
         .getSearchableInfo(componentName)
     )
+
+    userView.setOnClickListener {
+      val intent = Intent(this, UserActivity::class.java)
+      intent.putExtra("user", user)
+      startActivity(intent)
+    }
 
     searchView.setOnClickListener {
       TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))

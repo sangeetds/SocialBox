@@ -33,4 +33,10 @@
   <string name="go_to_chatbox">Go to Chatbox</string>
   <string name="movie_image">Movie Image</string>
   <string name="add_movie">Add Movie</string>
+  <string name="hello_s">Hello %s</string>
+  <string name="account_settings">Account Settings</string>
+  <string name="your_favorite_movies">Your Favorite Movies</string>
+  <string name="group_settings">Group Settings</string>
+  <string name="shared_movie_lists_with_you">Shared Movie Lists With You</string>
+  <string name="app_settings">App Settings</string>
 </resources>
