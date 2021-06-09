@@ -61,8 +61,9 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="30dp"
       android:layout_marginStart="30dp"
-      app:boxBackgroundColor="@color/white"
       android:layout_marginTop="40dp"
+      app:endIconMode="password_toggle"
+      app:boxBackgroundColor="@color/white"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
@@ -77,7 +78,6 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:passwordToggleEnabled="true"
         />
   </com.google.android.material.textfield.TextInputLayout>
 

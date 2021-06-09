@@ -22,6 +22,11 @@ import com.socialbox.R.menu.top_app_bar
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import android.R
+
+import android.app.SearchManager
+import android.content.Context
+import kotlin.Int.Companion
 
 @AndroidEntryPoint
 class GroupActivity : AppCompatActivity() {
@@ -73,6 +78,12 @@ class GroupActivity : AppCompatActivity() {
     notificationBell = menu.findItem(id.notification)
     userIcon = menu.findItem(id.user)
 
+    val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+    searchView.setSearchableInfo(
+      searchManager
+        .getSearchableInfo(componentName)
+    )
+
     searchView.setOnClickListener {
       TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))
       notificationBell.isVisible = false
@@ -83,13 +94,13 @@ class GroupActivity : AppCompatActivity() {
 
     searchView.queryHint = "Search Groups.."
     searchView.setOnQueryTextListener(object : OnQueryTextListener {
-
-      override fun onQueryTextChange(newText: String): Boolean {
+      override fun onQueryTextSubmit(query: String): Boolean {
+        groupAdapter.filter.filter(query)
         return false
       }
 
-      override fun onQueryTextSubmit(query: String): Boolean {
-        //   task HERE
+      override fun onQueryTextChange(query: String): Boolean {
+        groupAdapter.filter.filter(query)
         return false
       }
     })
