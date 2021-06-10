@@ -90,7 +90,7 @@ dependencies {
   testImplementation 'junit:junit:4.13.2'
 
   // Picasso
-  implementation 'com.squareup.picasso:picasso:2.8'
+  implementation 'com.squareup.picasso:picasso:2.71828'
 
   // Android tests
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
