@@ -22,8 +22,8 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_group_details)
-    mToolbar = findViewById(id.topAppBar)
+    setContentView(R.layout.group_details_activity_layout)
+    mToolbar = findViewById(id.groupNameBar)
     setSupportActionBar(mToolbar)
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
@@ -36,6 +36,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     val group = intent.getParcelableExtra<Group>("group")
     groupViewModel.getGroup(group!!.groupId)
     mToolbar.title = group.groupName
+    supportActionBar?.title = group.groupName
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer

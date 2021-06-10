@@ -93,7 +93,7 @@ class GroupActivity : AppCompatActivity() {
     }
 
     searchView.setOnClickListener {
-      TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))
+      TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
       notificationBell.isVisible = false
       Timber.i("${notificationBell.isVisible}")
       userIcon.isVisible = false
@@ -125,7 +125,7 @@ class GroupActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       id.search -> {
-        TransitionManager.beginDelayedTransition(findViewById(id.topAppBar))
+        TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
         item.expandActionView()
         notificationBell.isVisible = false
         Timber.i("${notificationBell.isVisible}")

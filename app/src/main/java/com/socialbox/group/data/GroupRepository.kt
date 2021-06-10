@@ -10,6 +10,12 @@ import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
+import android.widget.Toast
+
+import org.json.JSONObject
+
+
+
 
 class GroupRepository @Inject constructor(private val groupService: GroupService) {
 
@@ -26,8 +32,9 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
           Timber.i("Successfully fetched groups from server.")
           Success(body()!!)
         } else {
-          Timber.e(errorString)
-          Error(Exception(errorString))
+          Timber.e(errorBody()?.string())
+          Timber.e(errorBody()?.byteStream().toString())
+          Error(Exception(errorBody()?.byteStream().toString()))
         }
       }
     } catch (exception: SocketTimeoutException) {
@@ -50,7 +57,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
         Success(body()!!)
       }
       else {
-        Error(Exception(errorString))
+        Error(Exception(errorBody()?.charStream().toString()))
       }
     }
   } catch (exception: SocketTimeoutException) {

@@ -126,15 +126,15 @@ class LoginActivity : AppCompatActivity() {
       setOnEditorActionListener { _, actionId, _ ->
         when (actionId) {
           EditorInfo.IME_ACTION_DONE -> {
-            Timber.i("User requested log in")
-            updateUiWithUser(User(id = "id"))
-            // loginViewModel.login(
-            //   User(
-            //     userEmail = username.text.toString(),
-            //     userPassword = password.text.toString()
-            //   )
-            // )
             progressIndicator.visibility = View.VISIBLE
+            Timber.i("User requested log in")
+            // updateUiWithUser(User(id = "id"))
+            loginViewModel.login(
+              User(
+                userEmail = username.text.toString(),
+                userPassword = password.text.toString()
+              )
+            )
           }
         }
         false
@@ -142,17 +142,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     loginButton.setOnClickListener {
+      progressIndicator.visibility = View.VISIBLE
       Timber.i("User requested log in")
       loginButton.isEnabled = false
       Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_SHORT).show()
-      updateUiWithUser(User(id = "someId"))
-      // loginViewModel.login(
-      //   User(
-      //     userEmail = username.text.toString(),
-      //     userPassword = password.text.toString()
-      //   )
-      // )
-      progressIndicator.visibility = View.VISIBLE
+      // updateUiWithUser(User(id = "someId"))
+      loginViewModel.login(
+        User(
+          userEmail = username.text.toString(),
+          userPassword = password.text.toString()
+        )
+      )
     }
 
     googleLoginButton.setOnClickListener {

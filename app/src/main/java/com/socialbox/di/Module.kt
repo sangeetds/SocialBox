@@ -1,5 +1,6 @@
 package com.socialbox.di
 
+import com.socialbox.group.data.MovieService
 import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.service.UserService
 import com.squareup.moshi.Moshi
@@ -35,11 +36,11 @@ class Module {
   @Singleton
   fun provideRetrofit(
     okHttpClient: OkHttpClient,
-    BASE_URL: String,
+    baseUrl: String,
     moshi: Moshi
   ): Retrofit =
     Retrofit.Builder()
-      .baseUrl(BASE_URL)
+      .baseUrl(baseUrl)
       .addConverterFactory(MoshiConverterFactory.create(moshi))
       .client(okHttpClient)
       .build()
@@ -53,4 +54,9 @@ class Module {
   @Singleton
   fun provideGroupService(retrofit: Retrofit): GroupService =
     retrofit.create(GroupService::class.java)
+
+  @Provides
+  @Singleton
+  fun provideMovieService(retrofit: Retrofit): MovieService =
+    retrofit.create(MovieService::class.java)
 }
