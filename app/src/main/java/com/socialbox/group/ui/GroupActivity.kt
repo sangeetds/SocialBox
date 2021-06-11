@@ -75,7 +75,7 @@ class GroupActivity : AppCompatActivity() {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(top_app_bar, menu)
     val searchView: SearchView = menu!!.findItem(id.search).actionView as SearchView
-    val userView: Button = menu.findItem(id.user).actionView as Button
+    val userView: MenuItem = menu.findItem(id.user)
     val closeButton = searchView.findViewById<ImageView>(id.search_close_btn)
     notificationBell = menu.findItem(id.notification)
     userIcon = menu.findItem(id.user)
@@ -86,10 +86,11 @@ class GroupActivity : AppCompatActivity() {
         .getSearchableInfo(componentName)
     )
 
-    userView.setOnClickListener {
+    userView.setOnMenuItemClickListener {
       val intent = Intent(this, UserActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
+      true
     }
 
     searchView.setOnClickListener {
@@ -98,7 +99,6 @@ class GroupActivity : AppCompatActivity() {
       Timber.i("${notificationBell.isVisible}")
       userIcon.isVisible = false
     }
-
 
     searchView.queryHint = "Search Groups.."
     searchView.setOnQueryTextListener(object : OnQueryTextListener {

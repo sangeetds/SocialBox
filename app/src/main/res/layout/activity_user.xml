@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DEDEDE"
+    android:background="#EDE4CC"
     tools:context=".user.ui.UserActivity"
     >
 
@@ -12,7 +12,6 @@
       android:id="@+id/welcome_user"
       android:layout_width="match_parent"
       android:layout_height="360dp"
-      android:background="#EDE4CC"
       android:fontFamily="@font/pattaya_regular"
       android:paddingTop="80dp"
       android:gravity="center_horizontal"
@@ -56,7 +55,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:text="@string/account_settings"
-        android:textFontWeight="1100"
+        android:textFontWeight="1000"
         android:textSize="20sp"
         />
     <TextView
@@ -71,7 +70,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:text="@string/group_settings"
-        android:textFontWeight="1100"
+        android:textFontWeight="1000"
         android:textSize="20sp"
         />
     <TextView
@@ -86,7 +85,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:text="@string/your_favorite_movies"
-        android:textFontWeight="1100"
+        android:textFontWeight="1000"
         android:textSize="20sp"
         />
     <TextView
@@ -100,7 +99,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:text="@string/shared_movie_lists_with_you"
-        android:textFontWeight="1100"
+        android:textFontWeight="1000"
         android:textSize="20sp"
         app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
         />
@@ -116,7 +115,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:text="@string/app_settings"
-        android:textFontWeight="1100"
+        android:textFontWeight="1000"
         android:textSize="20sp"
         />
     <View

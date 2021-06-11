@@ -1,6 +1,7 @@
 package com.socialbox.group.ui
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     setContentView(R.layout.group_details_activity_layout)
     mToolbar = findViewById(id.groupNameBar)
     setSupportActionBar(mToolbar)
+    mToolbar.showOverflowMenu()
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
     moviesAdapter = MovieAdapter()
@@ -35,7 +37,6 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     val group = intent.getParcelableExtra<Group>("group")
     groupViewModel.getGroup(group!!.groupId)
-    mToolbar.title = group.groupName
     supportActionBar?.title = group.groupName
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
@@ -46,5 +47,10 @@ class GroupDetailsActivity : AppCompatActivity() {
         moviesAdapter.notifyDataSetChanged()
       }
     })
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.top_app_bar, menu)
+    return super.onCreateOptionsMenu(menu)
   }
 }

@@ -6,16 +6,13 @@ import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.Result
 import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
-import android.widget.Toast
-
-import org.json.JSONObject
-
-
-
 
 class GroupRepository @Inject constructor(private val groupService: GroupService) {
 
@@ -32,8 +29,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
           Timber.i("Successfully fetched groups from server.")
           Success(body()!!)
         } else {
-          Timber.e(errorBody()?.string())
-          Timber.e(errorBody()?.byteStream().toString())
+          Timber.e(errorBody()?.stringSuspending())
           Error(Exception(errorBody()?.byteStream().toString()))
         }
       }
@@ -55,12 +51,15 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
     groupService.getGroup(groupId).run {
       if (isSuccessful && body() != null) {
         Success(body()!!)
-      }
-      else {
-        Error(Exception(errorBody()?.charStream().toString()))
+      } else {
+        Error(Exception(errorBody()?.stringSuspending()))
       }
     }
   } catch (exception: SocketTimeoutException) {
-    Error(Exception("Error fetching groups"))
+    Error(Exception("Error fetching group details."))
   }
+
+  @Suppress("BlockingMethodInNonBlockingContext")
+  suspend fun ResponseBody.stringSuspending() =
+    withContext(Dispatchers.IO) { string() }
 }

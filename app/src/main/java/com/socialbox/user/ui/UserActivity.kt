@@ -11,8 +11,7 @@ class UserActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_user)
 
-    // val user = intent.getParcelableExtra<User>("user")
-    val user = User(userName = "Sangeet")
+    val user = intent.getParcelableExtra<User>("user")
     val userWelcomeString = findViewById<TextView>(R.id.welcome_user)
     userWelcomeString.text = String.format(userWelcomeString.text.toString(), user?.userName)
   }
