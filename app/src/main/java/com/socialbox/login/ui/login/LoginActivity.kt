@@ -2,6 +2,7 @@ package com.socialbox.login.ui.login
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -22,9 +23,9 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialDialogs
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.socialbox.R
 import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
@@ -70,8 +71,17 @@ class LoginActivity : AppCompatActivity() {
     progressIndicator = findViewById(R.id.loading_icon)
 
     when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-      Configuration.UI_MODE_NIGHT_YES -> Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
-      Configuration.UI_MODE_NIGHT_NO -> Picasso.get().load(R.drawable.app_logo).into(appImage)
+      Configuration.UI_MODE_NIGHT_YES -> {
+        username.setHintTextColor(Color.BLACK)
+        username.setTextColor(Color.BLACK)
+        password.setHintTextColor(Color.BLACK)
+        password.setTextColor(Color.BLACK)
+        val textInput: TextInputLayout = findViewById(R.id.textInputLayout2)
+        Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
+      }
+      Configuration.UI_MODE_NIGHT_NO -> {
+        Picasso.get().load(R.drawable.app_logo).into(appImage)
+      }
     }
 
     setUpObserver()

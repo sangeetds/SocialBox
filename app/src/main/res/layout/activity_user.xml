@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDE4CC"
     tools:context=".user.ui.UserActivity"
     >
 
-  <TextView
+  <com.google.android.material.textview.MaterialTextView
       android:id="@+id/welcome_user"
       android:layout_width="match_parent"
       android:layout_height="360dp"
       android:fontFamily="@font/pattaya_regular"
       android:paddingTop="80dp"
       android:gravity="center_horizontal"
+      android:background="#7700FF"
       android:text="@string/hello_s"
       android:textSize="36sp"
       app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +41,9 @@
       android:layout_marginEnd="16dp"
       android:layout_marginStart="16dp"
       android:layout_marginTop="320dp"
+      android:elevation="10dp"
+      app:strokeColor="#EDE4CC"
+      app:strokeWidth="1dp"
       app:layout_constraintTop_toTopOf="parent"
       >
 

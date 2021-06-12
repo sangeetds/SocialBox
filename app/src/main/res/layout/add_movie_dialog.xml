@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".group.ui.AddMovieDialog"
     >
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +49,7 @@
   <ImageView
       android:id="@+id/group_placeholder_image"
       android:layout_width="match_parent"
-      android:layout_height="150dp"
+      android:layout_height="200dp"
       android:contentDescription="@string/group_image_placeholder"
       android:src="@drawable/gorup_placeholder_photo"
       app:layout_constraintEnd_toEndOf="parent"

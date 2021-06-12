@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.model.Movie
@@ -27,7 +26,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
-      .inflate(R.layout.moview_list_layout, parent, false)
+      .inflate(R.layout.movie_list_layout, parent, false)
     Timber.i("Inflating card view.")
     return ViewHolder(view)
   }
