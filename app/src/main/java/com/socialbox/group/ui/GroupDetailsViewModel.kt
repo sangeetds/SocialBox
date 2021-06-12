@@ -9,6 +9,7 @@ import com.socialbox.group.data.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +26,7 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
 
   fun getAllMovies() = viewModelScope.launch {
     movieRepository.getAllMovies().collect {
+      Timber.i("Successfully fetched ${it.joinToString (",") { m -> m.movieName }}")
       _movieState.value = it
     }
   }

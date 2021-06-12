@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.model.Movie
+import timber.log.Timber
 
 // Todo: Make it a list of Group Movie
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.ViewHolder>(MovieItemDiffCallback()) {
+class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+
+  var movies = listOf<Movie>()
 
   class ViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
     val image: ImageView = cardView.findViewById(R.id.movie_image)
@@ -25,17 +28,19 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.ViewHolder>(MovieItemDiffCa
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
       .inflate(R.layout.moview_list_layout, parent, false)
-
+    Timber.i("Inflating card view.")
     return ViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val movie = getItem(position)
-
+    val movie = movies[position]
+    Timber.i("Binding ${movie.movieName}")
     holder.name.text = movie?.movieName
     holder.ratings.text = "${movie.movieRating}/5.0"
-    // holder.addedBy.text = "Added by: ${movie.createdBy}"
+    holder.addedBy.text = "Added by: "
   }
+
+  override fun getItemCount() = movies.size
 }
 
 class MovieItemDiffCallback : DiffUtil.ItemCallback<Movie>() {

@@ -6,11 +6,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.socialbox.R
 import com.socialbox.R.id
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupDetailsActivity : AppCompatActivity() {
@@ -32,8 +34,8 @@ class GroupDetailsActivity : AppCompatActivity() {
     moviesAdapter = MovieAdapter()
     recyclerView = findViewById(id.movie_list)
     recyclerView.adapter = moviesAdapter
-    recyclerView.setHasFixedSize(true)
     recyclerView.layoutManager = GridLayoutManager(this, 2)
+    recyclerView.setHasFixedSize(true)
 
     val groupId = intent.getStringExtra("groupId")
     groupViewModel.getGroup(groupId!!)
@@ -41,8 +43,9 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     movieViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
       val movie = it ?: return@Observer
-
-      moviesAdapter.submitList(movie)
+      Timber.i("Adding movies to the adapter: ${movie.joinToString(",") { m -> m.movieName }}")
+      moviesAdapter.movies = movie
+      moviesAdapter.notifyDataSetChanged()
     })
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
