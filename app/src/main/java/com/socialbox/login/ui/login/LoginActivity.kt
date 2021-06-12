@@ -72,11 +72,6 @@ class LoginActivity : AppCompatActivity() {
 
     when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
       Configuration.UI_MODE_NIGHT_YES -> {
-        username.setHintTextColor(Color.BLACK)
-        username.setTextColor(Color.BLACK)
-        password.setHintTextColor(Color.BLACK)
-        password.setTextColor(Color.BLACK)
-        val textInput: TextInputLayout = findViewById(R.id.textInputLayout2)
         Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
       }
       Configuration.UI_MODE_NIGHT_NO -> {

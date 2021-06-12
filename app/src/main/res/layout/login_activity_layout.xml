@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/input_username"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -69,14 +69,14 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:autofillHints="Password"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="#757575"
+        android:textColorHint="#546E7A"
         />
   </com.google.android.material.textfield.TextInputLayout>
 

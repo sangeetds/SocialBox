@@ -28,6 +28,7 @@
         android:paddingStart="40dp"
         android:paddingEnd="10dp"
         android:autofillHints="name"
+        android:textColor="@color/black"
         android:hint="@string/add_group_name"
         android:inputType="textAutoComplete"
         android:textColorHint="#546E7A"
