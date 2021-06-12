@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.socialbox.R
 import com.socialbox.R.id
-import com.socialbox.group.data.model.Group
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GroupDetailsActivity : AppCompatActivity() {
 
   private val groupViewModel: GroupViewModel by viewModels()
+  private val movieViewModel: MovieViewModel by viewModels()
   private lateinit var mToolbar: MaterialToolbar
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
@@ -37,15 +37,21 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     val groupId = intent.getStringExtra("groupId")
     groupViewModel.getGroup(groupId!!)
+    movieViewModel.getAllMovies()
+
+    movieViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
+      val movie = it ?: return@Observer
+
+      moviesAdapter.submitList(movie)
+    })
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
       supportActionBar?.title = groupDetails.groupName
-      if (groupDetails.groupMovieList?.isNotEmpty() == true) {
-        moviesAdapter.cardList = groupDetails.groupMovieList
-        moviesAdapter.notifyDataSetChanged()
-      }
+      // if (groupDetails.groupMovieList?.isNotEmpty() == true) {
+      //   moviesAdapter.submitList(groupDetails.groupMovieList)
+      // }
     })
   }
 

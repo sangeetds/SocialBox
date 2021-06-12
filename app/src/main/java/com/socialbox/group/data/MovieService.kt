@@ -9,4 +9,7 @@ interface MovieService {
 
   @GET("/movie")
   suspend fun getMovies(@Query("groupID") groupId: String): Response<List<Movie>>
+
+  @GET("/movie")
+  suspend fun getAllMovies(): Response<List<Movie>>
 }

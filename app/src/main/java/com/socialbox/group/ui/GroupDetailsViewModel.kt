@@ -22,4 +22,10 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
       _movieState.value = it
     }
   }
+
+  fun getAllMovies() = viewModelScope.launch {
+    movieRepository.getAllMovies().collect {
+      _movieState.value = it
+    }
+  }
 }

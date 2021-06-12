@@ -102,12 +102,10 @@ class GroupActivity : AppCompatActivity() {
     searchView.queryHint = "Search Groups.."
     searchView.setOnQueryTextListener(object : OnQueryTextListener {
       override fun onQueryTextSubmit(query: String): Boolean {
-        groupAdapter.filter.filter(query)
         return false
       }
 
       override fun onQueryTextChange(query: String): Boolean {
-        groupAdapter.filter.filter(query)
         return false
       }
     })
@@ -143,8 +141,7 @@ class GroupActivity : AppCompatActivity() {
         recyclerView.visibility = View.VISIBLE
         emptyText.visibility = View.GONE
         Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.groupName }}")
-        groupAdapter.groupList.addAll(groups)
-        groupAdapter.notifyDataSetChanged()
+        groupAdapter.submitList(groups)
       } else {
         Timber.i("No groups present for the user")
         recyclerView.visibility = View.GONE

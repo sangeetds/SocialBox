@@ -22,4 +22,18 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
       Timber.i("Failed to fetch movies")
       listOf()
     }
+
+  fun getAllMovies() = flow {
+    emit(fetchAllMovies())
+  }
+
+  private suspend fun fetchAllMovies() =
+    try {
+      movieService.getAllMovies().run {
+        body()!!
+      }
+    } catch (exception: SocketTimeoutException) {
+      Timber.i("Failed to fetch movies")
+      listOf()
+    }
 }
