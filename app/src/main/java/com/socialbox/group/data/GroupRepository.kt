@@ -18,13 +18,13 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   private val errorString = "Error while loading groups"
 
-  fun getGroupsForUser(userId: String) = flow {
-    emit(getGroups(userId))
+  fun getGroupsForUser(groupId: List<String>) = flow {
+    emit(getGroups(groupId))
   }
 
-  private suspend fun getGroups(userId: String): Result<List<GroupDTO>> {
+  private suspend fun getGroups(groupId: List<String>): Result<List<GroupDTO>> {
     return try {
-      groupService.getGroupsForUser(userId).run {
+      groupService.getGroupsForUser(groupId).run {
         if (isSuccessful && body() != null) {
           Timber.i("Successfully fetched groups from server.")
           Success(body()!!)

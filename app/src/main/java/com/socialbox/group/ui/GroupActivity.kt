@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -50,7 +49,7 @@ class GroupActivity : AppCompatActivity() {
 
     user = intent.extras?.getParcelable("user") ?: User()
 
-    groupViewModel.getGroupsForUser(user.id!!)
+    groupViewModel.getGroupsForUser(user.groupsId!!.toList())
     getGroups()
 
     groupAdapter = GroupAdapter(context = this, user)
@@ -66,7 +65,7 @@ class GroupActivity : AppCompatActivity() {
     emptyText.visibility = View.VISIBLE
 
     newMovieButton.setOnClickListener {
-      AddMovieDialog(viewModel = groupViewModel, userId = user.id!!).show(
+      AddMovieDialog(viewModel = groupViewModel, userId = user.id!!, groupIds = user.groupsId!!).show(
         supportFragmentManager.beginTransaction(), "MovieDialog"
       )
     }
@@ -147,6 +146,7 @@ class GroupActivity : AppCompatActivity() {
         groupAdapter.groupList.addAll(groups)
         groupAdapter.notifyDataSetChanged()
       } else {
+        Timber.i("No groups present for the user")
         recyclerView.visibility = View.GONE
         emptyText.visibility = View.VISIBLE
       }

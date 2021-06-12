@@ -1,6 +1,7 @@
 package com.socialbox.group.ui
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.dto.GroupDTO
@@ -52,11 +54,16 @@ class GroupAdapter(
 
     holder.itemView.setOnClickListener {
       Timber.i("Opening groups ${group.groupName}")
+      val intent = Intent(context, GroupDetailsActivity::class.java)
+      intent.putExtra("groupId", group.groupId)
+      context.startActivity(intent)
     }
 
     holder.groupName.text = group.groupName
     holder.memberCount.text = String.format(holder.memberCount.text.toString(), group.memberCount)
-    Picasso.get().load(group.groupPhotoURL).into(holder.image)
+
+    // Todo: Set image later
+    // Picasso.get().load(group.groupPhotoURL).into(holder.image)
   }
 
   override fun getItemCount(): Int = this.groupList.size

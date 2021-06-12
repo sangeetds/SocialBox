@@ -13,12 +13,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.socialbox.R
 import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
-import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 class AddMovieDialog(
   private val viewModel: GroupViewModel,
-  private val userId: String
+  private val userId: String,
+  private val groupIds: Set<String>
 ) : DialogFragment() {
 
   private var dialogView: View? = null
@@ -44,8 +44,9 @@ class AddMovieDialog(
       Timber.i("New Group $groupName formed")
       val group = Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
       viewModel.addGroup(group)
+      viewModel.getGroupsForUser(groupIds.toList())
       val intent = Intent(context, GroupDetailsActivity::class.java)
-      intent.putExtra("group", group)
+      intent.putExtra("groupId", group.groupId)
       startActivity(intent)
       dismiss()
     }

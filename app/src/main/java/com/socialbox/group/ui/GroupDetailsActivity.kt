@@ -35,14 +35,14 @@ class GroupDetailsActivity : AppCompatActivity() {
     recyclerView.setHasFixedSize(true)
     recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-    val group = intent.getParcelableExtra<Group>("group")
-    groupViewModel.getGroup(group!!.groupId)
-    supportActionBar?.title = group.groupName
+    val groupId = intent.getStringExtra("groupId")
+    groupViewModel.getGroup(groupId!!)
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
-      if (groupDetails.groupMovieList.isNotEmpty()) {
+      supportActionBar?.title = groupDetails.groupName
+      if (groupDetails.groupMovieList?.isNotEmpty() == true) {
         moviesAdapter.cardList = groupDetails.groupMovieList
         moviesAdapter.notifyDataSetChanged()
       }
