@@ -26,22 +26,21 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
   fun login(user: User) = viewModelScope.launch {
     Timber.i("Making request to the server for user: $user")
-    loginRepository.login(user).collect { result ->
-      _loginResult.value = if (result is Result.Success) {
-        LoginResult(success = result.data)
-      } else {
-        LoginResult(error = R.string.login_failed)
-      }
+    val result = loginRepository.login(user)
+    _loginResult.value = if (result is Result.Success) {
+      LoginResult(success = result.data)
+    } else {
+      LoginResult(error = R.string.login_failed)
     }
   }
 
   fun loginDataChanged(username: String, password: String) {
-    if (!isEmail(username)) {
-      _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+  _loginForm.value = if (!isEmail(username)) {
+     LoginFormState(usernameError = R.string.invalid_username)
     } else if (!isPasswordValid(password)) {
-      _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+      LoginFormState(passwordError = R.string.invalid_password)
     } else {
-      _loginForm.value = LoginFormState(isDataValid = true)
+      LoginFormState(isDataValid = true)
     }
   }
 

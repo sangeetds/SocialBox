@@ -1,6 +1,6 @@
 package com.socialbox.di
 
-import com.socialbox.group.data.MovieService
+import com.socialbox.group.data.service.MovieService
 import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.service.UserService
 import com.squareup.moshi.Moshi

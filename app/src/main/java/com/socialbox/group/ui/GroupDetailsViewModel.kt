@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.socialbox.group.data.MovieRepository
 import com.socialbox.group.data.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,15 +18,12 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
   val movieState: LiveData<List<Movie>> = _movieState
 
   fun getMovies(groupId: String) = viewModelScope.launch {
-    movieRepository.getMovies(groupId).collect {
-      _movieState.value = it
-    }
+    _movieState.value = movieRepository.getMovies(groupId)
   }
 
   fun getAllMovies() = viewModelScope.launch {
-    movieRepository.getAllMovies().collect {
-      Timber.i("Successfully fetched ${it.joinToString (",") { m -> m.movieName }}")
-      _movieState.value = it
-    }
+    val allMovies = movieRepository.getAllMovies()
+    Timber.i("Successfully fetched ${allMovies.joinToString(",") { m -> m.movieName }}")
+    _movieState.value = allMovies
   }
 }

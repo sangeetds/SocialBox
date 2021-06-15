@@ -2,7 +2,6 @@ package com.socialbox.login.ui.login
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -25,8 +24,8 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.socialbox.R
+import com.socialbox.R.drawable
 import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
@@ -49,6 +48,32 @@ class LoginActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.login_activity_layout)
 
+    val mGoogleSignInClient = googleSignInClient()
+
+    username = findViewById(R.id.input_username)
+    password = findViewById(R.id.input_password)
+    loginButton = findViewById(R.id.btn_login)
+    googleLoginButton = findViewById(R.id.sign_in_button)
+    appImage = findViewById(R.id.app_image)
+    progressIndicator = findViewById(R.id.loading_icon)
+
+    darkModeConfigure()
+    setUpObserver()
+    setUpButtons(mGoogleSignInClient)
+  }
+
+  private fun darkModeConfigure() {
+    when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+      Configuration.UI_MODE_NIGHT_YES -> {
+        Picasso.get().load(drawable.app_logo_dark).into(appImage)
+      }
+      Configuration.UI_MODE_NIGHT_NO -> {
+        Picasso.get().load(drawable.app_logo).into(appImage)
+      }
+    }
+  }
+
+  private fun googleSignInClient(): GoogleSignInClient {
     val gso = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
       .requestId()
       .requestEmail()
@@ -62,25 +87,7 @@ class LoginActivity : AppCompatActivity() {
       intent.putExtra("user", user)
       startActivity(intent)
     }
-
-    username = findViewById(R.id.input_username)
-    password = findViewById(R.id.input_password)
-    loginButton = findViewById(R.id.btn_login)
-    googleLoginButton = findViewById(R.id.sign_in_button)
-    appImage = findViewById(R.id.app_image)
-    progressIndicator = findViewById(R.id.loading_icon)
-
-    when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-      Configuration.UI_MODE_NIGHT_YES -> {
-        Picasso.get().load(R.drawable.app_logo_dark).into(appImage)
-      }
-      Configuration.UI_MODE_NIGHT_NO -> {
-        Picasso.get().load(R.drawable.app_logo).into(appImage)
-      }
-    }
-
-    setUpObserver()
-    setUpButtons(mGoogleSignInClient)
+    return mGoogleSignInClient
   }
 
   private fun setUpObserver() {
@@ -88,11 +95,13 @@ class LoginActivity : AppCompatActivity() {
       val loginState = it ?: return@Observer
       loginButton.isEnabled = loginState.isDataValid
 
-      loginState.usernameError?.let {
-        username.error = getString(loginState.usernameError)
-      }
-      loginState.passwordError?.let {
-        password.error = getString(loginState.passwordError)
+      loginState.apply {
+        usernameError?.let {
+          username.error = getString(usernameError)
+        }
+        passwordError?.let {
+          password.error = getString(passwordError)
+        }
       }
     })
 
@@ -100,32 +109,28 @@ class LoginActivity : AppCompatActivity() {
       val loginResult = it ?: return@Observer
       Timber.i("Change in login result state.")
 
-      loginResult.error?.let {
-        Timber.e("Login not successful")
-        showLoginFailed(loginResult.error)
+      loginResult.apply {
+        error?.let {
+          Timber.e("Login not successful")
+          showLoginFailed(error)
+        }
+        success?.let {
+          Timber.i("Successfully logged in")
+          updateUiWithUser(success)
+        }
+        setResult(RESULT_OK)
       }
-      loginResult.success?.let {
-        Timber.i("Successfully logged in")
-        updateUiWithUser(loginResult.success)
-      }
-      setResult(RESULT_OK)
     })
   }
 
   private fun setUpButtons(mGoogleSignInClient: GoogleSignInClient) {
     username.doOnTextChanged { text, _, _, _ ->
-      loginViewModel.loginDataChanged(
-        text.toString(),
-        password.text.toString()
-      )
+      loginViewModel.loginDataChanged(text.toString(), password.text.toString())
     }
 
     password.apply {
       doOnTextChanged { text, _, _, _ ->
-        loginViewModel.loginDataChanged(
-          username.text.toString(),
-          text.toString()
-        )
+        loginViewModel.loginDataChanged(username.text.toString(), text.toString())
       }
 
       setOnEditorActionListener { _, actionId, _ ->
@@ -133,13 +138,8 @@ class LoginActivity : AppCompatActivity() {
           EditorInfo.IME_ACTION_DONE -> {
             progressIndicator.visibility = View.VISIBLE
             Timber.i("User requested log in")
-            // updateUiWithUser(User(id = "id"))
             loginViewModel.login(
-              User(
-                userEmail = username.text.toString(),
-                userPassword = password.text.toString()
-              )
-            )
+              User(userEmail = username.text.toString(), userPassword = password.text.toString()))
           }
         }
         false
@@ -151,12 +151,8 @@ class LoginActivity : AppCompatActivity() {
       Timber.i("User requested log in")
       loginButton.isEnabled = false
       Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_SHORT).show()
-      // updateUiWithUser(User(id = "someId"))
       loginViewModel.login(
-        User(
-          userEmail = username.text.toString(),
-          userPassword = password.text.toString()
-        )
+        User(userEmail = username.text.toString(), userPassword = password.text.toString())
       )
     }
 
@@ -180,11 +176,7 @@ class LoginActivity : AppCompatActivity() {
     val displayName = model.userEmail
     Timber.i("Login successful for $model")
 
-    Toast.makeText(
-      applicationContext,
-      "$welcome $displayName",
-      Toast.LENGTH_LONG
-    ).show()
+    Toast.makeText(applicationContext, "$welcome $displayName", Toast.LENGTH_LONG).show()
 
     Timber.i("Starting HomeScreenActivity")
     val songsActivity = Intent(this, GroupActivity::class.java)
@@ -203,7 +195,7 @@ class LoginActivity : AppCompatActivity() {
   override fun onActivityResult(
     requestCode: Int,
     resultCode: Int,
-    data: Intent?
+    data: Intent?,
   ) {
     super.onActivityResult(requestCode, resultCode, data)
 

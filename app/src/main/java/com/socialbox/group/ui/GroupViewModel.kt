@@ -9,7 +9,6 @@ import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.Result.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,11 +22,10 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   val groupState: LiveData<Group> = _groupState
 
   fun getGroupsForUser(groupId: List<String>) = viewModelScope.launch {
-    groupRepository.getGroupsForUser(groupId).collect { groups ->
-      _groupListState.value =
-        if (groups is Success) groups.data
-        else listOf()
-    }
+    val groups = groupRepository.getGroupsForUser(groupId)
+    _groupListState.value =
+      if (groups is Success) groups.data
+      else listOf()
   }
 
   fun addGroup(group: Group) = viewModelScope.launch {
@@ -35,10 +33,9 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun getGroup(groupId: String) = viewModelScope.launch {
-    groupRepository.getGroup(groupId).collect { result ->
-      if (result is Success) {
-        _groupState.value = result.data
-      }
+    val result = groupRepository.getGroup(groupId)
+    if (result is Success) {
+      _groupState.value = result.data
     }
   }
 }

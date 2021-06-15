@@ -1,19 +1,13 @@
 package com.socialbox.group.data
 
-import com.socialbox.group.data.model.Movie
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.socialbox.group.data.service.MovieService
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val movieService: MovieService) {
 
-  fun getMovies(groupId: String): Flow<List<Movie>> = flow {
-    emit(fetchMovies(groupId))
-  }
-
-  private suspend fun fetchMovies(groupId: String): List<Movie> =
+  suspend fun getMovies(groupId: String) =
     try {
       movieService.getMovies(groupId).run {
         body()!!
@@ -23,11 +17,7 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
       listOf()
     }
 
-  fun getAllMovies() = flow {
-    emit(fetchAllMovies())
-  }
-
-  private suspend fun fetchAllMovies() =
+  suspend fun getAllMovies() =
     try {
       movieService.getAllMovies().run {
         body()!!

@@ -1,4 +1,4 @@
-package com.socialbox.group.data
+package com.socialbox.group.data.service
 
 import com.socialbox.group.data.model.Movie
 import retrofit2.Response

@@ -4,7 +4,9 @@ import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
 import com.socialbox.login.data.model.User
 import com.socialbox.login.data.service.UserService
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -14,11 +16,7 @@ import javax.inject.Inject
  */
 class LoginRepository @Inject constructor(private val userService: UserService) {
 
-  fun login(user: User) = flow {
-    emit(loginUser(user))
-  }
-
-  private suspend fun loginUser(user: User): Result<User> =
+  suspend fun login(user: User) =
     try {
       userService.loginUser(user = user).run {
         when {
@@ -28,7 +26,7 @@ class LoginRepository @Inject constructor(private val userService: UserService) 
           }
           else -> {
             Timber.e("Error while logging in with error: ${errorBody()}")
-            Error(Exception(errorBody().toString()))
+            Error(Exception(errorBody()?.stringSuspending()))
           }
         }
       }
@@ -36,4 +34,8 @@ class LoginRepository @Inject constructor(private val userService: UserService) 
       Timber.e("Error while logging in with error: $exception")
       Error(Exception("Server Down. Please try again."))
     }
+
+  @Suppress("BlockingMethodInNonBlockingContext")
+  suspend fun ResponseBody.stringSuspending() =
+    withContext(Dispatchers.IO) { string() }
 }
