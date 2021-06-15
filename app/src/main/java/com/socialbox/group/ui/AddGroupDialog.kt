@@ -15,7 +15,7 @@ import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
 import timber.log.Timber
 
-class AddMovieDialog(
+class AddGroupDialog(
   private val viewModel: GroupViewModel,
   private val userId: String,
   private val groupIds: Set<String>
@@ -37,7 +37,7 @@ class AddMovieDialog(
     savedInstanceState: Bundle?
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(layout.add_movie_dialog, container, false)
+    val inflate = inflater.inflate(layout.add_group_dialog, container, false)
     val createNewGroupButton = inflate.findViewById<MaterialButton>(R.id.add_movie)
     val groupName = inflate.findViewById<EditText>(R.id.group_name)
     createNewGroupButton.setOnClickListener {

@@ -39,4 +39,6 @@
   <string name="group_settings">Group Settings</string>
   <string name="shared_movie_lists_with_you">Shared Movie Lists With You</string>
   <string name="app_settings">App Settings</string>
+  <string name="select_movie_from_your_collection">Select Movie From Your Collection</string>
+  <string name="add_movies">Add Movies</string>
 </resources>
