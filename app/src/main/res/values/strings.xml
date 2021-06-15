@@ -41,4 +41,6 @@
   <string name="app_settings">App Settings</string>
   <string name="select_movie_from_your_collection">Select Movie From Your Collection</string>
   <string name="add_movies">Add Movies</string>
+  <string name="add_movie_from_collection">Add Movies From Collection</string>
+  <string name="search_new_movie">Search and Add</string>
 </resources>
