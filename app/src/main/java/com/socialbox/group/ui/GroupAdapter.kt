@@ -20,7 +20,7 @@ class GroupAdapter(val context: Context, val user: User?) :
   ListAdapter<GroupDTO, SongSearchViewHolder>(GroupItemDiffCallback()) {
 
   class SongSearchViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
-    val image: ImageView = cardView.findViewById(R.id.shapeableImageView)
+    val image: ImageView = cardView.findViewById(R.id.user_movie_image)
     val groupName: TextView = cardView.findViewById(R.id.group_name)
     val memberCount: TextView = cardView.findViewById(R.id.members)
   }

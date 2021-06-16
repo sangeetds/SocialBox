@@ -20,7 +20,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     val image: ImageView = cardView.findViewById(R.id.movie_image)
     val name: TextView = cardView.findViewById(R.id.movie_name)
     val ratings: TextView = cardView.findViewById(R.id.movie_rating)
-    val addedBy: TextView = cardView.findViewById(R.id.movie_added_by)
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +35,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     Timber.i("Binding ${movie.movieName}")
     holder.name.text = movie?.movieName
     holder.ratings.text = "${movie.movieRating}/5.0"
-    holder.addedBy.text = "Added by: "
   }
 
   override fun getItemCount() = movies.size

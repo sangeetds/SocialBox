@@ -43,4 +43,8 @@
   <string name="add_movies">Add Movies</string>
   <string name="add_movie_from_collection">Add Movies From Collection</string>
   <string name="search_new_movie">Search and Add</string>
+  <string name="movie_small_image">movie small image</string>
+  <string name="this_can_be_a_big_movie_name_lets_see_how_it_looks_like_because_there_are_a_lot_of_comstraints">This can be a big movie name lets see how it looks like because there are a lot of comstraints</string>
+  <string name="s_selected">\t %s selected</string>
+  <string name="back_button">Back Button</string>
 </resources>

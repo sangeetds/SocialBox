@@ -29,7 +29,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+        app:layout_constraintStart_toEndOf="@+id/user_movie_image"
         app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
@@ -41,11 +41,11 @@
         android:fontFamily="@font/work_sans_light"
         android:text="@string/s_members"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+        app:layout_constraintStart_toEndOf="@+id/user_movie_image"
         app:layout_constraintTop_toBottomOf="@+id/group_name"
         />
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView"
+        android:id="@+id/user_movie_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"

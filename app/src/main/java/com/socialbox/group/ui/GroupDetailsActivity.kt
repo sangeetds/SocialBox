@@ -7,11 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialActionItem.Builder
 import com.leinardi.android.speeddial.SpeedDialView
 import com.socialbox.R
@@ -72,8 +69,7 @@ class GroupDetailsActivity : AppCompatActivity() {
           id.fab_action1 -> {
             AddMovieDialog().show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
           }
-          id.fab_action2 -> {
-          }
+          id.fab_action2 -> { }
         }
         false
       })
