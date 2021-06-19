@@ -2,6 +2,7 @@ package com.socialbox.group.data.service
 
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
+import com.socialbox.group.data.model.GroupMovie
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,4 +20,7 @@ interface GroupService {
 
   @GET("/group/{id}")
   suspend fun getGroup(@Path("id") groupId: String): Response<Group>
+
+  @GET("/group/movie")
+  suspend fun saveGroupMovies(@Body groupMovies: List<GroupMovie>): Response<GroupMovie>
 }

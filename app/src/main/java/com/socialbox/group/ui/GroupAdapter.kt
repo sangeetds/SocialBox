@@ -46,6 +46,7 @@ class GroupAdapter(val context: Context, val user: User?) :
       Timber.i("Opening groups ${group.groupName}")
       val intent = Intent(context, GroupDetailsActivity::class.java)
       intent.putExtra("groupId", group.groupId)
+      intent.putExtra("userId", user?.id ?: "")
       context.startActivity(intent)
     }
 

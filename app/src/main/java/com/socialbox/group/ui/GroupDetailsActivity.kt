@@ -1,7 +1,5 @@
 package com.socialbox.group.ui
 
-import android.content.res.Resources
-import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import com.leinardi.android.speeddial.SpeedDialActionItem.Builder
 import com.leinardi.android.speeddial.SpeedDialView
 import com.socialbox.R
@@ -19,6 +16,7 @@ import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.movie.ui.AddMovieDialog
+import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -26,7 +24,8 @@ import timber.log.Timber
 class GroupDetailsActivity : AppCompatActivity() {
 
   private val groupViewModel: GroupViewModel by viewModels()
-  private val movieViewModel: MovieViewModel by viewModels()
+  private val groupDetailsViewModel: GroupDetailsViewModel by viewModels()
+  private val userMovieViewModel: UserMovieViewModel by viewModels()
   private lateinit var mToolbar: MaterialToolbar
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
@@ -72,7 +71,13 @@ class GroupDetailsActivity : AppCompatActivity() {
             return@OnActionSelectedListener true // false will close it without animation
           }
           id.fab_action1 -> {
-            AddMovieDialog().show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
+            val userId = intent.getStringExtra("userId") ?: ""
+            val groupId = intent.getStringExtra("groupId") ?: ""
+            val addMovieDialog = AddMovieDialog(userMovieViewModel, userId, groupId)
+            addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
+            addMovieDialog.dialog?.setOnDismissListener {
+              groupViewModel.getGroup(groupId)
+            }
           }
           id.fab_action2 -> { }
         }
@@ -83,9 +88,9 @@ class GroupDetailsActivity : AppCompatActivity() {
   private fun setUpObservable() {
     val groupId = intent.getStringExtra("groupId")
     groupViewModel.getGroup(groupId!!)
-    movieViewModel.getAllMovies()
+    groupDetailsViewModel.getAllMovies()
 
-    movieViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
+    groupDetailsViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
       val movie = it ?: return@Observer
       Timber.i("Adding movies to the adapter: ${movie.joinToString(",") { m -> m.movieName }}")
       moviesAdapter.movies = movie

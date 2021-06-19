@@ -12,7 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
+class GroupDetailsViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
 
   private val _movieState = MutableLiveData<List<Movie>>()
   val movieState: LiveData<List<Movie>> = _movieState

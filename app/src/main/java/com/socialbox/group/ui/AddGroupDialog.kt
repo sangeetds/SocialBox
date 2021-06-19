@@ -42,11 +42,13 @@ class AddGroupDialog(
     val groupName = inflate.findViewById<EditText>(R.id.group_name)
     createNewGroupButton.setOnClickListener {
       Timber.i("New Group $groupName formed")
-      val group = Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
+      val group =
+        Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
       viewModel.addGroup(group)
       viewModel.getGroupsForUser(groupIds.toList())
       val intent = Intent(context, GroupDetailsActivity::class.java)
       intent.putExtra("groupId", group.groupId)
+      intent.putExtra("userId", userId)
       startActivity(intent)
       dismiss()
     }

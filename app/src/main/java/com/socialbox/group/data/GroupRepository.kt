@@ -1,6 +1,7 @@
 package com.socialbox.group.data
 
 import com.socialbox.group.data.model.Group
+import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
 import com.socialbox.login.data.Result.Error
 import com.socialbox.login.data.Result.Success
@@ -31,9 +32,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception(errorString))
     }
 
-  suspend fun createGroup(group: Group) {
-    groupService.saveGroup(group)
-  }
+  suspend fun createGroup(group: Group) = groupService.saveGroup(group)
 
   suspend fun getGroup(groupId: String) =
     try {
@@ -48,7 +47,9 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception("Error fetching group details."))
     }
 
+  suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) = groupService.saveGroupMovies(groupMovies)
+
   @Suppress("BlockingMethodInNonBlockingContext")
-  suspend fun ResponseBody.stringSuspending() =
+  private suspend fun ResponseBody.stringSuspending() =
     withContext(Dispatchers.IO) { string() }
 }

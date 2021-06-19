@@ -25,7 +25,7 @@ class UserMovieListAdapter(
 ) :
   ListAdapter<UserMovieDTO, UserMovieListAdapter.MovieHolder>(UserMovieDiffCallback()) {
 
-  val selectedItemsList: MutableSet<String> = mutableSetOf()
+  val selectedItemsList: MutableSet<UserMovieDTO> = mutableSetOf()
   val selectedItems: SparseBooleanArray = SparseBooleanArray()
   private val animationItemsIndex: SparseBooleanArray = SparseBooleanArray()
 
@@ -120,12 +120,12 @@ class UserMovieListAdapter(
     currentSelectedIndex = pos
     if (selectedItems[pos, false]) {
       selectedItems.delete(pos)
-      selectedItemsList.remove(getItem(pos).id)
+      selectedItemsList.remove(getItem(pos))
       animationItemsIndex.delete(pos)
       updateCount(selectedItems.size)
     } else {
       selectedItems.put(pos, true)
-      selectedItemsList.add(getItem(pos).id)
+      selectedItemsList.add(getItem(pos))
       animationItemsIndex.put(pos, true)
       updateCount(selectedItems.size)
     }
