@@ -1,22 +1,26 @@
 package com.socialbox.movie.data
 
-import com.socialbox.movie.data.service.UserMovieService
+import com.socialbox.login.data.service.UserService
+import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-class UserMovieRepository @Inject constructor(private val userMovieService: UserMovieService) {
+class UserMovieRepository @Inject constructor(private val userService: UserService) {
 
   suspend fun getUserMovies(id: String) =
     try {
-      userMovieService.getUserMovies(id = id).run {
+      userService.getUserMovies(id = id).run {
         if (isSuccessful && body() != null) {
+          Timber.i("Successfully fetched movies.")
           body()!!
         }
         else {
+          Timber.d("Found no movies.")
           listOf()
         }
       }
     } catch (exception: SocketTimeoutException) {
+      Timber.e("Failed to connect to the server")
       listOf()
     }
 }

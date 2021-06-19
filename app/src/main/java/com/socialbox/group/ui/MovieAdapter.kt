@@ -26,14 +26,12 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
       .inflate(R.layout.group_movie_card_layout, parent, false)
-    Timber.i("Inflating card view.")
     return ViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val movie = movies[position]
-    Timber.i("Binding ${movie.movieName}")
-    holder.name.text = movie?.movieName
+    holder.name.text = movie.movieName
     holder.ratings.text = "${movie.movieRating}/5.0"
   }
 

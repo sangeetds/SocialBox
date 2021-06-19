@@ -25,7 +25,7 @@ class LoginRepository @Inject constructor(private val userService: UserService) 
             Success(body()!!)
           }
           else -> {
-            Timber.e("Error while logging in with error: ${errorBody()}")
+            Timber.e("Error while logging in with error: ${errorBody()?.stringSuspending()}")
             Error(Exception(errorBody()?.stringSuspending()))
           }
         }

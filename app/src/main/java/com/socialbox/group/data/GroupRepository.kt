@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class GroupRepository @Inject constructor(private val groupService: GroupService) {
 
-  private val errorString = "Error while loading groups"
+  private val errorString = "Error in connecting to the server"
 
   suspend fun getGroupsForUser(groupId: List<String>) =
     try {
@@ -38,12 +38,15 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
     try {
       groupService.getGroup(groupId).run {
         if (isSuccessful && body() != null) {
+          Timber.i("Successfully fetched group: ${body()!!.groupId}")
           Success(body()!!)
         } else {
+          Timber.d("Error in fetching group")
           Error(Exception(errorBody()?.stringSuspending()))
         }
       }
     } catch (exception: SocketTimeoutException) {
+      Timber.d(errorString)
       Error(Exception("Error fetching group details."))
     }
 

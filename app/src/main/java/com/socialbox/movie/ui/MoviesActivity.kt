@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.socialbox.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
 
   private val movieViewModel: MovieViewModel by viewModels()
@@ -27,10 +29,10 @@ class MoviesActivity : AppCompatActivity() {
     latestMovieListAdapter = MovieListAdapter()
 
     personalMovieRecyclerView.adapter = personalMovieListAdapter
-    personalMovieRecyclerView.layoutManager = LinearLayoutManager(this)
+    personalMovieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
     personalMovieRecyclerView.setHasFixedSize(true)
     latestMovieRecyclerView.adapter = latestMovieListAdapter
-    latestMovieRecyclerView.layoutManager = LinearLayoutManager(this)
+    latestMovieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
     latestMovieRecyclerView.setHasFixedSize(true)
 
     browseLatestMovies.setOnClickListener {

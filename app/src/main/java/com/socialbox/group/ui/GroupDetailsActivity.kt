@@ -92,7 +92,6 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     groupDetailsViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
       val movie = it ?: return@Observer
-      Timber.i("Adding movies to the adapter: ${movie.joinToString(",") { m -> m.movieName }}")
       moviesAdapter.movies = movie
       moviesAdapter.notifyDataSetChanged()
     })

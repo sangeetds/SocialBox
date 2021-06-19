@@ -24,6 +24,6 @@ class UserMovieViewModel @Inject constructor(private val userMovieRepository: Us
   }
 
   fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {
-    val result = groupRepository.saveGroupMovies(groupMovies)
+    groupRepository.saveGroupMovies(groupMovies)
   }
 }

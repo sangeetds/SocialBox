@@ -8,9 +8,9 @@
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/personalMoviesRecycler"
       android:layout_width="match_parent"
-      android:orientation="horizontal"
-      android:layout_height="150dp"
+      android:layout_height="180dp"
       android:layout_margin="10dp"
+      android:orientation="horizontal"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/materialTextView"
@@ -19,10 +19,10 @@
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/latestMoviesRecycler"
       android:layout_width="match_parent"
-      android:layout_height="150dp"
+      android:layout_height="180dp"
       android:layout_margin="10dp"
-      android:translationY="40dp"
       android:orientation="horizontal"
+      android:translationY="40dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/personalMoviesRecycler"
@@ -44,48 +44,14 @@
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
   </com.google.android.material.appbar.AppBarLayout>
-  <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/materialTextView"
+  <com.google.android.material.button.MaterialButton
       android:layout_width="match_parent"
-      android:layout_marginTop="10dp"
-      android:layout_marginStart="10dp"
-      android:layout_marginEnd="120dp"
-      android:layout_marginBottom="10dp"
-      android:layout_height="wrap_content"
-      android:text="@string/your_movies_text"
-      android:padding="4dp"
-      android:fontFamily="@font/r_b_m_b"
-      android:textSize="18sp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
-      />
-  <com.google.android.material.chip.Chip
-      android:id="@+id/browsePersonalMovies"
-      android:layout_width="100dp"
-      android:layout_height="wrap_content"
-      android:text="@string/browse_all"
-      android:textSize="14sp"
-      android:translationY="6dp"
+      android:layout_height="55dp"
+      android:text="@string/browse_groups"
+      android:translationY="5dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/materialTextView"
-      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
-      />
-
-  <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/latest_movies_text"
-      android:layout_width="match_parent"
-      android:layout_marginTop="10dp"
-      android:layout_marginStart="10dp"
-      android:layout_marginEnd="120dp"
-      android:layout_marginBottom="10dp"
-      android:layout_height="wrap_content"
-      android:text="@string/latest_movies"
-      android:padding="4dp"
-      android:fontFamily="@font/r_b_m_b"
-      android:textSize="18sp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/personalMoviesRecycler"
       />
   <com.google.android.material.chip.Chip
       android:id="@+id/browseLatestMovies"
@@ -100,14 +66,48 @@
       app:layout_constraintStart_toEndOf="@+id/latest_movies_text"
       />
 
-  <com.google.android.material.button.MaterialButton
+  <com.google.android.material.chip.Chip
+      android:id="@+id/browsePersonalMovies"
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:text="@string/browse_all"
+      android:textSize="14sp"
+      android:translationY="6dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/materialTextView"
+      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+      />
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/materialTextView"
       android:layout_width="match_parent"
-      android:layout_height="55dp"
-      android:text="@string/browse_groups"
-      android:translationY="5dp"
-      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:layout_marginEnd="120dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="10dp"
+      android:fontFamily="@font/r_b_m_b"
+      android:padding="4dp"
+      android:text="@string/your_movies_text"
+      android:textSize="18sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+      />
+
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/latest_movies_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:layout_marginEnd="120dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="10dp"
+      android:fontFamily="@font/r_b_m_b"
+      android:padding="4dp"
+      android:text="@string/latest_movies"
+      android:textSize="18sp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/personalMoviesRecycler"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

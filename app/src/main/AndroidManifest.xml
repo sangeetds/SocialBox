@@ -36,6 +36,9 @@
     <activity
         android:name=".group.ui.GroupActivity"
         android:theme="@style/Theme.SocialBox.NoActionBar" />
+    <activity
+        android:name=".movie.ui.MoviesActivity"
+        android:theme="@style/Theme.SocialBox.NoActionBar" />
 
     <meta-data
         android:name="preloaded_fonts"
