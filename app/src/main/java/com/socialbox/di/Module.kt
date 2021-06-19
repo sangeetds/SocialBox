@@ -20,7 +20,7 @@ import javax.inject.Singleton
 class Module {
 
   @Provides
-  fun getBaseUrl() = "https://murmuring-spire-01887.herokuapp.com"
+  fun getBaseUrl() = "https://social-boxx.herokuapp.com"
 
   @Provides
   @Singleton

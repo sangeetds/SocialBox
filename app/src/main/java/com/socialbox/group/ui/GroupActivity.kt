@@ -18,11 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
 import com.socialbox.login.data.model.User
+import com.socialbox.movie.ui.MoviesActivity
 import com.socialbox.user.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -37,14 +39,14 @@ class GroupActivity : AppCompatActivity() {
   private lateinit var recyclerView: RecyclerView
   private lateinit var notificationBell: MenuItem
   private lateinit var userIcon: MenuItem
-  private lateinit var mToolbar: MaterialToolbar
+  private lateinit var toolbar: MaterialToolbar
   private lateinit var user: User
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.group_activity_layout)
-    mToolbar = findViewById(id.topAppBar)
-    setSupportActionBar(mToolbar)
+    toolbar = findViewById(id.topAppBar)
+    setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
     user = intent.extras?.getParcelable("user") ?: User()
@@ -69,51 +71,23 @@ class GroupActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction(), "MovieDialog"
       )
     }
+
+    findViewById<MaterialButton>(id.movies_button).setOnClickListener {
+      val intent = Intent(this, MoviesActivity::class.java)
+      intent.putExtra("user", user)
+      startActivity(intent)
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(top_app_bar, menu)
-    val searchView: SearchView = menu!!.findItem(id.search).actionView as SearchView
-    val userView: MenuItem = menu.findItem(id.user)
-    val closeButton = searchView.findViewById<ImageView>(id.search_close_btn)
-    notificationBell = menu.findItem(id.notification)
-    userIcon = menu.findItem(id.user)
-
-    val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-    searchView.setSearchableInfo(
-      searchManager
-        .getSearchableInfo(componentName)
-    )
+    val userView: MenuItem = menu!!.findItem(id.user)
 
     userView.setOnMenuItemClickListener {
       val intent = Intent(this, UserActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
       true
-    }
-
-    searchView.setOnClickListener {
-      TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
-      notificationBell.isVisible = false
-      Timber.i("${notificationBell.isVisible}")
-      userIcon.isVisible = false
-    }
-
-    searchView.queryHint = "Search Groups.."
-    searchView.setOnQueryTextListener(object : OnQueryTextListener {
-      override fun onQueryTextSubmit(query: String): Boolean {
-        return false
-      }
-
-      override fun onQueryTextChange(query: String): Boolean {
-        return false
-      }
-    })
-
-    closeButton.setOnClickListener {
-      notificationBell.isVisible = true
-      notificationBell.isVisible = true
-      searchView.onActionViewCollapsed()
     }
 
     return true

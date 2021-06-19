@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/personalMoviesRecycler"
+      android:layout_width="match_parent"
+      android:orientation="horizontal"
+      android:layout_height="150dp"
+      android:layout_margin="10dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/latestMoviesRecycler"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:layout_margin="10dp"
+      android:translationY="40dp"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/personalMoviesRecycler"
+      />
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/app_bar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      >
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/material_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="SocialBox"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        />
+  </com.google.android.material.appbar.AppBarLayout>
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/materialTextView"
+      android:layout_width="match_parent"
+      android:layout_marginTop="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="120dp"
+      android:layout_marginBottom="10dp"
+      android:layout_height="wrap_content"
+      android:text="@string/your_movies_text"
+      android:padding="4dp"
+      android:fontFamily="@font/r_b_m_b"
+      android:textSize="18sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+      />
+  <com.google.android.material.chip.Chip
+      android:id="@+id/browsePersonalMovies"
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:text="@string/browse_all"
+      android:textSize="14sp"
+      android:translationY="6dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/materialTextView"
+      app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+      />
+
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/latest_movies_text"
+      android:layout_width="match_parent"
+      android:layout_marginTop="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="120dp"
+      android:layout_marginBottom="10dp"
+      android:layout_height="wrap_content"
+      android:text="Latest Movies"
+      android:padding="4dp"
+      android:fontFamily="@font/r_b_m_b"
+      android:textSize="18sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/personalMoviesRecycler"
+      />
+  <com.google.android.material.chip.Chip
+      android:id="@+id/browseLatestMovies"
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:text="@string/browse_all"
+      android:textSize="14sp"
+      android:translationY="40dp"
+      app:layout_constraintBottom_toTopOf="@+id/latestMoviesRecycler"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.526"
+      app:layout_constraintStart_toEndOf="@+id/latest_movies_text"
+      />
+
+  <com.google.android.material.button.MaterialButton
+      android:layout_width="match_parent"
+      android:layout_height="55dp"
+      android:text="@string/browse_groups"
+      android:translationY="5dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

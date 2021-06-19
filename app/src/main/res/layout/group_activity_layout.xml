@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/constraint_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".group.ui.GroupActivity"
     >
 
+  <TextView
+      android:id="@+id/place_holder"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/pattaya_regular"
+      android:text="@string/make_new_friends_form_a_new_group"
+      android:textSize="20sp"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/group_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="65dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="60dp"
+      android:elevation="2dp"
+      app:layout_constraintBottom_toTopOf="@+id/movies_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+      app:layout_constraintVertical_bias="1.0"
+      />
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBarLayout"
       android:layout_width="match_parent"
@@ -27,35 +57,15 @@
         />
 
   </com.google.android.material.appbar.AppBarLayout>
-
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/group_recycler_view"
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/movies_button"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginBottom="65dp"
-      android:layout_marginEnd="10dp"
-      android:layout_marginStart="10dp"
-      android:layout_marginTop="60dp"
-      android:elevation="2dp"
-      app:layout_constraintBottom_toTopOf="@+id/movies_button"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-      app:layout_constraintVertical_bias="1.0"
-      />
-  <TextView
-      android:id="@+id/place_holder"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/make_new_friends_form_a_new_group"
-      android:fontFamily="@font/pattaya_regular"
-      android:textSize="20sp"
+      android:layout_height="70dp"
+      android:text="@string/your_movies"
+      android:translationY="5dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:visibility="gone"
       />
   <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
       android:id="@+id/new_group_button"
@@ -68,16 +78,6 @@
       android:text="@string/create_new_group"
       app:layout_constraintBottom_toBottomOf="@+id/movies_button"
       app:layout_constraintEnd_toEndOf="parent"
-      />
-  <com.google.android.material.button.MaterialButton
-      android:id="@+id/movies_button"
-      android:layout_width="match_parent"
-      android:layout_height="70dp"
-      android:text="@string/your_movies"
-      android:translationY="5dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
   <string name="group_name_which_can_be_very_big">Group name which can be very big</string>
   <string name="s_members">%s Members</string>
   <string name="login">Login</string>
-  <string name="your_movies">Your Movies</string>
+  <string name="your_movies">Browse Movies</string>
   <string name="create_new_group">Create New Group</string>
   <string name="make_new_friends_form_a_new_group">Make new friends. Form a new group.</string>
   <string name="group_image_placeholder">Group Image Placeholder</string>
@@ -41,10 +41,13 @@
   <string name="app_settings">App Settings</string>
   <string name="select_movie_from_your_collection">Select Movie From Your Collection</string>
   <string name="add_movies">Add Movies</string>
-  <string name="add_movie_from_collection">Add Movies From Collection</string>
+  <string name="add_movie_from_collection">Movies From Collection</string>
   <string name="search_new_movie">Search and Add</string>
   <string name="movie_small_image">movie small image</string>
   <string name="this_can_be_a_big_movie_name_lets_see_how_it_looks_like_because_there_are_a_lot_of_comstraints">This can be a big movie name lets see how it looks like because there are a lot of comstraints</string>
   <string name="s_selected">\t %s selected</string>
   <string name="back_button">Back Button</string>
+  <string name="browse_all">Browse All</string>
+  <string name="your_movies_text">Your Movies</string>
+  <string name="browse_groups">Browse Groups</string>
 </resources>

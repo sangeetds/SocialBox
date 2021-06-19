@@ -1,5 +1,7 @@
 package com.socialbox.group.ui
 
+import android.content.res.Resources
+import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import com.leinardi.android.speeddial.SpeedDialActionItem.Builder
 import com.leinardi.android.speeddial.SpeedDialView
 import com.socialbox.R
@@ -52,12 +55,14 @@ class GroupDetailsActivity : AppCompatActivity() {
     addMovieButton.addActionItem(
       Builder(id.fab_action1, drawable.ic_outline_account_circle_24)
         .setLabel(string.add_movie_from_collection)
-        .setLabelColor(Color.WHITE)
+        .setLabelBackgroundColor(Color.CYAN)
+        .setLabelColor(Color.BLACK)
         .create())
     addMovieButton.addActionItem(
       Builder(id.fab_action2, drawable.ic_baseline_search_24)
         .setLabel(string.search_new_movie)
-        .setLabelColor(Color.WHITE)
+        .setLabelBackgroundColor(Color.CYAN)
+        .setLabelColor(Color.BLACK)
         .create())
     addMovieButton.setOnActionSelectedListener(
       SpeedDialView.OnActionSelectedListener { actionItem ->
@@ -98,7 +103,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.top_app_bar, menu)
+    menuInflater.inflate(R.menu.group_top_app_bar, menu)
     return super.onCreateOptionsMenu(menu)
   }
 }
