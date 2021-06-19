@@ -45,14 +45,14 @@ class AddMovieDialog : DialogFragment() {
     val clearSelection = inflate.findViewById<ImageView>(R.id.clear)
     val addMovieButton: MaterialButton = inflate.findViewById(R.id.addMovieButton)
     val recyclerView: RecyclerView = inflate.findViewById(R.id.movieListRecyclerView)
+
     val updateCount = { count: Int ->
       if (count > 0) {
         addMovieButton.isEnabled = true
         selectedTopHeader.visibility = View.VISIBLE
         clearSelection.visibility = View.VISIBLE
         selectedTopHeader.text = String.format(selectedTopHeader.text.toString(), count)
-      }
-      else {
+      } else {
         addMovieButton.isEnabled = false
         selectedTopHeader.visibility = View.GONE
         clearSelection.visibility = View.GONE
@@ -64,6 +64,7 @@ class AddMovieDialog : DialogFragment() {
     recyclerView.itemAnimator = DefaultItemAnimator()
     recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     recyclerView.adapter = adapter
+    recyclerView.setHasFixedSize(true)
 
     addMovieButton.isEnabled = false
     clearSelection.setOnClickListener {
