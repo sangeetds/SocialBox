@@ -48,8 +48,6 @@ class LoginActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.login_activity_layout)
 
-    val mGoogleSignInClient = googleSignInClient()
-
     username = findViewById(R.id.input_username)
     password = findViewById(R.id.input_password)
     loginButton = findViewById(R.id.btn_login)
@@ -59,15 +57,17 @@ class LoginActivity : AppCompatActivity() {
 
     darkModeConfigure()
     setUpObserver()
-    setUpButtons(mGoogleSignInClient)
+    setUpButtons()
   }
 
   private fun darkModeConfigure() {
     when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
       Configuration.UI_MODE_NIGHT_YES -> {
+        Timber.i("Dark Mode Configured")
         Picasso.get().load(drawable.app_logo_dark).into(appImage)
       }
       Configuration.UI_MODE_NIGHT_NO -> {
+        Timber.i("Day Mode Configured")
         Picasso.get().load(drawable.app_logo).into(appImage)
       }
     }
@@ -82,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
     val account = GoogleSignIn.getLastSignedInAccount(this)
 
     account?.let {
+      Timber.i("User already signed in")
       val user = User(id = it.id, userName = it.displayName, userEmail = it.email)
       val intent = Intent(this, GroupActivity::class.java)
       intent.putExtra("user", user)
@@ -123,7 +124,9 @@ class LoginActivity : AppCompatActivity() {
     })
   }
 
-  private fun setUpButtons(mGoogleSignInClient: GoogleSignInClient) {
+  private fun setUpButtons() {
+    val mGoogleSignInClient = googleSignInClient()
+
     username.doOnTextChanged { text, _, _, _ ->
       loginViewModel.loginDataChanged(text.toString(), password.text.toString())
     }
@@ -157,14 +160,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     googleLoginButton.setOnClickListener {
+      Timber.i("Signing the user through Google sign in.")
       val signInIntent: Intent = mGoogleSignInClient.signInIntent
       startActivityForResult(signInIntent, 1)
     }
   }
 
-  /**
-   * To go back to the screen
-   */
   override fun onBackPressed() {
     Timber.i("User chose to close the screen")
     super.onBackPressed()
@@ -213,7 +214,7 @@ class LoginActivity : AppCompatActivity() {
       loginViewModel.login(user)
       updateUiWithUser(user)
     } catch (e: ApiException) {
-      Timber.e("signInResult:failed code=%s", e.statusCode)
+      Timber.e("signInResult:failed code=%s with message:%s", e.statusCode, e.message)
       showLoginFailed(string.error_google_sign)
     }
   }

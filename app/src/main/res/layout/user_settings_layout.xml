@@ -7,33 +7,6 @@
     tools:context=".user.ui.UserActivity"
     >
 
-  <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/welcome_user"
-      android:layout_width="match_parent"
-      android:layout_height="360dp"
-      android:fontFamily="@font/pattaya_regular"
-      android:paddingTop="80dp"
-      android:gravity="center_horizontal"
-      android:background="#7700FF"
-      android:text="@string/hello_s"
-      android:textSize="36sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-
-  <com.google.android.material.imageview.ShapeableImageView
-      android:id="@+id/user_movie_image"
-      android:layout_width="120dp"
-      android:layout_height="120dp"
-      android:layout_marginTop="144dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:shapeAppearanceOverlay="@style/CornerSize"
-      app:srcCompat="@drawable/app_logo"
-      />
   <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -42,9 +15,9 @@
       android:layout_marginStart="16dp"
       android:layout_marginTop="320dp"
       android:elevation="10dp"
+      app:layout_constraintTop_toTopOf="parent"
       app:strokeColor="#EDE4CC"
       app:strokeWidth="1dp"
-      app:layout_constraintTop_toTopOf="parent"
       >
 
     <TextView
@@ -121,6 +94,21 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
         />
+    <TextView
+        android:id="@+id/logOut"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="300dp"
+        android:elevation="5dp"
+        android:fontFamily="@font/work_sans_light"
+        android:gravity="center_vertical"
+        android:paddingEnd="18dp"
+        android:paddingStart="18dp"
+        android:text="@string/log_out"
+        android:textFontWeight="1000"
+        android:textSize="16sp"
+        app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -153,9 +141,43 @@
         android:layout_marginTop="240dp"
         android:background="#c0c0c0"
         />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="300dp"
+        android:background="#c0c0c0"
+        />
 
   </com.google.android.material.card.MaterialCardView>
+
+  <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/user_movie_image"
+      android:layout_width="120dp"
+      android:layout_height="120dp"
+      android:layout_marginTop="144dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:shapeAppearanceOverlay="@style/CornerSize"
+      app:srcCompat="@drawable/app_logo"
+      />
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/welcome_user"
+      android:layout_width="match_parent"
+      android:layout_height="360dp"
+      android:background="#7700FF"
+      android:fontFamily="@font/pattaya_regular"
+      android:gravity="center_horizontal"
+      android:paddingTop="80dp"
+      android:text="@string/hello_s"
+      android:textSize="36sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

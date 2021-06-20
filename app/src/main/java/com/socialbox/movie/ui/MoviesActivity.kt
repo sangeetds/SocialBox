@@ -1,13 +1,16 @@
 package com.socialbox.movie.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.socialbox.R
+import com.socialbox.group.ui.GroupActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +28,7 @@ class MoviesActivity : AppCompatActivity() {
     val latestMovieRecyclerView = findViewById<RecyclerView>(R.id.latestMoviesRecycler)
     val browseLatestMovies = findViewById<Chip>(R.id.browseLatestMovies)
     val browsePersonalMovies = findViewById<Chip>(R.id.browsePersonalMovies)
+    val browseGroup = findViewById<MaterialButton>(R.id.browseGroupsButton)
     personalMovieListAdapter = MovieListAdapter()
     latestMovieListAdapter = MovieListAdapter()
 
@@ -41,6 +45,11 @@ class MoviesActivity : AppCompatActivity() {
 
     browsePersonalMovies.setOnClickListener {
 
+    }
+
+    browseGroup.setOnClickListener {
+      startActivity(Intent(this, GroupActivity::class.java))
+      finish()
     }
 
     setUpObservers()

@@ -18,6 +18,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   suspend fun getGroupsForUser(groupId: List<String>) =
     try {
+      Timber.i("Fetching groups for $groupId")
       groupService.getGroupsForUser(groupId).run {
         if (isSuccessful && body() != null) {
           Timber.i("Successfully fetched groups from server.")
@@ -36,6 +37,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   suspend fun getGroup(groupId: String) =
     try {
+      Timber.i("Fetching group $groupId")
       groupService.getGroup(groupId).run {
         if (isSuccessful && body() != null) {
           Timber.i("Successfully fetched group: ${body()!!.groupId}")

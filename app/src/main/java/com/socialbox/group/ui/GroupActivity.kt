@@ -71,6 +71,7 @@ class GroupActivity : AppCompatActivity() {
       val intent = Intent(this, MoviesActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
+      finish()
     }
   }
 

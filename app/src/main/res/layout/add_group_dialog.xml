@@ -51,6 +51,7 @@
       android:id="@+id/group_placeholder_image"
       android:layout_width="match_parent"
       android:layout_height="200dp"
+      android:translationY="-30dp"
       android:contentDescription="@string/group_image_placeholder"
       android:src="@drawable/gorup_placeholder_photo"
       app:layout_constraintEnd_toEndOf="parent"
