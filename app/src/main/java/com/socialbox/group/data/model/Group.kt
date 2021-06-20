@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Group(
-  val groupId: String = "",
-  val groupName: String,
-  val groupMovieList: List<GroupMovie>? = listOf(),
+  val id: String = "",
+  val name: String,
+  val movieList: List<GroupMovie>? = listOf(),
   val usersId: Set<String>? = setOf(),
   val memberCount: Int,
-  val groupPhotoURL: String? = "",
-  val groupAdminId: String,
+  val photoURL: String? = "",
+  val adminId: String,
 ) : Parcelable

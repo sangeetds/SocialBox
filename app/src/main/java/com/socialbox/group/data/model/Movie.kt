@@ -1,9 +1,9 @@
 package com.socialbox.group.data.model
 
 data class Movie(
-  val movieId: String,
-  val movieName: String,
-  val movieRating: Double = 0.0,
-  val movieReviews: List<String>?,
-  val moviePhotoURL: String?
+  val id: String,
+  val name: String,
+  val rating: Double = 0.0,
+  val reviews: List<String>?,
+  val photoURL: String?
 )
