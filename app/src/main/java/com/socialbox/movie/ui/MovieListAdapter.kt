@@ -32,7 +32,7 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieHolder>(MovieD
     position: Int
   ) {
     val movie = getItem(position)
-    holder.ratings.text = String.format(holder.ratings.text.toString(), movie.movieRating)
+    holder.ratings.text = String.format(holder.ratings.text.toString(), movie.rating)
   }
 }
 

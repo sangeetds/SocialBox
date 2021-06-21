@@ -9,7 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
-import com.google.android.gms.tasks.OnCompleteListener
 import com.socialbox.R
 import com.socialbox.login.MainActivity
 import com.socialbox.login.data.model.User
@@ -23,7 +22,7 @@ class UserActivity : AppCompatActivity() {
     val user = intent.getParcelableExtra<User>("user")
     val userWelcomeString = findViewById<TextView>(R.id.welcome_user)
     val logOutButton = findViewById<TextView>(R.id.logOut)
-    userWelcomeString.text = String.format(userWelcomeString.text.toString(), user?.userName)
+    userWelcomeString.text = String.format(userWelcomeString.text.toString(), user?.name)
 
     logOutButton.setOnClickListener {
       signOut()

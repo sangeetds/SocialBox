@@ -4,14 +4,11 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,11 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.textfield.TextInputEditText
 import com.socialbox.R
 import com.socialbox.R.drawable
+import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
@@ -37,9 +33,6 @@ import timber.log.Timber
 class LoginActivity : AppCompatActivity() {
 
   private val loginViewModel: LoginViewModel by viewModels()
-  private lateinit var username: EditText
-  private lateinit var password: TextInputEditText
-  private lateinit var loginButton: MaterialButton
   private lateinit var appImage: ImageView
   private lateinit var googleLoginButton: SignInButton
   private lateinit var progressIndicator: CircularProgressIndicator
@@ -48,12 +41,9 @@ class LoginActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.login_activity_layout)
 
-    username = findViewById(R.id.input_username)
-    password = findViewById(R.id.input_password)
-    loginButton = findViewById(R.id.btn_login)
-    googleLoginButton = findViewById(R.id.sign_in_button)
-    appImage = findViewById(R.id.app_image)
-    progressIndicator = findViewById(R.id.loading_icon)
+    googleLoginButton = findViewById(id.sign_in_button)
+    appImage = findViewById(id.app_image)
+    progressIndicator = findViewById(id.loading_icon)
 
     darkModeConfigure()
     setUpObserver()
@@ -83,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
     account?.let {
       Timber.i("User already signed in")
-      val user = User(id = it.id, userName = it.displayName, userEmail = it.email)
+      val user = User(id = it.id, name = it.displayName, email = it.email)
       val intent = Intent(this, GroupActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
@@ -92,19 +82,6 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun setUpObserver() {
-    loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-      val loginState = it ?: return@Observer
-      loginButton.isEnabled = loginState.isDataValid
-
-      loginState.apply {
-        usernameError?.let {
-          username.error = getString(usernameError)
-        }
-        passwordError?.let {
-          password.error = getString(passwordError)
-        }
-      }
-    })
 
     loginViewModel.loginResult.observe(this@LoginActivity, Observer {
       val loginResult = it ?: return@Observer
@@ -127,38 +104,6 @@ class LoginActivity : AppCompatActivity() {
   private fun setUpButtons() {
     val mGoogleSignInClient = googleSignInClient()
 
-    username.doOnTextChanged { text, _, _, _ ->
-      loginViewModel.loginDataChanged(text.toString(), password.text.toString())
-    }
-
-    password.apply {
-      doOnTextChanged { text, _, _, _ ->
-        loginViewModel.loginDataChanged(username.text.toString(), text.toString())
-      }
-
-      setOnEditorActionListener { _, actionId, _ ->
-        when (actionId) {
-          EditorInfo.IME_ACTION_DONE -> {
-            progressIndicator.visibility = View.VISIBLE
-            Timber.i("User requested log in")
-            loginViewModel.login(
-              User(userEmail = username.text.toString(), userPassword = password.text.toString()))
-          }
-        }
-        false
-      }
-    }
-
-    loginButton.setOnClickListener {
-      progressIndicator.visibility = View.VISIBLE
-      Timber.i("User requested log in")
-      loginButton.isEnabled = false
-      Toast.makeText(this, "Signing in. Please Wait", Toast.LENGTH_SHORT).show()
-      loginViewModel.login(
-        User(userEmail = username.text.toString(), userPassword = password.text.toString())
-      )
-    }
-
     googleLoginButton.setOnClickListener {
       Timber.i("Signing the user through Google sign in.")
       val signInIntent: Intent = mGoogleSignInClient.signInIntent
@@ -174,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
 
   private fun updateUiWithUser(model: User) {
     val welcome = getString(R.string.welcome)
-    val displayName = model.userEmail
+    val displayName = model.email
     Timber.i("Login successful for $model")
 
     Toast.makeText(applicationContext, "$welcome $displayName", Toast.LENGTH_LONG).show()
@@ -189,7 +134,6 @@ class LoginActivity : AppCompatActivity() {
   private fun showLoginFailed(@StringRes errorString: Int) {
     Timber.d("Logging failed.")
     Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
-    loginButton.isEnabled = true
     progressIndicator.visibility = View.GONE
   }
 
@@ -200,9 +144,11 @@ class LoginActivity : AppCompatActivity() {
   ) {
     super.onActivityResult(requestCode, resultCode, data)
 
-    if (requestCode == 1) {
-      val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-      handleSignInResult(task)
+    when (requestCode) {
+      1 -> {
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        handleSignInResult(task)
+      }
     }
   }
 
@@ -210,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
     try {
       val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
 
-      val user = User(id = account?.id, userName = account?.displayName, userEmail = account?.email)
+      val user = User(id = account?.id, name = account?.displayName, email = account?.email)
       loginViewModel.login(user)
       updateUiWithUser(user)
     } catch (e: ApiException) {

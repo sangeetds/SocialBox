@@ -23,7 +23,7 @@ class GroupDetailsViewModel @Inject constructor(private val movieRepository: Mov
 
   fun getAllMovies() = viewModelScope.launch {
     val allMovies = movieRepository.getAllMovies()
-    Timber.i("Successfully fetched ${allMovies.joinToString(",") { m -> m.movieName }}")
+    Timber.i("Successfully fetched ${allMovies.joinToString(",") { m -> m.name }}")
     _movieState.value = allMovies
   }
 }

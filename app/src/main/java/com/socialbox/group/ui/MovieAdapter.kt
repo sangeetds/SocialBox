@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.model.Movie
-import timber.log.Timber
 
 // Todo: Make it a list of Group Movie
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
@@ -31,8 +30,8 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val movie = movies[position]
-    holder.name.text = movie.movieName
-    holder.ratings.text = "${movie.movieRating}/5.0"
+    holder.name.text = movie.name
+    holder.ratings.text = "${movie.rating}/5.0"
   }
 
   override fun getItemCount() = movies.size

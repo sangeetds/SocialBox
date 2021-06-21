@@ -23,28 +23,28 @@
         <entry key="../../../../layout/compose-model-1622982952181.xml" value="0.11233108108108109" />
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="../../.gradle/caches/transforms-3/1dad11eaaa16358bbbd3427a103b1da8/transformed/material-1.3.0/res/drawable/design_ic_visibility.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/drawable/bg_list_row.xml" value="0.884375" />
         <entry key="app/src/main/res/drawable/register_button.xml" value="0.12916666666666668" />
         <entry key="app/src/main/res/drawable/sign_in_button.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_group_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18611111111111112" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_user.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/add_group_dialog.xml" value="0.18541666666666667" />
-        <entry key="app/src/main/res/layout/add_movie_dialog.xml" value="0.25092592592592594" />
+        <entry key="app/src/main/res/layout/add_group_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/add_movie_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/group_acitivity_layout.xml" value="0.21484375" />
         <entry key="app/src/main/res/layout/group_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/group_card_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/group_details_activity_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/group_movie_card_layout.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/group_details_activity_layout.xml" value="0.125" />
         <entry key="app/src/main/res/layout/log.xml" value="0.165" />
         <entry key="app/src/main/res/layout/login_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/main_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/movie_activity_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/movie_card_layout.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/movie_list_layout.xml" value="0.15081521739130435" />
+        <entry key="app/src/main/res/layout/movie_list_layout.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/layout/moview_list_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/personal_movie_card_layout.xml" value="0.15081521739130435" />
-        <entry key="app/src/main/res/layout/user_settings_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/personal_movie_card_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/user_settings_layout.xml" value="0.2324074074074074" />
+        <entry key="app/src/main/res/menu/group_top_app_bar.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/menu/top_app_bar.xml" value="0.2037037037037037" />
       </map>
     </option>
@@ -54,12 +54,5 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.335" />
-      </ProjectState>
-    </option>
   </component>
 </project>

@@ -110,7 +110,7 @@ class GroupActivity : AppCompatActivity() {
       if (groups.isNotEmpty()) {
         recyclerView.visibility = View.VISIBLE
         emptyText.visibility = View.GONE
-        Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.groupName }}")
+        Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.name }}")
         groupAdapter.submitList(groups)
       } else {
         Timber.i("No groups present for the user")

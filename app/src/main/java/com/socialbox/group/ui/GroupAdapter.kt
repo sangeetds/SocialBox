@@ -43,14 +43,14 @@ class GroupAdapter(val context: Context, val user: User?) :
     val group = getItem(position)
 
     holder.itemView.setOnClickListener {
-      Timber.i("Opening groups ${group.groupName}")
+      Timber.i("Opening groups ${group.name}")
       val intent = Intent(context, GroupDetailsActivity::class.java)
-      intent.putExtra("groupId", group.groupId)
+      intent.putExtra("groupId", group.id)
       intent.putExtra("userId", user?.id ?: "")
       context.startActivity(intent)
     }
 
-    holder.groupName.text = group.groupName
+    holder.groupName.text = group.name
     holder.memberCount.text = String.format(holder.memberCount.text.toString(), group.memberCount)
 
     // Todo: Set image later

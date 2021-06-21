@@ -14,6 +14,7 @@
         android:name=".user.ui.UserActivity"
         android:exported="true"
         android:theme="@style/Theme.SocialBox.NoActionBar" />
+
     <activity
         android:name=".group.ui.GroupDetailsActivity"
         android:exported="true"
