@@ -29,7 +29,6 @@ class GroupActivity : AppCompatActivity() {
 
   private val groupViewModel: GroupViewModel by viewModels()
   private lateinit var groupAdapter: GroupAdapter
-  private lateinit var newMovieButton: ExtendedFloatingActionButton
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var notificationBell: MenuItem
@@ -40,19 +39,18 @@ class GroupActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.group_activity_layout)
-    toolbar = findViewById(id.topAppBar)
-    setSupportActionBar(toolbar)
-    supportActionBar?.setDisplayShowTitleEnabled(true)
 
     user = intent.extras?.getParcelable("user") ?: User()
 
-    groupViewModel.getGroupsForUser(user.groupsId!!.toList())
     getGroups()
+    setUpToolbar()
+    setUpView()
+  }
 
-    groupAdapter = GroupAdapter(context = this, user)
+  private fun setUpView() {
     emptyText = findViewById(id.place_holder)
     recyclerView = findViewById(id.group_recycler_view)
-    newMovieButton = findViewById(id.new_group_button)
+    groupAdapter = GroupAdapter(context = this, user = user)
     recyclerView.adapter = groupAdapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
@@ -61,14 +59,12 @@ class GroupActivity : AppCompatActivity() {
     recyclerView.visibility = View.GONE
     emptyText.visibility = View.VISIBLE
 
-    newMovieButton.setOnClickListener {
+    findViewById<ExtendedFloatingActionButton>(id.new_group_button).setOnClickListener {
       AddGroupDialog(
         viewModel = groupViewModel,
         userId = user.id!!,
         groupIds = user.groupsId!!
-      ).show(
-        supportFragmentManager.beginTransaction(), "MovieDialog"
-      )
+      ).show(supportFragmentManager.beginTransaction(), "MovieDialog")
     }
 
     findViewById<MaterialButton>(id.movies_button).setOnClickListener {
@@ -77,6 +73,12 @@ class GroupActivity : AppCompatActivity() {
       startActivity(intent)
       finish()
     }
+  }
+
+  private fun setUpToolbar() {
+    toolbar = findViewById(id.topAppBar)
+    setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayShowTitleEnabled(true)
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -108,6 +110,7 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun getGroups() {
+    groupViewModel.getGroupsForUser(user.groupsId!!.toList())
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
 

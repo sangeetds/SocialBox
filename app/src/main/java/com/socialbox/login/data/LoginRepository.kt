@@ -1,7 +1,7 @@
 package com.socialbox.login.data
 
-import com.socialbox.login.data.Result.Error
-import com.socialbox.login.data.Result.Success
+import com.socialbox.Result.Error
+import com.socialbox.Result.Success
 import com.socialbox.login.data.model.User
 import com.socialbox.login.data.service.UserService
 import kotlinx.coroutines.Dispatchers

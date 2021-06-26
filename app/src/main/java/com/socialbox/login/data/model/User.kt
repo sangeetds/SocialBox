@@ -1,5 +1,6 @@
 package com.socialbox.login.data.model
 
+import android.net.Uri
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
@@ -12,6 +13,6 @@ data class User(
   val personalMovieList: List<String>? = listOf(),
   val sharedMovieList: List<String>? = listOf(),
   val groupsId: Set<String>? = setOf(),
-  val photoURL: String? = null,
+  @Transient val photoUri: Uri = Uri.EMPTY,
   val email: String? = null,
 ) : Parcelable

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
@@ -27,7 +26,6 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.layout
-import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
 import com.squareup.picasso.Picasso
@@ -71,14 +69,15 @@ class LoginActivity : AppCompatActivity() {
     val gso = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
       .requestId()
       .requestEmail()
+      .requestProfile()
       .build()
     val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     val account = GoogleSignIn.getLastSignedInAccount(this)
 
-    account?.let {
-      Timber.i("User ${it.displayName} already signed in")
-      val user = User(id = it.id, name = it.displayName, email = it.email)
-      val intent = Intent(this, GroupActivity::class.java)
+    account?.apply {
+      Timber.i("User $displayName already signed in")
+      val user = User(id = id, name = displayName, email = email, photoUri = photoUrl!!)
+      val intent = Intent(this@LoginActivity, GroupActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
     }
@@ -145,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
     finish()
   }
 
-  private fun showLoginFailed(@StringRes errorString: Int) {
+  private fun showLoginFailed(errorString: String) {
     Timber.d("Logging failed.")
     Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
     progressIndicator.visibility = View.GONE
@@ -166,12 +165,12 @@ class LoginActivity : AppCompatActivity() {
     try {
       val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
 
-      val user = User(id = account?.id, name = account?.displayName, email = account?.email)
+      val user = User(id = account?.id, name = account?.displayName, email = account?.email, photoUri = account?.photoUrl!!)
       loginViewModel.login(user)
       updateUiWithUser(user)
     } catch (e: ApiException) {
       Timber.e("signInResult:failed code=%s with message:%s", e.statusCode, e.message)
-      showLoginFailed(string.error_google_sign)
+      showLoginFailed(e.message ?: "Error Connecting to Google")
     }
   }
 }

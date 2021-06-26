@@ -25,10 +25,7 @@ class GroupAdapter(val context: Context, val user: User?) :
     val memberCount: TextView = cardView.findViewById(R.id.members)
   }
 
-  override fun onCreateViewHolder(
-    parent: ViewGroup,
-    viewType: Int
-  ): SongSearchViewHolder {
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongSearchViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
       .inflate(R.layout.group_card_layout, parent, false)
@@ -36,10 +33,7 @@ class GroupAdapter(val context: Context, val user: User?) :
     return SongSearchViewHolder(view)
   }
 
-  override fun onBindViewHolder(
-    holder: SongSearchViewHolder,
-    position: Int
-  ) {
+  override fun onBindViewHolder(holder: SongSearchViewHolder, position: Int) {
     val group = getItem(position)
 
     holder.itemView.setOnClickListener {

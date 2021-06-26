@@ -7,30 +7,42 @@
     android:background="@color/white"
     tools:context=".group.ui.AddGroupDialog"
     >
+
+  <ImageView
+      android:id="@+id/group_placeholder_image"
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:contentDescription="@string/group_image_placeholder"
+      android:src="@drawable/gorup_placeholder_photo"
+      android:translationY="-30dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="200dp"
       android:layout_marginTop="120dp"
-      android:paddingStart="20dp"
-      android:paddingEnd="20dp"
       android:background="@drawable/sign_in_button"
+      android:elevation="10dp"
+      android:paddingEnd="20dp"
+      android:paddingStart="20dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      android:elevation="10dp"
       >
     <EditText
         android:id="@+id/group_name"
         android:layout_width="360dp"
         android:layout_height="80dp"
         android:layout_marginTop="44dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="10dp"
         android:autofillHints="name"
-        android:textColor="@color/black"
         android:hint="@string/add_group_name"
         android:inputType="textAutoComplete"
+        android:paddingEnd="10dp"
+        android:paddingStart="40dp"
+        android:textColor="@color/black"
         android:textColorHint="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,16 +59,5 @@
         app:layout_constraintStart_toStartOf="parent"
         />
   </androidx.constraintlayout.widget.ConstraintLayout>
-  <ImageView
-      android:id="@+id/group_placeholder_image"
-      android:layout_width="match_parent"
-      android:layout_height="200dp"
-      android:translationY="-30dp"
-      android:contentDescription="@string/group_image_placeholder"
-      android:src="@drawable/gorup_placeholder_photo"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

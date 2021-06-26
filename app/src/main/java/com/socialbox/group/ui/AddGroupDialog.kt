@@ -31,22 +31,19 @@ class AddGroupDialog(
     }.create()
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     super.onCreateView(inflater, container, savedInstanceState)
     val inflate = inflater.inflate(layout.add_group_dialog, container, false)
     val createNewGroupButton = inflate.findViewById<MaterialButton>(R.id.add_movie)
     val groupName = inflate.findViewById<EditText>(R.id.group_name)
+
     createNewGroupButton.setOnClickListener {
-      Timber.i("New Group $groupName formed")
       val group =
         Group(name = groupName.text.toString(), memberCount = 0, adminId = userId)
       viewModel.addGroup(group)
       viewModel.getGroupsForUser(groupIds.toList())
       val intent = Intent(context, GroupDetailsActivity::class.java)
+      Timber.i("Opening Group $groupName with ${group.id} and $userId")
       intent.putExtra("groupId", group.id)
       intent.putExtra("userId", userId)
       startActivity(intent)

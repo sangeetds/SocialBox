@@ -1,10 +1,11 @@
 package com.socialbox.group.data
 
+import com.socialbox.Result
+import com.socialbox.Result.Error
+import com.socialbox.Result.Success
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
-import com.socialbox.login.data.Result.Error
-import com.socialbox.login.data.Result.Success
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
