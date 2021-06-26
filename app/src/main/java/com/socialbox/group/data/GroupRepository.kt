@@ -52,7 +52,8 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception("Error fetching group details."))
     }
 
-  suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) = groupService.saveGroupMovies(groupMovies)
+  suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) =
+    groupService.saveGroupMovies(groupMovies)
 
   @Suppress("BlockingMethodInNonBlockingContext")
   private suspend fun ResponseBody.stringSuspending() =

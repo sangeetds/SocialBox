@@ -15,6 +15,7 @@ import com.socialbox.login.data.model.User
 import timber.log.Timber
 
 class UserActivity : AppCompatActivity() {
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.user_settings_layout)

@@ -33,10 +33,12 @@ class MoviesActivity : AppCompatActivity() {
     latestMovieListAdapter = MovieListAdapter()
 
     personalMovieRecyclerView.adapter = personalMovieListAdapter
-    personalMovieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+    personalMovieRecyclerView.layoutManager =
+      LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
     personalMovieRecyclerView.setHasFixedSize(true)
     latestMovieRecyclerView.adapter = latestMovieListAdapter
-    latestMovieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+    latestMovieRecyclerView.layoutManager =
+      LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
     latestMovieRecyclerView.setHasFixedSize(true)
 
     browseLatestMovies.setOnClickListener {

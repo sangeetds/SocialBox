@@ -62,7 +62,11 @@ class GroupActivity : AppCompatActivity() {
     emptyText.visibility = View.VISIBLE
 
     newMovieButton.setOnClickListener {
-      AddGroupDialog(viewModel = groupViewModel, userId = user.id!!, groupIds = user.groupsId!!).show(
+      AddGroupDialog(
+        viewModel = groupViewModel,
+        userId = user.id!!,
+        groupIds = user.groupsId!!
+      ).show(
         supportFragmentManager.beginTransaction(), "MovieDialog"
       )
     }
