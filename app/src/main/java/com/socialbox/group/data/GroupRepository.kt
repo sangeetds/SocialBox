@@ -40,7 +40,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Timber.i("Fetching group $groupId")
       groupService.getGroup(groupId).run {
         if (isSuccessful && body() != null) {
-          Timber.i("Successfully fetched group: ${body()!!.groupId}")
+          Timber.i("Successfully fetched group: ${body()!!.id}")
           Success(body()!!)
         } else {
           Timber.d("Error in fetching group")

@@ -99,7 +99,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
-      supportActionBar?.title = groupDetails.groupName
+      supportActionBar?.title = groupDetails.name
       // if (groupDetails.groupMovieList?.isNotEmpty() == true) {
       //   moviesAdapter.submitList(groupDetails.groupMovieList)
       // }

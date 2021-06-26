@@ -10,8 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.socialbox.R
-import com.socialbox.login.MainActivity
 import com.socialbox.login.data.model.User
+import com.socialbox.login.ui.login.LoginActivity
 import timber.log.Timber
 
 class UserActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class UserActivity : AppCompatActivity() {
     val user = intent.getParcelableExtra<User>("user")
     val userWelcomeString = findViewById<TextView>(R.id.welcome_user)
     val logOutButton = findViewById<TextView>(R.id.logOut)
-    userWelcomeString.text = String.format(userWelcomeString.text.toString(), user?.name)
+    userWelcomeString.text = userWelcomeString.text.toString().format(user?.name)
 
     logOutButton.setOnClickListener {
       signOut()
@@ -36,7 +36,7 @@ class UserActivity : AppCompatActivity() {
       .addOnCompleteListener(this) {
         Timber.i("Logging user out")
         Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
       }
   }

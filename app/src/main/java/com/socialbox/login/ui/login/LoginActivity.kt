@@ -9,7 +9,11 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,10 +22,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.socialbox.R
 import com.socialbox.R.drawable
 import com.socialbox.R.id
+import com.socialbox.R.layout
 import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
@@ -36,13 +41,14 @@ class LoginActivity : AppCompatActivity() {
   private lateinit var appImage: ImageView
   private lateinit var googleLoginButton: SignInButton
   private lateinit var progressIndicator: CircularProgressIndicator
+  private lateinit var signInButton: MaterialButton
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.login_activity_layout)
+    setContentView(layout.login_activity_layout)
 
-    googleLoginButton = findViewById(id.sign_in_button)
-    appImage = findViewById(id.app_image)
+    googleLoginButton = findViewById(id.googleSignInButton)
+    appImage = findViewById(id.appImage)
     progressIndicator = findViewById(id.loading_icon)
 
     darkModeConfigure()
@@ -53,11 +59,9 @@ class LoginActivity : AppCompatActivity() {
   private fun darkModeConfigure() {
     when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
       Configuration.UI_MODE_NIGHT_YES -> {
-        Timber.i("Dark Mode Configured")
         Picasso.get().load(drawable.app_logo_dark).into(appImage)
       }
       Configuration.UI_MODE_NIGHT_NO -> {
-        Timber.i("Day Mode Configured")
         Picasso.get().load(drawable.app_logo).into(appImage)
       }
     }
@@ -72,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     val account = GoogleSignIn.getLastSignedInAccount(this)
 
     account?.let {
-      Timber.i("User already signed in")
+      Timber.i("User ${it.displayName} already signed in")
       val user = User(id = it.id, name = it.displayName, email = it.email)
       val intent = Intent(this, GroupActivity::class.java)
       intent.putExtra("user", user)
@@ -85,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
 
     loginViewModel.loginResult.observe(this@LoginActivity, Observer {
       val loginResult = it ?: return@Observer
-      Timber.i("Change in login result state.")
 
       loginResult.apply {
         error?.let {
@@ -103,11 +106,24 @@ class LoginActivity : AppCompatActivity() {
 
   private fun setUpButtons() {
     val mGoogleSignInClient = googleSignInClient()
+    signInButton = findViewById(id.signInButton)
 
     googleLoginButton.setOnClickListener {
-      Timber.i("Signing the user through Google sign in.")
       val signInIntent: Intent = mGoogleSignInClient.signInIntent
       startActivityForResult(signInIntent, 1)
+    }
+
+    signInButton.setOnClickListener {
+      findViewById<ImageView>(id.appImage).animate().alpha(0.4f)
+
+      val transition: Transition = Fade()
+      transition.duration = 600
+      transition.addTarget(id.loginView)
+      transition.addTarget(id.signInButton)
+      TransitionManager.beginDelayedTransition(findViewById(id.loginConstraintLayout), transition)
+
+      it.visibility = View.GONE
+      findViewById<ConstraintLayout>(id.loginView).visibility = View.VISIBLE
     }
   }
 
@@ -118,14 +134,12 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun updateUiWithUser(model: User) {
-    val welcome = getString(R.string.welcome)
-    val displayName = model.email
     Timber.i("Login successful for $model")
 
-    Toast.makeText(applicationContext, "$welcome $displayName", Toast.LENGTH_LONG).show()
+    Toast.makeText(applicationContext, "Welcome ${model.name}!", Toast.LENGTH_LONG).show()
 
-    Timber.i("Starting HomeScreenActivity")
     val songsActivity = Intent(this, GroupActivity::class.java)
+    Timber.i("Starting HomeActivity with user: $model")
     songsActivity.putExtra("user", model)
     startActivity(songsActivity)
     finish()
@@ -137,11 +151,7 @@ class LoginActivity : AppCompatActivity() {
     progressIndicator.visibility = View.GONE
   }
 
-  override fun onActivityResult(
-    requestCode: Int,
-    resultCode: Int,
-    data: Intent?,
-  ) {
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
     when (requestCode) {

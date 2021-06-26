@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login.ui.login.LoginActivity"
     >
 
   <ImageView
-      android:id="@+id/app_image"
+      android:id="@+id/appImage"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:alpha="0.4"
+      android:animateLayoutChanges="true"
       android:contentDescription="@string/app_image"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent"
@@ -31,56 +32,81 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       />
-  <View
-      android:layout_width="100dp"
-      android:layout_height="2dp"
-      android:layout_marginBottom="11dp"
-      android:layout_marginEnd="8dp"
-      android:background="#c0c0c0"
-      app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
-      app:layout_constraintEnd_toStartOf="@+id/materialTextView2"
-      />
 
 
-  <View
-      android:layout_width="100dp"
-      android:layout_height="2dp"
-      android:layout_marginBottom="11dp"
-      android:layout_marginStart="8dp"
-      android:background="#c0c0c0"
-      app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
-      app:layout_constraintStart_toEndOf="@+id/materialTextView2"
-      />
-  <com.google.android.material.textview.MaterialTextView
-      android:id="@+id/materialTextView2"
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/loginView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="24dp"
-      android:fontFamily="@font/pattaya_regular"
-      android:gravity="center"
-      android:text="@string/login"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+      android:layout_marginTop="90dp"
+      android:animateLayoutChanges="true"
+      android:visibility="gone"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
-      />
+      app:layout_constraintTop_toBottomOf="@id/app_name"
+      >
+    <View
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="8dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toBottomOf="@+id/loginText"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
-  <com.google.android.gms.common.SignInButton
-      android:id="@+id/sign_in_button"
-      android:layout_width="210dp"
-      android:layout_height="80dp"
-      android:layout_marginBottom="328dp"
-      app:layout_constraintBottom_toBottomOf="@+id/app_image"
+    <View
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginStart="8dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toBottomOf="@+id/loginText"
+        app:layout_constraintStart_toEndOf="@+id/loginText"
+        />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignInButton"
+        android:layout_width="210dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginText"
+        tools:layout_editor_absoluteX="24dp"
+        />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/lobstertwo_bold"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/googleSignInButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/signInButton"
+      android:layout_width="match_parent"
+      android:layout_height="70dp"
+      android:text="@string/action_sign_in"
+      android:textSize="20sp"
+      android:translationY="5dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       />
   <com.google.android.material.progressindicator.CircularProgressIndicator
       android:id="@+id/loading_icon"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="628dp"
+      android:layout_marginTop="522dp"
       android:indeterminate="true"
       android:visibility="gone"
       app:layout_constraintEnd_toEndOf="parent"

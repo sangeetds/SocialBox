@@ -43,11 +43,11 @@ class AddGroupDialog(
     createNewGroupButton.setOnClickListener {
       Timber.i("New Group $groupName formed")
       val group =
-        Group(groupName = groupName.text.toString(), memberCount = 0, groupAdminId = userId)
+        Group(name = groupName.text.toString(), memberCount = 0, adminId = userId)
       viewModel.addGroup(group)
       viewModel.getGroupsForUser(groupIds.toList())
       val intent = Intent(context, GroupDetailsActivity::class.java)
-      intent.putExtra("groupId", group.groupId)
+      intent.putExtra("groupId", group.id)
       intent.putExtra("userId", userId)
       startActivity(intent)
       dismiss()
