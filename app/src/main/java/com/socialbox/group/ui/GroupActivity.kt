@@ -6,19 +6,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
+import com.socialbox.group.ui.AnimationUtils.Companion.circleReveal
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.MoviesActivity
 import com.socialbox.user.ui.UserActivity
@@ -28,12 +32,11 @@ import timber.log.Timber
 @AndroidEntryPoint
 class GroupActivity : AppCompatActivity() {
 
+  private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
   private lateinit var groupAdapter: GroupAdapter
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
-  private lateinit var notificationBell: MenuItem
-  private lateinit var userIcon: MenuItem
   private lateinit var toolbar: MaterialToolbar
   private lateinit var user: User
 
@@ -57,30 +60,37 @@ class GroupActivity : AppCompatActivity() {
       val intent = Intent(this, UserActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
+      if (search.isVisible) {
+        groupViewModel.restoreGroups()
+      }
       true
     }
 
     searchView.setOnMenuItemClickListener {
-      val search: EditText = findViewById(id.searchGroup)
       search.visibility = View.VISIBLE
+      search.circleReveal(true)
       true
     }
 
-    return true
-  }
+    val searchQueryView = search.findViewById<EditText>(id.searchGroup)
+    val cancelSearch = search.findViewById<ImageButton>(id.cancelSearch)
+    val eraseQuery = search.findViewById<ImageButton>(id.eraseQuery)
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      id.search -> {
-        TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
-        item.expandActionView()
-        notificationBell.isVisible = false
-        Timber.i("${notificationBell.isVisible}")
-        userIcon.isVisible = false
-        return true
-      }
+    searchQueryView.doOnTextChanged { text, _, _, _ ->
+      groupViewModel.filterGroups(text ?: "")
     }
-    return super.onOptionsItemSelected(item)
+
+    cancelSearch.setOnClickListener {
+      search.visibility = View.GONE
+      search.circleReveal(false)
+      groupViewModel.restoreGroups()
+    }
+
+    eraseQuery.setOnClickListener {
+      searchQueryView.text.clear()
+    }
+
+    return true
   }
 
   private fun setUpToolbar() {

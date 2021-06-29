@@ -3,8 +3,14 @@ package com.socialbox.group.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,14 +21,15 @@ import com.socialbox.R
 import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
+import com.socialbox.group.ui.AnimationUtils.Companion.circleReveal
 import com.socialbox.movie.ui.AddMovieDialog
 import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupDetailsActivity : AppCompatActivity() {
 
+  private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
   private val groupDetailsViewModel: GroupDetailsViewModel by viewModels()
   private val userMovieViewModel: UserMovieViewModel by viewModels()
@@ -88,7 +95,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   private fun setUpObservable() {
     val groupId = intent.getStringExtra("groupId")
     groupViewModel.getGroup(groupId!!)
-    groupDetailsViewModel.getAllMovies()
+    groupDetailsViewModel.getMovies(groupId)
 
     groupDetailsViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
       val movie = it ?: return@Observer
@@ -108,6 +115,32 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
+    val searchView: MenuItem = menu!!.findItem(id.search)
+
+    searchView.setOnMenuItemClickListener {
+      search.visibility = View.VISIBLE
+      search.circleReveal(true)
+      true
+    }
+
+    val searchQueryView = search.findViewById<EditText>(id.searchGroup)
+    val cancelSearch = search.findViewById<ImageButton>(id.cancelSearch)
+    val eraseQuery = search.findViewById<ImageButton>(id.eraseQuery)
+
+    searchQueryView.doOnTextChanged { text, _, _, _ ->
+      groupViewModel.filterGroups(text ?: "")
+    }
+
+    cancelSearch.setOnClickListener {
+      search.visibility = View.GONE
+      search.circleReveal(false)
+      groupViewModel.restoreGroups()
+    }
+
+    eraseQuery.setOnClickListener {
+      searchQueryView.text.clear()
+    }
+
     return super.onCreateOptionsMenu(menu)
   }
 }

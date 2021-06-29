@@ -55,4 +55,6 @@
   <string name="latest_movies">Latest Movies</string>
   <string name="log_out">Log Out</string>
   <string name="search_groups">Search Groups…</string>
+  <string name="go_back_from_search">Go back from search</string>
+  <string name="erase_written">Erase written</string>
 </resources>
