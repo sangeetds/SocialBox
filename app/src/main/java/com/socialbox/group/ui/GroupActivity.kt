@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -42,12 +43,53 @@ class GroupActivity : AppCompatActivity() {
 
     user = intent.extras?.getParcelable("user") ?: User()
 
-    getGroups()
+    setUpObservables()
     setUpToolbar()
-    setUpView()
+    setUpViews()
   }
 
-  private fun setUpView() {
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(top_app_bar, menu)
+    val userView: MenuItem = menu!!.findItem(id.user)
+    val searchView: MenuItem = menu.findItem(id.search)
+
+    userView.setOnMenuItemClickListener {
+      val intent = Intent(this, UserActivity::class.java)
+      intent.putExtra("user", user)
+      startActivity(intent)
+      true
+    }
+
+    searchView.setOnMenuItemClickListener {
+      val search: EditText = findViewById(id.searchGroup)
+      search.visibility = View.VISIBLE
+      true
+    }
+
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      id.search -> {
+        TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
+        item.expandActionView()
+        notificationBell.isVisible = false
+        Timber.i("${notificationBell.isVisible}")
+        userIcon.isVisible = false
+        return true
+      }
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
+  private fun setUpToolbar() {
+    toolbar = findViewById(id.topAppBar)
+    setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayShowTitleEnabled(true)
+  }
+
+  private fun setUpViews() {
     emptyText = findViewById(id.place_holder)
     recyclerView = findViewById(id.group_recycler_view)
     groupAdapter = GroupAdapter(context = this, user = user)
@@ -75,41 +117,7 @@ class GroupActivity : AppCompatActivity() {
     }
   }
 
-  private fun setUpToolbar() {
-    toolbar = findViewById(id.topAppBar)
-    setSupportActionBar(toolbar)
-    supportActionBar?.setDisplayShowTitleEnabled(true)
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(top_app_bar, menu)
-    val userView: MenuItem = menu!!.findItem(id.user)
-
-    userView.setOnMenuItemClickListener {
-      val intent = Intent(this, UserActivity::class.java)
-      intent.putExtra("user", user)
-      startActivity(intent)
-      true
-    }
-
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      id.search -> {
-        TransitionManager.beginDelayedTransition(findViewById(id.groupNameBar))
-        item.expandActionView()
-        notificationBell.isVisible = false
-        Timber.i("${notificationBell.isVisible}")
-        userIcon.isVisible = false
-        return true
-      }
-    }
-    return super.onOptionsItemSelected(item)
-  }
-
-  private fun getGroups() {
+  private fun setUpObservables() {
     groupViewModel.getGroupsForUser(user.groupsId!!.toList())
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
