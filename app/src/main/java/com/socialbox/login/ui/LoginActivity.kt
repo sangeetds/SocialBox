@@ -40,8 +40,10 @@ class LoginActivity : AppCompatActivity() {
   private lateinit var googleLoginButton: SignInButton
   private lateinit var progressIndicator: CircularProgressIndicator
   private lateinit var signInButton: MaterialButton
+  private lateinit var mGoogleSignInClient: GoogleSignInClient
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    mGoogleSignInClient = googleSignInClient()
     super.onCreate(savedInstanceState)
     setContentView(layout.login_activity_layout)
 
@@ -76,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
 
     account?.apply {
       Timber.i("User $displayName already signed in")
-      val user = User(id = id, name = displayName, email = email, photoUri = photoUrl!!)
+      val user = User(id = id, name = displayName, email = email, photoUri = photoUrl)
       val intent = Intent(this@LoginActivity, GroupActivity::class.java)
       intent.putExtra("user", user)
       startActivity(intent)
@@ -85,7 +87,6 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun setUpObserver() {
-
     loginViewModel.loginResult.observe(this@LoginActivity, Observer {
       val loginResult = it ?: return@Observer
 
@@ -104,7 +105,6 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun setUpButtons() {
-    val mGoogleSignInClient = googleSignInClient()
     signInButton = findViewById(id.signInButton)
 
     googleLoginButton.setOnClickListener {
@@ -165,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
     try {
       val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
 
-      val user = User(id = account?.id, name = account?.displayName, email = account?.email, photoUri = account?.photoUrl!!)
+      val user = User(id = account?.id, name = account?.displayName, email = account?.email, photoUri = account?.photoUrl)
       loginViewModel.login(user)
       updateUiWithUser(user)
     } catch (e: ApiException) {

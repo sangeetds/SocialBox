@@ -2,6 +2,7 @@ package com.socialbox.group.data
 
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.data.service.MovieService
+import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -12,7 +13,13 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
   suspend fun getMovies(groupId: String) =
     try {
       movieService.getMovies(groupId).run {
-        body()!!
+        when {
+          isSuccessful && body() != null -> body()!!
+          else -> {
+            Timber.d("Failed to fetch movies with error: ${errorBody()?.stringSuspending()}")
+            listOf()
+          }
+        }
       }
     } catch (exception: SocketTimeoutException) {
       Timber.e("Failed to fetch movies with error: $exception")
@@ -22,10 +29,16 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
   suspend fun getAllMovies() =
     try {
       movieService.getAllMovies().run {
-        body()!!
+        when {
+          isSuccessful && body() != null -> body()!!
+          else -> {
+            Timber.d("Failed to fetch movies with error: ${errorBody()?.stringSuspending()}")
+            listOf()
+          }
+        }
       }
     } catch (exception: SocketTimeoutException) {
-      Timber.e("Failed to fetch movies with error $exception")
+      Timber.e("Failed to connect with error $exception")
       listOf()
     }
 

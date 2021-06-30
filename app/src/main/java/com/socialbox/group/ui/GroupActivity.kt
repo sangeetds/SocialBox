@@ -114,8 +114,8 @@ class GroupActivity : AppCompatActivity() {
     findViewById<ExtendedFloatingActionButton>(id.new_group_button).setOnClickListener {
       AddGroupDialog(
         viewModel = groupViewModel,
-        userId = user.id!!,
-        groupIds = user.groupsId!!
+        userId = user.id ?: "",
+        groupIds = user.groupsId
       ).show(supportFragmentManager.beginTransaction(), "MovieDialog")
     }
 
