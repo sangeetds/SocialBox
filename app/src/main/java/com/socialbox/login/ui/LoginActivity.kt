@@ -1,4 +1,4 @@
-package com.socialbox.login.ui.login
+package com.socialbox.login.ui
 
 import android.content.Intent
 import android.content.res.Configuration

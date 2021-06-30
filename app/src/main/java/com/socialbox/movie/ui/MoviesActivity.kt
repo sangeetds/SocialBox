@@ -11,12 +11,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.socialbox.R
 import com.socialbox.group.ui.GroupActivity
+import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
 
   private val movieViewModel: MovieViewModel by viewModels()
+  private val user: User by lazy { intent.getParcelableExtra("user") ?: User(id = "") }
   private lateinit var personalMovieListAdapter: MovieListAdapter
   private lateinit var latestMovieListAdapter: MovieListAdapter
 
@@ -58,6 +60,7 @@ class MoviesActivity : AppCompatActivity() {
   }
 
   private fun setUpObservers() {
+    user.id?.let { movieViewModel.getUserMovies(it) }
     movieViewModel.latestMovies.observe(this@MoviesActivity, Observer {
       val movies = it ?: return@Observer
       latestMovieListAdapter.submitList(movies)

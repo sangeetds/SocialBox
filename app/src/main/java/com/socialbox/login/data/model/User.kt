@@ -12,7 +12,7 @@ data class User(
   val password: String? = null,
   val personalMovieList: List<String>? = listOf(),
   val sharedMovieList: List<String>? = listOf(),
-  val groupsId: Set<String>? = setOf(),
+  val groupsId: Set<String> = setOf(),
   @Transient val photoUri: Uri = Uri.EMPTY,
   val email: String? = null,
 ) : Parcelable

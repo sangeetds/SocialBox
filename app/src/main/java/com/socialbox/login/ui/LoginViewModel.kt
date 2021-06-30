@@ -1,10 +1,10 @@
-package com.socialbox.login.ui.login
+package com.socialbox.login.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.socialbox.login.data.LoginRepository
+import com.socialbox.login.data.UserRepository
 import com.socialbox.Result
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +13,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
+class LoginViewModel @Inject constructor(private val userRepository: UserRepository) :
   ViewModel() {
 
   private val _loginResult = MutableLiveData<LoginResult>()
@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
   fun login(user: User) = viewModelScope.launch {
     Timber.i("Making request to the server for user: $user")
-    val result = loginRepository.login(user)
+    val result = userRepository.login(user)
     _loginResult.value = when (result) {
       is Result.Success -> LoginResult(success = result.data)
       is Result.Error -> LoginResult(error = result.exception.localizedMessage)

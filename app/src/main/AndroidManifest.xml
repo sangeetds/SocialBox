@@ -20,7 +20,7 @@
         android:exported="true"
         android:theme="@style/Theme.SocialBox.NoActionBar" />
     <activity
-        android:name=".login.ui.login.LoginActivity"
+        android:name=".login.ui.LoginActivity"
         android:label="@string/title_activity_login"
         android:theme="@style/Theme.SocialBox.NoActionBar"
         android:exported="true">

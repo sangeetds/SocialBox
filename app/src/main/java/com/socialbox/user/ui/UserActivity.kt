@@ -11,7 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
 import com.socialbox.R
 import com.socialbox.login.data.model.User
-import com.socialbox.login.ui.login.LoginActivity
+import com.socialbox.login.ui.LoginActivity
 import timber.log.Timber
 
 class UserActivity : AppCompatActivity() {

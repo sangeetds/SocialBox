@@ -1,4 +1,4 @@
-package com.socialbox.group.ui
+package com.socialbox.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

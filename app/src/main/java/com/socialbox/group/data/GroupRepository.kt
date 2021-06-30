@@ -6,6 +6,7 @@ import com.socialbox.Result.Success
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
+import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -55,8 +56,4 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) =
     groupService.saveGroupMovies(groupMovies)
-
-  @Suppress("BlockingMethodInNonBlockingContext")
-  private suspend fun ResponseBody.stringSuspending() =
-    withContext(Dispatchers.IO) { string() }
 }

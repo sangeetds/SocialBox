@@ -1,4 +1,4 @@
-// package com.socialbox.login.ui.login
+package com.socialbox.login.ui// package com.socialbox.login.ui.login
 //
 // import androidx.compose.foundation.Image
 // import androidx.compose.foundation.layout.Arrangement

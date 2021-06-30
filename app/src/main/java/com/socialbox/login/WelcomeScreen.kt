@@ -21,7 +21,7 @@
 // import androidx.compose.ui.unit.dp
 // import androidx.compose.ui.unit.sp
 // import com.socialbox.R.drawable
-// import com.socialbox.login.ui.login.LoginActivity
+// import com.socialbox.login.ui.LoginActivity
 // import com.socialbox.theme.logoSansFamily
 //
 // @Composable

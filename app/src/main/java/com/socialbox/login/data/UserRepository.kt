@@ -4,9 +4,7 @@ import com.socialbox.Result.Error
 import com.socialbox.Result.Success
 import com.socialbox.login.data.model.User
 import com.socialbox.login.data.service.UserService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
+import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -14,7 +12,7 @@ import javax.inject.Inject
 /**
  * Class that requests authentication and user information from the remote data source.
  */
-class LoginRepository @Inject constructor(private val userService: UserService) {
+class UserRepository @Inject constructor(private val userService: UserService) {
 
   suspend fun login(user: User) =
     try {
@@ -35,7 +33,22 @@ class LoginRepository @Inject constructor(private val userService: UserService) 
       Error(Exception("Server Down. Please try again."))
     }
 
-  @Suppress("BlockingMethodInNonBlockingContext")
-  suspend fun ResponseBody.stringSuspending() =
-    withContext(Dispatchers.IO) { string() }
+  suspend fun getAllMovies(userId: String) =
+    try {
+      userService.getUserMovies(userId).run {
+        when {
+          isSuccessful && body() != null -> {
+            Timber.i("Fetched movies successful with response: ${raw()} ")
+            Success(body()!!)
+          }
+          else -> {
+            Timber.e("Error while fetch movies for the user with error: ${errorBody()?.stringSuspending()}")
+            Error(Exception(errorBody()?.stringSuspending()))
+          }
+        }
+      }
+    } catch (exception: SocketTimeoutException) {
+      Timber.e("Error while fetching movies with error: $exception")
+      Error(Exception("Server Down. Please try again."))
+    }
 }
