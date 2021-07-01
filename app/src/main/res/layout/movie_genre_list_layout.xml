@@ -39,21 +39,10 @@
       android:layout_marginTop="10dp"
       android:fontFamily="@font/r_b_m_b"
       android:padding="4dp"
-      android:text="@string/your_movies_text"
+      android:text="@string/s_movies"
       android:textSize="18sp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      />
-
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/searchMoviesRecyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:layout_margin="10dp"
-      android:visibility="gone"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/genreTextView"
-      tools:listitem="@layout/search_movie_card_layout"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
