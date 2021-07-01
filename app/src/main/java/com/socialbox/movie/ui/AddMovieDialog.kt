@@ -28,7 +28,7 @@ class AddMovieDialog(
 ) : DialogFragment() {
 
   private var dialogView: View? = null
-  private lateinit var adapter: UserMovieListAdapter
+  private lateinit var adapter: MovieListAdapter
   private lateinit var topHeader: MaterialTextView
   private lateinit var selectedTopHeader: MaterialTextView
 
@@ -71,7 +71,7 @@ class AddMovieDialog(
     val updateCount = updateCount(addMovieButton, clearSelection)
     topHeader = inflate.findViewById(R.id.top_header)
     selectedTopHeader = inflate.findViewById(R.id.selected_top_header)
-    adapter = UserMovieListAdapter(requireContext(), updateCount)
+    adapter = MovieListAdapter(requireContext(), updateCount)
 
     recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     recyclerView.layoutManager = mLayoutManager

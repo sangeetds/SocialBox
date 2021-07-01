@@ -21,9 +21,9 @@
         android:theme="@style/Theme.SocialBox.NoActionBar" />
     <activity
         android:name=".login.ui.LoginActivity"
-        android:label="@string/title_activity_login"
-        android:theme="@style/Theme.SocialBox.NoActionBar"
-        android:exported="true">
+        android:exported="true"
+        android:label="SocialBox"
+        android:theme="@style/Theme.SocialBox.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

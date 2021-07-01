@@ -2,9 +2,8 @@ package com.socialbox.group.data
 
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.data.service.MovieService
-import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
-import java.io.IOException
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 

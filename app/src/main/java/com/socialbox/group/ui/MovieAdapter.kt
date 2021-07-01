@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.model.Movie
 
-// Todo: Make it a list of Group Movie
+// Todo: Should it be a list of Group Movie?
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
   var movies = listOf<Movie>()
@@ -31,7 +31,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val movie = movies[position]
     holder.name.text = movie.name
-    holder.ratings.text = "${movie.rating}/5.0"
+    holder.ratings.text = holder.ratings.text.toString().format(movie.rating)
   }
 
   override fun getItemCount() = movies.size

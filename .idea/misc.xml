@@ -24,6 +24,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="../../.gradle/caches/transforms-3/1dad11eaaa16358bbbd3427a103b1da8/transformed/material-1.3.0/res/drawable/design_ic_visibility.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/drawable/register_button.xml" value="0.12916666666666668" />
+        <entry key="app/src/main/res/drawable/rounded_search_view.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/sign_in_button.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_group_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18611111111111112" />
@@ -41,9 +42,12 @@
         <entry key="app/src/main/res/layout/main_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/movie_activity_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/movie_card_layout.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/movie_genre_list_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/movie_list_layout.xml" value="0.15081521739130435" />
+        <entry key="app/src/main/res/layout/movie_search_card_layout.xml" value="0.3411458333333333" />
         <entry key="app/src/main/res/layout/moview_list_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/personal_movie_card_layout.xml" value="0.15081521739130435" />
+        <entry key="app/src/main/res/layout/personal_movie_card_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/search_movie_card_layout.xml" value="0.3411458333333333" />
         <entry key="app/src/main/res/layout/user_settings_layout.xml" value="0.25" />
         <entry key="app/src/main/res/menu/group_top_app_bar.xml" value="0.3411458333333333" />
         <entry key="app/src/main/res/menu/top_app_bar.xml" value="0.2037037037037037" />

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.socialbox.common.enums.Result
 import com.socialbox.group.data.MovieRepository
 import com.socialbox.group.data.model.Movie
 import com.socialbox.login.data.UserRepository
@@ -29,7 +30,7 @@ class MovieViewModel @Inject constructor(
 
   fun getUserMovies(userId: String) = viewModelScope.launch {
     val userMovies = userRepository.getAllMovies(userId)
-    if (userMovies is com.socialbox.Result.Success) {
+    if (userMovies is Result.Success) {
       _userMovies.value = userMovies.data.map {
         Movie(
           id = it.id,

@@ -1,7 +1,7 @@
 package com.socialbox.movie.data
 
 import com.socialbox.login.data.service.UserService
-import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject

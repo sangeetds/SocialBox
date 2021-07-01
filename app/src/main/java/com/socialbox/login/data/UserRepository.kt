@@ -1,10 +1,10 @@
 package com.socialbox.login.data
 
-import com.socialbox.Result.Error
-import com.socialbox.Result.Success
+import com.socialbox.common.enums.Result.Error
+import com.socialbox.common.enums.Result.Success
 import com.socialbox.login.data.model.User
 import com.socialbox.login.data.service.UserService
-import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject

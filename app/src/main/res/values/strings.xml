@@ -1,6 +1,5 @@
 <resources>
   <string name="app_name">SocialBox</string>
-  <string name="title_activity_login">LoginActivity</string>
   <string name="prompt_email">Email</string>
   <string name="prompt_password">Password</string>
   <string name="action_sign_in">Sign in</string>
@@ -57,4 +56,5 @@
   <string name="search_groups">Search Groups…</string>
   <string name="go_back_from_search">Go back from search</string>
   <string name="erase_written">Erase written</string>
+  <string name="search_movies">Search Movies</string>
 </resources>
