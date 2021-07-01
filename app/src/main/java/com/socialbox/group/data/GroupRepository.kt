@@ -1,15 +1,11 @@
 package com.socialbox.group.data
 
-import com.socialbox.Result
-import com.socialbox.Result.Error
-import com.socialbox.Result.Success
+import com.socialbox.common.enums.Result.Error
+import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
-import com.socialbox.util.RepositoryUtils.Companion.stringSuspending
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject

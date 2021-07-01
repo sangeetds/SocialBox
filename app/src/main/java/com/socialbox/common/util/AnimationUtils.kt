@@ -1,4 +1,4 @@
-package com.socialbox.util
+package com.socialbox.common.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -16,7 +16,7 @@ class AnimationUtils {
         ViewAnimationUtils.createCircularReveal(this, width, height, 0f, width.toFloat())
       else
         ViewAnimationUtils.createCircularReveal(this, width, height, width.toFloat(), 0f)
-      anim.duration = 220L
+      anim.duration = 300L
 
       anim.addListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator) {
@@ -28,8 +28,10 @@ class AnimationUtils {
       })
 
       // make the view visible and start the animation
-      if (isShow) {
-        this.visibility = View.VISIBLE
+      this.visibility = if (isShow) {
+        View.VISIBLE
+      } else {
+        View.GONE
       }
       // start the animation
       anim.start()

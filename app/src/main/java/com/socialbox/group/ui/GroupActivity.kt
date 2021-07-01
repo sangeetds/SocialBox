@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
-import com.socialbox.util.AnimationUtils.Companion.circleReveal
+import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.MoviesActivity
 import com.socialbox.user.ui.UserActivity
@@ -67,7 +67,6 @@ class GroupActivity : AppCompatActivity() {
     }
 
     searchView.setOnMenuItemClickListener {
-      search.visibility = View.VISIBLE
       search.circleReveal(true)
       true
     }
@@ -81,7 +80,6 @@ class GroupActivity : AppCompatActivity() {
     }
 
     cancelSearch.setOnClickListener {
-      search.visibility = View.GONE
       search.circleReveal(false)
       groupViewModel.restoreGroups()
     }

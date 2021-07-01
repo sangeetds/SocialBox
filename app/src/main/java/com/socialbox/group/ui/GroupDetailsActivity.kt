@@ -21,7 +21,7 @@ import com.socialbox.R
 import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
-import com.socialbox.util.AnimationUtils.Companion.circleReveal
+import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.movie.ui.AddMovieDialog
 import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint

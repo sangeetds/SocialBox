@@ -1,4 +1,4 @@
-package com.socialbox
+package com.socialbox.common.enums
 
 /**
  * A generic class that holds a value with its loading status.

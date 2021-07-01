@@ -1,4 +1,4 @@
-package com.socialbox.di
+package com.socialbox.common.di
 
 import com.socialbox.group.data.service.MovieService
 import com.socialbox.group.data.service.GroupService

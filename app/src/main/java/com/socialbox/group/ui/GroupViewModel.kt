@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.socialbox.Result.Success
+import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
