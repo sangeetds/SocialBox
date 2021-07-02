@@ -2,10 +2,10 @@ package com.socialbox.group.data
 
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
-import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -31,7 +31,23 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception(errorString))
     }
 
-  suspend fun createGroup(group: Group) = groupService.saveGroup(group)
+  suspend fun createGroup(group: Group) = try {
+    groupService.saveGroup(group).run {
+      when {
+        isSuccessful && body() != null -> {
+          Timber.i("Successfully saved group ${group.name}")
+          Success(body()!!)
+        }
+        else -> {
+          Timber.d("Failed in saving group with error: ${errorBody()?.stringSuspending()}")
+          Error(Exception(errorBody()?.stringSuspending()))
+        }
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    Timber.d(errorString)
+    Error(Exception("Error fetching group details."))
+  }
 
   suspend fun getGroup(groupId: String) =
     try {
@@ -41,7 +57,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
           Timber.i("Successfully fetched group: ${body()!!.id}")
           Success(body()!!)
         } else {
-          Timber.d("Error in fetching group")
+          Timber.d("Error in fetching group details")
           Error(Exception(errorBody()?.stringSuspending()))
         }
       }
@@ -50,6 +66,12 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception("Error fetching group details."))
     }
 
-  suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) =
-    groupService.saveGroupMovies(groupMovies)
+  suspend fun saveGroupMovies(groupMovies: List<GroupMovie>) {
+    groupService.saveGroupMovies(groupMovies).run {
+      when {
+        isSuccessful -> Timber.i("Successfully saved group movies")
+        else -> Timber.d("Failed in saving group with error: ${errorBody()?.stringSuspending()}")
+      }
+    }
+  }
 }

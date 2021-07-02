@@ -43,9 +43,6 @@ class GroupActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.group_activity_layout)
-
-    user = intent.extras?.getParcelable("user") ?: User()
-
     setUpObservables()
     setUpToolbar()
     setUpViews()
@@ -112,8 +109,7 @@ class GroupActivity : AppCompatActivity() {
     findViewById<ExtendedFloatingActionButton>(id.new_group_button).setOnClickListener {
       AddGroupDialog(
         viewModel = groupViewModel,
-        userId = user.id ?: "",
-        groupIds = user.groupsId
+        userId = user.id ?: ""
       ).show(supportFragmentManager.beginTransaction(), "MovieDialog")
     }
 
@@ -126,7 +122,8 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun setUpObservables() {
-    groupViewModel.getGroupsForUser(user.groupsId!!.toList())
+    user = intent.extras?.getParcelable("user")!!
+    groupViewModel.getGroupsForUser(user.groupsId.toList())
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
 

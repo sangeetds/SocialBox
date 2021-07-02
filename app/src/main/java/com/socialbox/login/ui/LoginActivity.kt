@@ -36,24 +36,19 @@ import timber.log.Timber
 class LoginActivity : AppCompatActivity() {
 
   private val loginViewModel: LoginViewModel by viewModels()
-  private lateinit var appImage: ImageView
-  private lateinit var googleLoginButton: SignInButton
-  private lateinit var progressIndicator: CircularProgressIndicator
-  private lateinit var signInButton: MaterialButton
+  private val appImage: ImageView by lazy { findViewById(id.appImage)}
+  private val googleLoginButton: SignInButton by lazy { findViewById(id.googleSignInButton) }
+  private val progressIndicator: CircularProgressIndicator by lazy { findViewById(id.loading_icon) }
+  private val signInButton: MaterialButton by lazy { findViewById(id.signInButton) }
   private lateinit var mGoogleSignInClient: GoogleSignInClient
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    mGoogleSignInClient = googleSignInClient()
     super.onCreate(savedInstanceState)
     setContentView(layout.login_activity_layout)
-
-    googleLoginButton = findViewById(id.googleSignInButton)
-    appImage = findViewById(id.appImage)
-    progressIndicator = findViewById(id.loading_icon)
-
-    darkModeConfigure()
     setUpObserver()
-    setUpButtons()
+    darkModeConfigure()
+    setUpViews()
+    mGoogleSignInClient = googleSignInClient()
   }
 
   private fun darkModeConfigure() {
@@ -77,12 +72,14 @@ class LoginActivity : AppCompatActivity() {
     val account = GoogleSignIn.getLastSignedInAccount(this)
 
     account?.apply {
-      Timber.i("User $displayName already signed in")
+      progressIndicator.visibility = View.VISIBLE
+      Toast.makeText(this@LoginActivity, "Logging in. Please Wait.", Toast.LENGTH_SHORT).show()
       val user = User(id = id, name = displayName, email = email, photoUri = photoUrl)
-      val intent = Intent(this@LoginActivity, GroupActivity::class.java)
-      intent.putExtra("user", user)
-      startActivity(intent)
+      Timber.i("User $displayName already signed in")
+      loginViewModel.login(user)
     }
+
+    if (account == null) signInButton.isEnabled = true
     return mGoogleSignInClient
   }
 
@@ -104,12 +101,12 @@ class LoginActivity : AppCompatActivity() {
     })
   }
 
-  private fun setUpButtons() {
-    signInButton = findViewById(id.signInButton)
-
+  private fun setUpViews() {
     googleLoginButton.setOnClickListener {
       val signInIntent: Intent = mGoogleSignInClient.signInIntent
       startActivityForResult(signInIntent, 1)
+      progressIndicator.visibility = View.VISIBLE
+      Toast.makeText(this@LoginActivity, "Logging in. Please Wait.", Toast.LENGTH_SHORT).show()
     }
 
     signInButton.setOnClickListener {
@@ -137,10 +134,10 @@ class LoginActivity : AppCompatActivity() {
 
     Toast.makeText(applicationContext, "Welcome ${model.name}!", Toast.LENGTH_LONG).show()
 
-    val songsActivity = Intent(this, GroupActivity::class.java)
     Timber.i("Starting HomeActivity with user: $model")
-    songsActivity.putExtra("user", model)
-    startActivity(songsActivity)
+    val intent = Intent(this@LoginActivity, GroupActivity::class.java)
+    intent.putExtra("user", model)
+    startActivity(intent)
     finish()
   }
 
@@ -167,7 +164,6 @@ class LoginActivity : AppCompatActivity() {
 
       val user = User(id = account?.id, name = account?.displayName, email = account?.email, photoUri = account?.photoUrl)
       loginViewModel.login(user)
-      updateUiWithUser(user)
     } catch (e: ApiException) {
       Timber.e("signInResult:failed code=%s with message:%s", e.statusCode, e.message)
       showLoginFailed(e.message ?: "Error Connecting to Google")

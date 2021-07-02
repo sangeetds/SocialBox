@@ -94,22 +94,14 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   private fun setUpObservable() {
     val groupId = intent.getStringExtra("groupId")
-    groupViewModel.getGroup(groupId!!)
-    groupDetailsViewModel.getMovies(groupId)
-
-    groupDetailsViewModel.movieState.observe(this@GroupDetailsActivity, Observer {
-      val movie = it ?: return@Observer
-      moviesAdapter.movies = movie
-      moviesAdapter.notifyDataSetChanged()
-    })
 
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
       supportActionBar?.title = groupDetails.name
-      // if (groupDetails.groupMovieList?.isNotEmpty() == true) {
-      //   moviesAdapter.submitList(groupDetails.groupMovieList)
-      // }
+      if (groupDetails.movieList?.isNotEmpty() == true) {
+        moviesAdapter.submitList(groupDetails.movieList)
+      }
     })
   }
 

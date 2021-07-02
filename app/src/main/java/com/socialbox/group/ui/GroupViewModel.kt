@@ -10,6 +10,7 @@ import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +40,11 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun addGroup(group: Group) = viewModelScope.launch {
-    groupRepository.createGroup(group)
+    Timber.i("Saving group for admin: ${group.adminId}")
+    val result = groupRepository.createGroup(group)
+    if (result is Success) {
+      _groupState.value = result.data
+    }
   }
 
   fun getGroup(groupId: String) = viewModelScope.launch {

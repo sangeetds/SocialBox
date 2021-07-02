@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.socialbox.R
@@ -18,7 +21,6 @@ import timber.log.Timber
 class AddGroupDialog(
   private val viewModel: GroupViewModel,
   private val userId: String,
-  private val groupIds: Set<String>
 ) : DialogFragment() {
 
   private var dialogView: View? = null
@@ -41,14 +43,20 @@ class AddGroupDialog(
       val group =
         Group(name = groupName.text.toString(), memberCount = 0, adminId = userId)
       viewModel.addGroup(group)
-      viewModel.getGroupsForUser(groupIds.toList())
+      Timber.i("Adding Group ${groupName.text} with id: ${group.id} and $userId")
+      Toast.makeText(context, "Adding Group. Please wait.", Toast.LENGTH_SHORT).show()
+    }
+
+    viewModel.groupState.observe(this@AddGroupDialog, Observer {
+      val group = it ?: return@Observer
+
       val intent = Intent(context, GroupDetailsActivity::class.java)
-      Timber.i("Opening Group $groupName with ${group.id} and $userId")
-      intent.putExtra("groupId", group.id)
+      intent.putExtra("group", group)
       intent.putExtra("userId", userId)
       startActivity(intent)
       dismiss()
-    }
+    })
+
     return inflate
   }
 
