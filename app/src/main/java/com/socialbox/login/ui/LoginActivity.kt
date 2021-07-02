@@ -145,6 +145,7 @@ class LoginActivity : AppCompatActivity() {
     Timber.d("Logging failed.")
     Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
     progressIndicator.visibility = View.GONE
+    signInButton.isEnabled = true
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
