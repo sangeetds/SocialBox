@@ -37,7 +37,8 @@ class UserActivity : AppCompatActivity() {
         Timber.i("Logging user out")
         Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
       }

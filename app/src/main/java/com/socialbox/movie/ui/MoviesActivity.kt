@@ -43,7 +43,9 @@ class MoviesActivity : AppCompatActivity() {
     movieViewRecyclerView.layoutManager = LinearLayoutManager(this)
 
     findViewById<MaterialButton>(id.browseGroupsButton).setOnClickListener {
-      startActivity(Intent(this, GroupActivity::class.java))
+      val intent = Intent(this, GroupActivity::class.java)
+      intent.putExtra("user", user)
+      startActivity(intent)
       finish()
     }
   }

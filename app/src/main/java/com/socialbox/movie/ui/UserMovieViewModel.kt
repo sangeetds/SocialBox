@@ -10,6 +10,7 @@ import com.socialbox.movie.data.UserMovieRepository
 import com.socialbox.movie.data.dto.UserMovieDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +20,7 @@ class UserMovieViewModel @Inject constructor(private val userMovieRepository: Us
   val userMovies: LiveData<List<UserMovieDTO>> = _userMovies
 
   fun getUserMovies(userId: String) = viewModelScope.launch {
+    Timber.i("Fetching movies for user: $userId")
     val result = userMovieRepository.getUserMovies(id = userId)
     if (result.isNotEmpty()) _userMovies.value = result
   }

@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
+import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
 
 // Todo: Should it be a list of Group Movie?
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
-
-  var movies = listOf<Movie>()
+class MovieAdapter : ListAdapter<GroupMovie, MovieAdapter.ViewHolder>(MovieItemDiffCallback()) {
 
   class ViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
     val image: ImageView = cardView.findViewById(R.id.movie_image)
@@ -29,17 +29,16 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val movie = movies[position]
+    val movie = getItem(position)
     holder.name.text = movie.name
     holder.ratings.text = holder.ratings.text.toString().format(movie.rating)
   }
 
-  override fun getItemCount() = movies.size
 }
 
-class MovieItemDiffCallback : DiffUtil.ItemCallback<Movie>() {
+class MovieItemDiffCallback : DiffUtil.ItemCallback<GroupMovie>() {
 
-  override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
+  override fun areItemsTheSame(oldItem: GroupMovie, newItem: GroupMovie): Boolean = oldItem == newItem
 
-  override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
+  override fun areContentsTheSame(oldItem: GroupMovie, newItem: GroupMovie): Boolean = oldItem == newItem
 }

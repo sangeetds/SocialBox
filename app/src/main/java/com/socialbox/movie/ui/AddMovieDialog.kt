@@ -33,6 +33,7 @@ class AddMovieDialog(
   private lateinit var selectedTopHeader: MaterialTextView
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    userMovieViewModel.getUserMovies(userId)
     return MaterialAlertDialogBuilder(requireContext(), theme).apply {
       dialogView = onCreateView(LayoutInflater.from(requireContext()), null, savedInstanceState)
       dialogView?.let { onViewCreated(it, savedInstanceState) }
@@ -47,7 +48,6 @@ class AddMovieDialog(
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
     val inflate = inflater.inflate(R.layout.add_movie_dialog, container, false)
-    userMovieViewModel.getUserMovies(userId)
 
     setUpViews(inflate)
     setUpObservables()
