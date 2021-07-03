@@ -8,12 +8,13 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.core.util.size
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R.*
+import com.socialbox.group.data.model.Movie
 import com.socialbox.movie.data.dto.UserMovieDTO
 import com.socialbox.movie.ui.FlipAnimator.flipView
 
@@ -23,9 +24,9 @@ class MovieListAdapter(
   private var reverseAllAnimations: Boolean = false,
   private var currentSelectedIndex: Int = -1,
 ) :
-  ListAdapter<UserMovieDTO, MovieListAdapter.MovieHolder>(UserMovieDiffCallback()) {
+  ListAdapter<Movie, MovieListAdapter.MovieHolder>(MovieDiffCallback()) {
 
-  val selectedItemsList: MutableSet<UserMovieDTO> = mutableSetOf()
+  val selectedItemsList: MutableSet<Movie> = mutableSetOf()
   val selectedItems: SparseBooleanArray = SparseBooleanArray()
   private val animationItemsIndex: SparseBooleanArray = SparseBooleanArray()
 
@@ -133,15 +134,15 @@ class MovieListAdapter(
   }
 }
 
-class UserMovieDiffCallback : DiffUtil.ItemCallback<UserMovieDTO>() {
+class MovieDiffCallback : ItemCallback<Movie>() {
 
   override fun areItemsTheSame(
-    oldItem: UserMovieDTO,
-    newItem: UserMovieDTO,
+    oldItem: Movie,
+    newItem: Movie,
   ): Boolean = oldItem == newItem
 
   override fun areContentsTheSame(
-    oldItem: UserMovieDTO,
-    newItem: UserMovieDTO,
+    oldItem: Movie,
+    newItem: Movie,
   ): Boolean = oldItem == newItem
 }

@@ -16,7 +16,7 @@ import com.socialbox.group.data.model.Movie
 
 class MovieDisplayAdapter(
   val context: Context,
-  val movieViewModel: MovieViewModel,
+  private val movieViewModel: MovieViewModel,
 ) : ListAdapter<Movie, MovieDisplayAdapter.MovieHolder>(MovieDiffCallback()) {
 
   class MovieHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,17 +44,4 @@ class MovieDisplayAdapter(
       // movieListAdapter.submitList(movies)
     })
   }
-}
-
-class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
-
-  override fun areItemsTheSame(
-    oldItem: Movie,
-    newItem: Movie,
-  ): Boolean = oldItem == newItem
-
-  override fun areContentsTheSame(
-    oldItem: Movie,
-    newItem: Movie,
-  ): Boolean = oldItem == newItem
 }

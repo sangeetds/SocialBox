@@ -10,6 +10,7 @@ import com.socialbox.group.data.MovieRepository
 import com.socialbox.group.data.model.Movie
 import com.socialbox.login.data.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,20 +26,16 @@ class MovieViewModel @Inject constructor(
   }
   val latestMovies: LiveData<List<Movie>> = _latestMovies
 
-  private val _userMovies = MutableLiveData<List<Movie>>()
-  val userMovie: LiveData<List<Movie>> = _userMovies
+  private val _movies = MutableLiveData<List<Movie>>()
+  val movies: LiveData<List<Movie>> = _movies
 
-  fun getUserMovies(userId: String) = viewModelScope.launch {
-    val userMovies = userRepository.getAllMovies(userId)
-    if (userMovies is Result.Success) {
-      _userMovies.value = userMovies.data.map {
-        Movie(
-          id = it.id,
-          name = it.name,
-          rating = it.rating,
-          reviews = listOf(),
-          photoURL = it.photoURL
-        )
+  fun getUserMovies(searchQuery: String) = viewModelScope.launch {
+    val query = searchQuery.trim()
+    delay(500)
+    if (query == searchQuery.trim()) {
+      val movies = movieRepository.searchMovie(searchQuery)
+      if (movies is Result.Success) {
+        _movies.value = movies.data
       }
     }
   }

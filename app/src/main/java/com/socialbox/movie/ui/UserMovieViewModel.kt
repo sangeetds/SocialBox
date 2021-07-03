@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.socialbox.group.data.GroupRepository
-import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.movie.data.UserMovieRepository
 import com.socialbox.movie.data.dto.UserMovieDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +12,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class UserMovieViewModel @Inject constructor(private val userMovieRepository: UserMovieRepository, private val groupRepository: GroupRepository) : ViewModel() {
+class UserMovieViewModel @Inject constructor(private val userMovieRepository: UserMovieRepository) :
+  ViewModel() {
 
   private val _userMovies = MutableLiveData<List<UserMovieDTO>>()
   val userMovies: LiveData<List<UserMovieDTO>> = _userMovies
@@ -23,9 +22,5 @@ class UserMovieViewModel @Inject constructor(private val userMovieRepository: Us
     Timber.i("Fetching movies for user: $userId")
     val result = userMovieRepository.getUserMovies(id = userId)
     if (result.isNotEmpty()) _userMovies.value = result
-  }
-
-  fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {
-    groupRepository.saveGroupMovies(groupMovies)
   }
 }

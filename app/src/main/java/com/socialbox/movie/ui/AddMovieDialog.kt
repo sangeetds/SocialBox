@@ -18,11 +18,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
 import com.socialbox.group.data.model.GroupMovie
+import com.socialbox.group.data.model.Movie
+import com.socialbox.group.ui.GroupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddMovieDialog(
   private val userMovieViewModel: UserMovieViewModel,
+  private val groupViewModel: GroupViewModel,
   private val userId: String,
   val groupId: String
 ) : DialogFragment() {
@@ -59,7 +62,7 @@ class AddMovieDialog(
     userMovieViewModel.userMovies.observe(this@AddMovieDialog, Observer {
       val movies = it ?: return@Observer
 
-      adapter.submitList(movies)
+      adapter.submitList(movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
     })
   }
 
@@ -69,7 +72,7 @@ class AddMovieDialog(
     val recyclerView = inflate.findViewById<RecyclerView>(R.id.movieListRecyclerView)
     val mLayoutManager: LayoutManager = LinearLayoutManager(context)
     val updateCount = updateCount(addMovieButton, clearSelection)
-    topHeader = inflate.findViewById(R.id.top_header)
+    topHeader = inflate.findViewById(R.id.searchMoviesText)
     selectedTopHeader = inflate.findViewById(R.id.selected_top_header)
     adapter = MovieListAdapter(requireContext(), updateCount)
 
@@ -82,7 +85,7 @@ class AddMovieDialog(
     addMovieButton.isEnabled = false
     addMovieButton.setOnClickListener {
       val groupMovies = toGroupMovies()
-      userMovieViewModel.addMovies(groupMovies)
+      groupViewModel.addMovies(groupMovies)
       dismiss()
     }
 
@@ -94,7 +97,7 @@ class AddMovieDialog(
     }
   }
 
-  private fun toGroupMovies() = adapter.selectedItemsList.map { m ->
+  private fun toGroupMovies() = adapter.selectedItemsList.map { m: Movie ->
     GroupMovie(
       name = m.name,
       groupId = groupId,
