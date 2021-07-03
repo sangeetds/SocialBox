@@ -22,18 +22,19 @@ import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
+import com.socialbox.group.data.model.Group
 import com.socialbox.movie.ui.AddMovieDialog
 import com.socialbox.movie.ui.MovieViewModel
 import com.socialbox.movie.ui.SearchMovieDialog
 import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupDetailsActivity : AppCompatActivity() {
 
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
-  private val groupDetailsViewModel: GroupDetailsViewModel by viewModels()
   private val movieViewModel: MovieViewModel by viewModels()
   private val userMovieViewModel: UserMovieViewModel by viewModels()
   private lateinit var mToolbar: MaterialToolbar
@@ -58,6 +59,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     setUpObservable()
     setUpFabMenu()
+    Timber.i("Group Details activity set up.")
   }
 
   private fun setUpFabMenu() {
@@ -100,8 +102,6 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    val groupId = intent.getStringExtra("groupId")
-
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
@@ -112,9 +112,17 @@ class GroupDetailsActivity : AppCompatActivity() {
     })
   }
 
+  override fun onBackPressed() {
+    super.onBackPressed()
+    finish()
+  }
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
     val searchView: MenuItem = menu!!.findItem(id.search)
+    val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
+    val group = intent.extras?.getParcelable("group") as Group?
+    toolbar.title = group?.name ?: ""
 
     searchView.setOnMenuItemClickListener {
       search.visibility = View.VISIBLE

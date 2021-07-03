@@ -43,19 +43,18 @@ class AddGroupDialog(
       val group =
         Group(name = groupName.text.toString(), memberCount = 0, adminId = userId)
       viewModel.addGroup(group)
+      viewModel.groupState.observe(this@AddGroupDialog, Observer {
+        val newGroup = it ?: return@Observer
+
+        val intent = Intent(context, GroupDetailsActivity::class.java)
+        intent.putExtra("group", newGroup)
+        intent.putExtra("userId", userId)
+        startActivity(intent)
+        dismiss()
+      })
       Timber.i("Adding Group ${groupName.text} with id: ${group.id} and $userId")
       Toast.makeText(context, "Adding Group. Please wait.", Toast.LENGTH_SHORT).show()
     }
-
-    viewModel.groupState.observe(this@AddGroupDialog, Observer {
-      val group = it ?: return@Observer
-
-      val intent = Intent(context, GroupDetailsActivity::class.java)
-      intent.putExtra("group", group)
-      intent.putExtra("userId", userId)
-      startActivity(intent)
-      dismiss()
-    })
 
     return inflate
   }
