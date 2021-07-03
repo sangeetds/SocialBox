@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
-import com.socialbox.R.*
+import com.socialbox.R.id
+import com.socialbox.R.layout
+import com.socialbox.R.string
 import com.socialbox.group.data.model.Movie
-import com.socialbox.movie.data.dto.UserMovieDTO
 import com.socialbox.movie.ui.FlipAnimator.flipView
+import com.squareup.picasso.Picasso
 
 class MovieListAdapter(
   val context: Context,
@@ -31,7 +33,6 @@ class MovieListAdapter(
   private val animationItemsIndex: SparseBooleanArray = SparseBooleanArray()
 
   inner class MovieHolder(cardView: View) : RecyclerView.ViewHolder(cardView), OnLongClickListener {
-
     val image: ShapeableImageView = cardView.findViewById(id.user_movie_image)
     val movieName: MaterialTextView = cardView.findViewById(id.user_movie_name)
     val imageBack: ShapeableImageView = cardView.findViewById(id.card_selected)
@@ -60,7 +61,8 @@ class MovieListAdapter(
     val userMovie = getItem(position)
     holder.movieName.text = userMovie.name
     holder.itemView.isActivated = selectedItems.get(position, false)
-
+    Picasso.get().load("${context.getString(string.image_base_url)}${userMovie.photoURL}")
+      .into(holder.image)
     applyIconAnimation(holder, position)
     applyClickEvents(holder, position)
   }
@@ -94,8 +96,10 @@ class MovieListAdapter(
       resetIconYAxis(holder.image)
       holder.image.visibility = View.VISIBLE
       holder.image.imageAlpha = 1
-      if (reverseAllAnimations && animationItemsIndex.get(position,
-          false) || currentSelectedIndex == position
+      if (reverseAllAnimations && animationItemsIndex.get(
+          position,
+          false
+        ) || currentSelectedIndex == position
       ) {
         flipView(context, holder.imageBack, holder.image, false)
         resetCurrentIndex()

@@ -17,6 +17,6 @@ interface MovieService {
   @POST("/movie")
   suspend fun saveMovie(movie: Movie): Response<Movie>
 
-  @GET("/search")
+  @GET("/movie/search")
   suspend fun searchMovie(@Query("name") searchQuery: String): Response<List<Movie>>
 }

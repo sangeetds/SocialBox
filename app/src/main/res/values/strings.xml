@@ -59,4 +59,5 @@
   <string name="search_movies">Search Movies</string>
   <string name="s_movies">%s Movies</string>
   <string name="search_for_movies">Search for Movies</string>
+  <string name="image_base_url">https://image.tmdb.org/t/p/w500</string>
 </resources>

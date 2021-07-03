@@ -52,6 +52,7 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
     }
 
   suspend fun searchMovie(searchQuery: String) = try {
+    Timber.i("Making query for $searchQuery")
     movieService.searchMovie(searchQuery).run {
       when {
         isSuccessful && body() != null -> {

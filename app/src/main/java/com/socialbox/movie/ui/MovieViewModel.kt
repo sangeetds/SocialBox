@@ -10,8 +10,8 @@ import com.socialbox.group.data.MovieRepository
 import com.socialbox.group.data.model.Movie
 import com.socialbox.login.data.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,13 +30,10 @@ class MovieViewModel @Inject constructor(
   val movies: LiveData<List<Movie>> = _movies
 
   fun getUserMovies(searchQuery: String) = viewModelScope.launch {
-    val query = searchQuery.trim()
-    delay(500)
-    if (query == searchQuery.trim()) {
-      val movies = movieRepository.searchMovie(searchQuery)
-      if (movies is Result.Success) {
-        _movies.value = movies.data
-      }
+    val movies = movieRepository.searchMovie(searchQuery.trim())
+    if (movies is Result.Success) {
+      Timber.i("Search Successful loading ${movies.data.size} movies.")
+      _movies.value = movies.data
     }
   }
 

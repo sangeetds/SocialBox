@@ -2,9 +2,12 @@ package com.socialbox.movie.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -21,6 +24,10 @@ import com.socialbox.R
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.ui.GroupViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchMovieDialog(
   private val movieViewModel: MovieViewModel,
@@ -31,7 +38,7 @@ class SearchMovieDialog(
 
   private var dialogView: View? = null
   private lateinit var adapter: MovieListAdapter
-  private lateinit var topHeader: MaterialTextView
+  private lateinit var topHeader: EditText
   private lateinit var selectedTopHeader: MaterialTextView
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -94,9 +101,25 @@ class SearchMovieDialog(
       clearSelection.visibility = View.GONE
     }
 
-    topHeader.doOnTextChanged { text, _, _, _ ->
-      text?.let { movieViewModel.getUserMovies(it.toString()) }
-    }
+    topHeader.addTextChangedListener(object : TextWatcher {
+      private var searchFor = topHeader.text.toString()
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        val searchText = s.toString().trim()
+        if (searchFor != searchText) {
+          searchFor = searchText
+          CoroutineScope(Dispatchers.Main).launch {
+            delay(500)
+            if (searchText == searchFor) {
+              movieViewModel.getUserMovies(searchText)
+            }
+          }
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {}
+    })
   }
 
   override fun getView(): View? {
