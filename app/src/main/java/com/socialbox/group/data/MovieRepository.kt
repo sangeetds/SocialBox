@@ -1,5 +1,8 @@
 package com.socialbox.group.data
 
+import com.socialbox.common.enums.Result
+import com.socialbox.common.enums.Result.Error
+import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.data.service.MovieService
 import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
@@ -9,9 +12,9 @@ import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val movieService: MovieService) {
 
-  suspend fun getMovies(groupId: String) =
+  suspend fun getMoviesForGroup(groupId: String) =
     try {
-      movieService.getMovies(groupId).run {
+      movieService.getMoviesForGroup(groupId).run {
         when {
           isSuccessful && body() != null -> body()!!
           else -> {
@@ -47,4 +50,23 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
     } catch (exception: Exception) {
       Timber.e("Failed to save movie with error $exception")
     }
+
+  suspend fun searchMovie(searchQuery: String) = try {
+    movieService.searchMovie(searchQuery).run {
+      when {
+        isSuccessful && body() != null -> {
+          Success(body()!!)
+        }
+        else -> {
+          val errorMessage = "Failed to fetch movies with error: ${errorBody()?.stringSuspending()}"
+          Timber.d(errorMessage)
+          Error(Exception(errorMessage))
+        }
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    val errorMessage = "Failed to connect with error $exception"
+    Timber.e(errorMessage)
+    Error(Exception(errorMessage))
+  }
 }

@@ -23,6 +23,8 @@ import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.movie.ui.AddMovieDialog
+import com.socialbox.movie.ui.MovieViewModel
+import com.socialbox.movie.ui.SearchMovieDialog
 import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +34,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
   private val groupDetailsViewModel: GroupDetailsViewModel by viewModels()
+  private val movieViewModel: MovieViewModel by viewModels()
   private val userMovieViewModel: UserMovieViewModel by viewModels()
   private lateinit var mToolbar: MaterialToolbar
   private lateinit var moviesAdapter: MovieAdapter
@@ -80,13 +83,17 @@ class GroupDetailsActivity : AppCompatActivity() {
           id.fab_action1 -> {
             val userId = intent.getStringExtra("userId") ?: ""
             val groupId = intent.getStringExtra("groupId") ?: ""
-            val addMovieDialog = AddMovieDialog(userMovieViewModel, userId, groupId)
+            val addMovieDialog = AddMovieDialog(userMovieViewModel, groupViewModel, userId, groupId)
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
             addMovieDialog.dialog?.setOnDismissListener {
               groupViewModel.getGroup(groupId)
             }
           }
-          id.fab_action2 -> { }
+          id.fab_action2 -> {
+            val groupId = intent.getStringExtra("groupId") ?: ""
+            val searchMovieDialog = SearchMovieDialog(movieViewModel, groupId, groupViewModel)
+            searchMovieDialog.show(supportFragmentManager.beginTransaction(), "SearchMovieDialog")
+          }
         }
         false
       })

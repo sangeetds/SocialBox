@@ -8,6 +8,7 @@ import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
+import com.socialbox.group.data.model.GroupMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -60,5 +61,9 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
 
   fun restoreGroups() {
     _groupListState.value = cachedList
+  }
+
+  fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {
+    groupRepository.saveGroupMovies(groupMovies)
   }
 }

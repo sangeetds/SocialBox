@@ -19,7 +19,7 @@ class GroupDetailsViewModel @Inject constructor(private val movieRepository: Mov
   val movieState: LiveData<List<Movie>> = _movieState
 
   fun getMovies(groupId: String) = viewModelScope.launch {
-    val movies = movieRepository.getMovies(groupId)
+    val movies = movieRepository.getMoviesForGroup(groupId)
     Timber.i("Successfully fetched ${movies.joinToString(",") { m -> m.name }}")
     _movieState.value = movies
     cachedList.clear()
