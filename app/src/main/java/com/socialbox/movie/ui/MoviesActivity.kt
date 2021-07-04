@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.socialbox.R
@@ -51,6 +52,7 @@ class MoviesActivity : AppCompatActivity() {
   }
 
   private val setSearchMode = {
+    fadeRecyclerView()
     expandSearchView()
     val searchMovieListAdapter = MovieListAdapter(context = this, updateCount = null)
     val searchMoviesRecyclerView = findViewById<RecyclerView>(R.id.searchMoviesRecyclerView)
@@ -58,16 +60,11 @@ class MoviesActivity : AppCompatActivity() {
     searchMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
   }
 
-  private fun expandSearchView() = CoroutineScope(Dispatchers.Main).launch {
+  private fun expandSearchView() {
     val toolBarView: MaterialToolbar = findViewById(id.material_tool_bar)
     val slideAnimator = ValueAnimator
-      .ofInt(toolBarView.height, toolBarView.height + 200)
-      .setDuration(700)
-    val editText: EditText = findViewById(id.searchMovieEditText)
-    editText.visibility = View.VISIBLE
-
-    toolBarView.isTitleCentered = true
-    toolBarView.setTitleTextAppearance(this@MoviesActivity, style.Toolbar_TitleText)
+      .ofInt(toolBarView.height, toolBarView.height + 100)
+      .setDuration(1000)
 
     slideAnimator.addUpdateListener { animation1 ->
       val value = animation1.animatedValue as Int
@@ -79,13 +76,14 @@ class MoviesActivity : AppCompatActivity() {
     animationSet.interpolator = AccelerateDecelerateInterpolator()
     animationSet.play(slideAnimator)
     animationSet.start()
-
-    fadeRecyclerView()
+    val editText: EditText = findViewById(id.searchMovieEditText)
+    editText.visibility = View.VISIBLE
+    toolBarView.setTitleTextAppearance(this@MoviesActivity, style.Toolbar_TitleText)
   }
 
-  private fun fadeRecyclerView() = CoroutineScope(Dispatchers.Main).launch {
+  private fun fadeRecyclerView() {
     val transition: Transition = Fade()
-    transition.duration = 600
+    transition.duration = 300
     transition.addTarget(id.movieViewRecyclerView)
     TransitionManager.beginDelayedTransition(
       findViewById(id.movieConstraintLayout),
