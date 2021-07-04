@@ -22,7 +22,9 @@ import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
+import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
+import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.AddMovieDialog
 import com.socialbox.movie.ui.MovieViewModel
 import com.socialbox.movie.ui.SearchMovieDialog
@@ -83,12 +85,12 @@ class GroupDetailsActivity : AppCompatActivity() {
             return@OnActionSelectedListener true // false will close it without animation
           }
           id.fab_action1 -> {
-            val userId = intent.getStringExtra("userId") ?: ""
-            val groupId = intent.getStringExtra("groupId") ?: ""
-            val addMovieDialog = AddMovieDialog(userMovieViewModel, groupViewModel, userId, groupId)
+            val user = intent.getStringExtra("user") as User?
+            val group = intent.getStringExtra("group") as Group?
+            val addMovieDialog = AddMovieDialog(userMovieViewModel, groupViewModel, user?.id!!, groupId = group?.id!!)
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
             addMovieDialog.dialog?.setOnDismissListener {
-              groupViewModel.getGroup(groupId)
+              groupViewModel.getGroup(group.id)
             }
           }
           id.fab_action2 -> {
@@ -121,8 +123,9 @@ class GroupDetailsActivity : AppCompatActivity() {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
     val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
+    val groupDTO = intent.extras?.getParcelable("groupDTO") as GroupDTO?
     val group = intent.extras?.getParcelable("group") as Group?
-    toolbar.title = group?.name ?: ""
+    toolbar.title = group?.name ?: (groupDTO?.name ?: "SocialBox")
 
     searchView.setOnMenuItemClickListener {
       search.visibility = View.VISIBLE

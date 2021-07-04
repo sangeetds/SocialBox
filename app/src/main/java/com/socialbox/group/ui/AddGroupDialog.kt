@@ -16,11 +16,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.socialbox.R
 import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
+import com.socialbox.login.data.model.User
 import timber.log.Timber
 
 class AddGroupDialog(
   private val viewModel: GroupViewModel,
-  private val userId: String,
+  private val user: User,
 ) : DialogFragment() {
 
   private var dialogView: View? = null
@@ -41,18 +42,20 @@ class AddGroupDialog(
 
     createNewGroupButton.setOnClickListener {
       val group =
-        Group(name = groupName.text.toString(), memberCount = 0, adminId = userId)
+        Group(name = groupName.text.toString(), memberCount = 1, adminId = user.id!!)
       viewModel.addGroup(group)
       viewModel.groupState.observe(this@AddGroupDialog, Observer {
         val newGroup = it ?: return@Observer
 
+        Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.id}")
+        user.groupsId.add(newGroup.id!!)
+        viewModel.getGroupsForUser(user.groupsId.toList())
         val intent = Intent(context, GroupDetailsActivity::class.java)
         intent.putExtra("group", newGroup)
-        intent.putExtra("userId", userId)
+        intent.putExtra("user", user)
         startActivity(intent)
         dismiss()
       })
-      Timber.i("Adding Group ${groupName.text} with id: ${group.id} and $userId")
       Toast.makeText(context, "Adding Group. Please wait.", Toast.LENGTH_SHORT).show()
     }
 

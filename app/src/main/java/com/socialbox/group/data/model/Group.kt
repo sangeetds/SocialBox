@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Group(
-  val id: String = "",
+  val id: String? = null,
   val name: String,
   val movieList: List<GroupMovie>? = listOf(),
   val usersId: Set<String>? = setOf(),
