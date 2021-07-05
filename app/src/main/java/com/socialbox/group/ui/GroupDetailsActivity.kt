@@ -53,7 +53,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
     addMovieButton = findViewById(id.add_movie_floating_button)
-    moviesAdapter = MovieAdapter()
+    moviesAdapter = MovieAdapter(url = getString(string.image_base_url))
     recyclerView = findViewById(id.movie_list)
     recyclerView.adapter = moviesAdapter
     recyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -70,13 +70,15 @@ class GroupDetailsActivity : AppCompatActivity() {
         .setLabel(string.add_movie_from_collection)
         .setLabelBackgroundColor(Color.CYAN)
         .setLabelColor(Color.BLACK)
-        .create())
+        .create()
+    )
     addMovieButton.addActionItem(
       Builder(id.fab_action2, drawable.ic_baseline_search_24)
         .setLabel(string.search_new_movie)
         .setLabelBackgroundColor(Color.CYAN)
         .setLabelColor(Color.BLACK)
-        .create())
+        .create()
+    )
     addMovieButton.setOnActionSelectedListener(
       SpeedDialView.OnActionSelectedListener { actionItem ->
         when (actionItem.id) {
@@ -86,16 +88,24 @@ class GroupDetailsActivity : AppCompatActivity() {
           }
           id.fab_action1 -> {
             val user = intent.getStringExtra("user") as User?
-            val group = intent.getStringExtra("group") as Group?
-            val addMovieDialog = AddMovieDialog(userMovieViewModel, groupViewModel, user?.id!!, groupId = group?.id!!)
+            val group = intent.getParcelableExtra<GroupDTO>("groupDTO")
+            val addMovieDialog = AddMovieDialog(
+              userMovieViewModel,
+              groupViewModel,
+              user?.id!!,
+              groupId = group?.id!!,
+              url = this.getString(string.image_base_url)
+            )
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
-            addMovieDialog.dialog?.setOnDismissListener {
-              groupViewModel.getGroup(group.id)
-            }
           }
           id.fab_action2 -> {
-            val groupId = intent.getStringExtra("groupId") ?: ""
-            val searchMovieDialog = SearchMovieDialog(movieViewModel, groupId, groupViewModel)
+            val group = intent.getParcelableExtra<GroupDTO>("groupDTO")
+            val searchMovieDialog = SearchMovieDialog(
+              movieViewModel,
+              group?.id ?: "",
+              url = getString(string.image_base_url),
+              groupViewModel = groupViewModel
+            )
             searchMovieDialog.show(supportFragmentManager.beginTransaction(), "SearchMovieDialog")
           }
         }
@@ -104,6 +114,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
+    groupViewModel.getGroup(groupId = (intent.getParcelableExtra<GroupDTO>("groupDTO"))?.id ?: "")
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
@@ -121,7 +132,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
-    val searchView: MenuItem = menu!!.findItem(id.search)
+    val searchView: MenuItem = menu!!.findItem(id.searchMovieName)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
     val groupDTO = intent.extras?.getParcelable("groupDTO") as GroupDTO?
     val group = intent.extras?.getParcelable("group") as Group?

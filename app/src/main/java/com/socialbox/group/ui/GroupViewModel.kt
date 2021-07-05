@@ -49,6 +49,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun getGroup(groupId: String) = viewModelScope.launch {
+    Timber.i("Fetching details about the group $groupId")
     val result = groupRepository.getGroup(groupId)
     if (result is Success) {
       _groupState.value = result.data

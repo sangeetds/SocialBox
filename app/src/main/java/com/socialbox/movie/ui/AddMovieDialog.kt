@@ -27,12 +27,14 @@ class AddMovieDialog(
   private val userMovieViewModel: UserMovieViewModel,
   private val groupViewModel: GroupViewModel,
   private val userId: String,
-  val groupId: String
+  val groupId: String,
+  private val url: String
 ) : DialogFragment() {
 
   private var dialogView: View? = null
   private lateinit var adapter: MovieListAdapter
   private lateinit var topHeader: MaterialTextView
+  private lateinit var recyclerView: RecyclerView
   private lateinit var selectedTopHeader: MaterialTextView
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -62,24 +64,25 @@ class AddMovieDialog(
     userMovieViewModel.userMovies.observe(this@AddMovieDialog, Observer {
       val movies = it ?: return@Observer
 
-      adapter.submitList(movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
+      adapter.movies = (movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
+      (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
     })
   }
 
   private fun setUpViews(inflate: View) {
     val clearSelection = inflate.findViewById<ImageView>(R.id.clear)
     val addMovieButton = inflate.findViewById<MaterialButton>(R.id.addMovieButton)
-    val recyclerView = inflate.findViewById<RecyclerView>(R.id.movieListRecyclerView)
+    recyclerView = inflate.findViewById(R.id.movieListRecyclerView)
     val mLayoutManager: LayoutManager = LinearLayoutManager(context)
     val updateCount = updateCount(addMovieButton, clearSelection)
     topHeader = inflate.findViewById(R.id.searchMoviesText)
     selectedTopHeader = inflate.findViewById(R.id.selected_top_header)
-    adapter = MovieListAdapter(requireContext(), updateCount)
+    adapter = MovieListAdapter(requireContext(), updateCount, url = url)
 
     recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+    recyclerView.adapter = adapter
     recyclerView.layoutManager = mLayoutManager
     recyclerView.itemAnimator = DefaultItemAnimator()
-    recyclerView.adapter = adapter
     recyclerView.setHasFixedSize(true)
 
     addMovieButton.isEnabled = false

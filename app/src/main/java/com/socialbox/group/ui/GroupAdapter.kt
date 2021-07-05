@@ -37,7 +37,7 @@ class GroupAdapter(val context: Context, val user: User?) :
     val group = getItem(position)
 
     holder.itemView.setOnClickListener {
-      Timber.i("Opening groups ${group.name}")
+      Timber.i("Opening groups $group")
       val intent = Intent(context, GroupDetailsActivity::class.java)
       intent.putExtra("groupDTO", group)
       intent.putExtra("user", user)

@@ -21,6 +21,6 @@ interface GroupService {
   @GET("/group/{id}")
   suspend fun getGroup(@Path("id") groupId: String): Response<Group>
 
-  @GET("/group/movie")
-  suspend fun saveGroupMovies(@Body groupMovies: List<GroupMovie>): Response<GroupMovie>
+  @POST("/group/movie")
+  suspend fun saveGroupMovies(@Body groupMovies: List<GroupMovie>): Response<List<GroupMovie>>
 }

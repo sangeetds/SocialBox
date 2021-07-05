@@ -6,10 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GroupMovie(
-  val id: String = "",
+  val id: String? = null,
   val groupId: String,
   val name: String = "",
-  @Json(name = "photoUrl") val image: String = "",
+  val photoUrl: String = "",
   val rating: Double = 0.0,
   val votes: Int = 0,
 ) : Parcelable

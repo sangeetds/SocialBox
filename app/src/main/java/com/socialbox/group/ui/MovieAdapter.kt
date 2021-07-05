@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.group.data.model.GroupMovie
-import com.socialbox.group.data.model.Movie
+import com.squareup.picasso.Picasso
 
 // Todo: Should it be a list of Group Movie?
-class MovieAdapter : ListAdapter<GroupMovie, MovieAdapter.ViewHolder>(MovieItemDiffCallback()) {
+class MovieAdapter(val url: String) : ListAdapter<GroupMovie, MovieAdapter.ViewHolder>(MovieItemDiffCallback()) {
 
   class ViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
     val image: ImageView = cardView.findViewById(R.id.movie_image)
@@ -32,6 +32,8 @@ class MovieAdapter : ListAdapter<GroupMovie, MovieAdapter.ViewHolder>(MovieItemD
     val movie = getItem(position)
     holder.name.text = movie.name
     holder.ratings.text = holder.ratings.text.toString().format(movie.rating)
+    Picasso.get().isLoggingEnabled = true
+    Picasso.get().load("$url${movie.photoUrl}").into(holder.image)
   }
 
 }

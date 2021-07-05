@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
@@ -44,4 +45,17 @@ class MovieDisplayAdapter(
       // movieListAdapter.submitList(movies)
     })
   }
+}
+
+class MovieDiffCallback : ItemCallback<Movie>() {
+
+  override fun areItemsTheSame(
+    oldItem: Movie,
+    newItem: Movie,
+  ): Boolean = oldItem == newItem
+
+  override fun areContentsTheSame(
+    oldItem: Movie,
+    newItem: Movie,
+  ): Boolean = oldItem == newItem
 }
