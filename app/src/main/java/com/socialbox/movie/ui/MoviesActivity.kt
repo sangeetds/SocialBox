@@ -54,7 +54,7 @@ class MoviesActivity : AppCompatActivity() {
   private val setSearchMode = {
     fadeRecyclerView()
     expandSearchView()
-    val searchMovieListAdapter = MovieListAdapter(context = this, updateCount = null)
+    val searchMovieListAdapter = MovieListAdapter(context = this, updateCount = null, url = getString(R.string.image_base_url))
     val searchMoviesRecyclerView = findViewById<RecyclerView>(R.id.searchMoviesRecyclerView)
     searchMoviesRecyclerView.adapter = searchMovieListAdapter
     searchMoviesRecyclerView.layoutManager = LinearLayoutManager(this)

@@ -7,10 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.compose.ui.graphics.Color
+import androidx.core.util.forEach
 import androidx.core.util.size
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R.id
@@ -19,23 +24,29 @@ import com.socialbox.R.string
 import com.socialbox.group.data.model.Movie
 import com.socialbox.movie.ui.FlipAnimator.flipView
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
 class MovieListAdapter(
   val context: Context,
   val updateCount: ((Int) -> Unit)?,
+  private val url: String,
   private var reverseAllAnimations: Boolean = false,
   private var currentSelectedIndex: Int = -1,
 ) :
-  ListAdapter<Movie, MovieListAdapter.MovieHolder>(MovieDiffCallback()) {
+  RecyclerView.Adapter<MovieListAdapter.MovieHolder>() {
+
+  var movies = listOf<Movie>()
 
   val selectedItemsList: MutableSet<Movie> = mutableSetOf()
   val selectedItems: SparseBooleanArray = SparseBooleanArray()
   private val animationItemsIndex: SparseBooleanArray = SparseBooleanArray()
 
   inner class MovieHolder(cardView: View) : RecyclerView.ViewHolder(cardView), OnLongClickListener {
-    val image: ShapeableImageView = cardView.findViewById(id.user_movie_image)
-    val movieName: MaterialTextView = cardView.findViewById(id.user_movie_name)
-    val imageBack: ShapeableImageView = cardView.findViewById(id.card_selected)
+    val card: MaterialCardView = cardView.findViewById(id.searchMovieCard)
+    val image: CircleImageView = cardView.findViewById(id.userMovieImage)
+    val movieName: TextView = cardView.findViewById(id.movieName)
+    val imageBack: CircleImageView = cardView.findViewById(id.cardSelected)
 
     override fun onLongClick(view: View): Boolean {
       onRowLongClicked(absoluteAdapterPosition)
@@ -58,10 +69,10 @@ class MovieListAdapter(
     holder: MovieHolder,
     position: Int,
   ) {
-    val userMovie = getItem(position)
+    val userMovie = movies[position]
     holder.movieName.text = userMovie.name
     holder.itemView.isActivated = selectedItems.get(position, false)
-    Picasso.get().load("${context.getString(string.image_base_url)}${userMovie.photoURL}")
+    Picasso.get().load("${url}${userMovie.photoURL}").resize(50,50)
       .into(holder.image)
     applyIconAnimation(holder, position)
     applyClickEvents(holder, position)
@@ -91,6 +102,7 @@ class MovieListAdapter(
         flipView(context, holder.imageBack, holder.image, true)
         resetCurrentIndex()
       }
+      holder.card.setCardBackgroundColor(android.graphics.Color.parseColor("#B3E5FC"))
     } else {
       holder.imageBack.visibility = View.GONE
       resetIconYAxis(holder.image)
@@ -104,6 +116,7 @@ class MovieListAdapter(
         flipView(context, holder.imageBack, holder.image, false)
         resetCurrentIndex()
       }
+      holder.card.setCardBackgroundColor((android.graphics.Color.parseColor("#FFFFFF")))
     }
   }
 
@@ -125,28 +138,26 @@ class MovieListAdapter(
     currentSelectedIndex = pos
     if (selectedItems[pos, false]) {
       selectedItems.delete(pos)
-      selectedItemsList.remove(getItem(pos))
+      selectedItemsList.remove(movies[pos])
       animationItemsIndex.delete(pos)
-      updateCount?.invoke(selectedItems.size)
+      updateCount?.invoke(selectedItemsList.size)
     } else {
       selectedItems.put(pos, true)
-      selectedItemsList.add(getItem(pos))
+      selectedItemsList.add(movies[pos])
       animationItemsIndex.put(pos, true)
-      updateCount?.invoke(selectedItems.size)
+      updateCount?.invoke(selectedItemsList.size)
     }
     notifyItemChanged(pos)
   }
-}
 
-class MovieDiffCallback : ItemCallback<Movie>() {
+  fun clearSelection() {
+    val itemsToChangeView = mutableListOf<Int>()
+    selectedItems.forEach { key, _ -> itemsToChangeView.add(key) }
+    selectedItems.clear()
+    selectedItemsList.clear()
+    animationItemsIndex.clear()
+    itemsToChangeView.forEach { k -> notifyItemChanged(k) }
+  }
 
-  override fun areItemsTheSame(
-    oldItem: Movie,
-    newItem: Movie,
-  ): Boolean = oldItem == newItem
-
-  override fun areContentsTheSame(
-    oldItem: Movie,
-    newItem: Movie,
-  ): Boolean = oldItem == newItem
+  override fun getItemCount() = movies.size
 }

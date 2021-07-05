@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".movie.ui.AddMovieDialog"
+    tools:context=".movie.ui.SearchMovieDialog"
     >
 
   <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/movieListRecyclerView"
+      android:id="@+id/searchMovieRecycleView"
       android:layout_width="match_parent"
       android:layout_height="200dp"
-      android:layout_margin="5dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/selectCardView"
+      app:layout_constraintTop_toBottomOf="@+id/select"
       tools:listitem="@layout/search_movie_card_layout"
       />
 
   <com.google.android.material.card.MaterialCardView
-      android:id="@+id/selectCardView"
+      android:id="@+id/select"
       android:layout_width="match_parent"
       android:layout_height="40dp"
-      android:elevation="5dp"
+      android:translationZ="10dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       >
     <EditText
-        android:id="@+id/searchMoviesText"
+        android:id="@+id/searchMovieName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:autofillHints="name"
         android:drawablePadding="15dp"
         android:drawableStart="@drawable/ic_baseline_search_24"
         android:elevation="10dp"
+        android:animateLayoutChanges="true"
         android:fontFamily="@font/work_sans_bold"
         android:hint="@string/search_for_movies"
         android:inputType="text"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
     <ImageView
-        android:id="@+id/clear"
+        android:id="@+id/clearSelection"
         android:layout_width="33dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/back_button"
@@ -56,13 +56,14 @@
         android:visibility="gone"
         />
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/selected_top_header"
+        android:id="@+id/selectedTopHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/purple_500"
         android:fontFamily="@font/work_sans_bold"
         android:gravity="center_vertical"
         android:paddingEnd="10dp"
+        android:animateLayoutChanges="true"
         android:paddingStart="40dp"
         android:text="@string/s_selected"
         android:textColor="#FFEE58"
@@ -77,14 +78,16 @@
   <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="60dp"
-      app:layout_constraintTop_toBottomOf="@+id/movieListRecyclerView"
+      android:translationZ="10dp"
+      app:layout_constraintTop_toBottomOf="@+id/searchMovieRecycleView"
       >
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/addMovieButton"
+        android:id="@+id/addMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingEnd="10dp"
+        android:animateLayoutChanges="true"
         android:paddingStart="10dp"
         android:text="@string/add_movies"
         />
