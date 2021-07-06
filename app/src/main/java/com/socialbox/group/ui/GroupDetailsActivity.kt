@@ -1,5 +1,6 @@
 package com.socialbox.group.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -15,12 +16,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.leinardi.android.speeddial.SpeedDialActionItem.Builder
 import com.leinardi.android.speeddial.SpeedDialView
 import com.socialbox.R
 import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
+import com.socialbox.chat.ui.ChatActivity
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
@@ -43,6 +46,9 @@ class GroupDetailsActivity : AppCompatActivity() {
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
   private lateinit var addMovieButton: SpeedDialView
+  private val groupDTO by lazy { intent.getParcelableExtra<GroupDTO>("groupDTO") }
+  private val group by lazy { intent.getParcelableExtra<Group>("group") }
+  private val user by lazy { intent.getParcelableExtra<User>("user") }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,6 +64,14 @@ class GroupDetailsActivity : AppCompatActivity() {
     recyclerView.adapter = moviesAdapter
     recyclerView.layoutManager = GridLayoutManager(this, 2)
     recyclerView.setHasFixedSize(true)
+
+    findViewById<MaterialButton>(id.button).setOnClickListener {
+      val intent = Intent(this, ChatActivity::class.java)
+      intent.putExtra("user", user)
+      intent.putExtra("group", group)
+      intent.putExtra("groupDTO", groupDTO)
+      startActivity(intent)
+    }
 
     setUpObservable()
     setUpFabMenu()
@@ -87,22 +101,19 @@ class GroupDetailsActivity : AppCompatActivity() {
             return@OnActionSelectedListener true // false will close it without animation
           }
           id.fab_action1 -> {
-            val user = intent.getStringExtra("user") as User?
-            val group = intent.getParcelableExtra<GroupDTO>("groupDTO")
             val addMovieDialog = AddMovieDialog(
               userMovieViewModel,
               groupViewModel,
               user?.id!!,
-              groupId = group?.id!!,
+              groupId = groupDTO?.id ?: group?.id ?: "",
               url = this.getString(string.image_base_url)
             )
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
           }
           id.fab_action2 -> {
-            val group = intent.getParcelableExtra<GroupDTO>("groupDTO")
             val searchMovieDialog = SearchMovieDialog(
               movieViewModel,
-              group?.id ?: "",
+              groupDTO?.id ?: group?.id ?: "",
               url = getString(string.image_base_url),
               groupViewModel = groupViewModel
             )
@@ -114,7 +125,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    groupViewModel.getGroup(groupId = (intent.getParcelableExtra<GroupDTO>("groupDTO"))?.id ?: "")
+    groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id ?: "")
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
@@ -134,9 +145,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
     val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
-    val groupDTO = intent.extras?.getParcelable("groupDTO") as GroupDTO?
-    val group = intent.extras?.getParcelable("group") as Group?
-    toolbar.title = group?.name ?: (groupDTO?.name ?: "SocialBox")
+    toolbar.title = groupDTO?.name ?: (group?.name ?: getString(string.appName))
 
     searchView.setOnMenuItemClickListener {
       search.visibility = View.VISIBLE
