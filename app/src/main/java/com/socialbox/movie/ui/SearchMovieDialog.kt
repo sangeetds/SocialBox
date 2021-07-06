@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -65,6 +67,8 @@ class SearchMovieDialog(
     val movieListAdapter = MovieListAdapter(requireContext(), updateCount, url)
     recyclerView.adapter = movieListAdapter
     recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+    recyclerView.itemAnimator = DefaultItemAnimator()
 
     searchBar.addTextChangedListener(object : TextWatcher {
       private var searchFor = searchBar.text.toString()
