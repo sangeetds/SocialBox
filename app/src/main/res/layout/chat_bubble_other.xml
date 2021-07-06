@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/otherUserLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <ImageView
+      android:id="@+id/imageChatProfileOther"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:layout_marginStart="16dp"
+      android:contentDescription="@string/user_icon"
+      android:src="@drawable/ic_outline_account_box_24"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/textChatUserOther"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="@string/john_grady_cole"
+      android:textSize="14sp"
+      app:layout_constraintStart_toEndOf="@+id/imageChatProfileOther"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/textChatTimestampOther"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/_8_00"
+      android:textColor="#C0C0C0"
+      android:textSize="11sp"
+      app:layout_constraintBottom_toBottomOf="@+id/card_gchat_message_other"
+      app:layout_constraintStart_toEndOf="@+id/card_gchat_message_other"
+      />
+
+
+  <androidx.cardview.widget.CardView
+      android:id="@+id/card_gchat_message_other"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toEndOf="@+id/imageChatProfileOther"
+      app:layout_constraintTop_toBottomOf="@+id/textChatUserOther"
+      app:cardBackgroundColor="#774df2"
+      app:cardCornerRadius="12dp"
+      app:cardElevation="0dp"
+      app:cardPreventCornerOverlap="false"
+      app:cardUseCompatPadding="true"
+      >
+
+    <LinearLayout
+        android:id="@+id/layout_gchat_container_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/textChatMessageOther"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="8dp"
+          android:maxWidth="260dp"
+          android:paddingLeft="12dp"
+          android:paddingRight="12dp"
+          android:paddingTop="8dp"
+          android:text="@string/message"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          />
+    </LinearLayout>
+
+  </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
