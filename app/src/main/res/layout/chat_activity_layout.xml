@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C5CAE9"
+    tools:context=".chat.ui.ChatActivity"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/messageInputContainer"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/input_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:context="com.example.chattutorial.ChannelActivity"
+        >
+
+      <EditText
+          android:id="@+id/messageInput"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:background="@android:color/transparent"
+          android:paddingStart="10dp"
+          android:paddingEnd="10dp"
+          android:hint="Type a message"
+          android:text="@={viewModel.messageInputText}"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          />
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:layout_margin="6dp"
+          android:src="@{TextUtils.isEmpty(viewModel.messageInputText) ? @drawable/ic_mic_black_24dp : @drawable/ic_send_black_24dp}"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:backgroundTint="@color/floating_message_send"
+          app:fabCustomSize="48dp"
+          app:tint="@color/white"
+          />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
