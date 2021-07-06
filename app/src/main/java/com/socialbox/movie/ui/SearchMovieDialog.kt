@@ -144,7 +144,7 @@ class SearchMovieDialog(
     movieListAdapter.selectedItemsList.map { m: Movie ->
       GroupMovie(
         name = m.name,
-        photoUrl = m.photoURL ?: "",
+        photoURL = m.photoURL ?: "",
         groupId = groupId,
         rating = m.rating,
         votes = m.votes

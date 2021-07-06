@@ -51,7 +51,7 @@ class GroupActivity : AppCompatActivity() {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(top_app_bar, menu)
     val userView: MenuItem = menu!!.findItem(id.user)
-    val searchView: MenuItem = menu.findItem(id.searchMovieName)
+    val searchView: MenuItem = menu.findItem(id.search)
 
     userView.setOnMenuItemClickListener {
       val intent = Intent(this, UserActivity::class.java)

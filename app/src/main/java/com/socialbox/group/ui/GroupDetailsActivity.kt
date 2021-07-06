@@ -132,7 +132,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
-    val searchView: MenuItem = menu!!.findItem(id.searchMovieName)
+    val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
     val groupDTO = intent.extras?.getParcelable("groupDTO") as GroupDTO?
     val group = intent.extras?.getParcelable("group") as Group?

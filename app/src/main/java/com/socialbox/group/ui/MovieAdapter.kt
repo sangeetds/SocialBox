@@ -33,7 +33,7 @@ class MovieAdapter(val url: String) : ListAdapter<GroupMovie, MovieAdapter.ViewH
     holder.name.text = movie.name
     holder.ratings.text = holder.ratings.text.toString().format(movie.rating)
     Picasso.get().isLoggingEnabled = true
-    Picasso.get().load("$url${movie.photoUrl}").into(holder.image)
+    Picasso.get().load("$url${movie.photoURL}").into(holder.image)
   }
 
 }
