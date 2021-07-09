@@ -60,6 +60,8 @@ class ChatActivity : AppCompatActivity() {
 
     toolbar.setOnClickListener {
       val intent = Intent(this, ChatSettingsActivity::class.java)
+      intent.putExtra("group", group)
+      intent.putExtra("user", user)
       startActivity(intent)
     }
   }

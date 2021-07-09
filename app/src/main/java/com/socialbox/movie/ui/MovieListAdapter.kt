@@ -44,6 +44,7 @@ class MovieListAdapter(
 
   inner class MovieHolder(cardView: View) : RecyclerView.ViewHolder(cardView), OnLongClickListener {
     val card: MaterialCardView = cardView.findViewById(id.searchMovieCard)
+    val imageCard: MaterialCardView = cardView.findViewById(id.selectedImageView)
     val image: CircleImageView = cardView.findViewById(id.userMovieImage)
     val movieName: TextView = cardView.findViewById(id.movieName)
     val imageBack: CircleImageView = cardView.findViewById(id.cardSelected)
@@ -96,6 +97,7 @@ class MovieListAdapter(
     if (selectedItems.get(position, false)) {
       holder.image.visibility = View.GONE
       resetIconYAxis(holder.imageBack)
+      holder.imageCard.visibility = View.VISIBLE
       holder.imageBack.visibility = View.VISIBLE
       holder.imageBack.imageAlpha = 1
       if (currentSelectedIndex == position) {
@@ -104,6 +106,7 @@ class MovieListAdapter(
       }
       holder.card.setCardBackgroundColor(android.graphics.Color.parseColor("#B3E5FC"))
     } else {
+      holder.imageCard.visibility = View.GONE
       holder.imageBack.visibility = View.GONE
       resetIconYAxis(holder.image)
       holder.image.visibility = View.VISIBLE

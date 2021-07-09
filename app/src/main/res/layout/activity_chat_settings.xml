@@ -12,384 +12,399 @@
       android:layout_height="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent">
-
-  <com.google.android.material.card.MaterialCardView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="10dp"
-      android:layout_marginStart="10dp"
-      android:layout_marginTop="65dp"
-      android:backgroundTint="?attr/colorPrimary"
-      app:cardCornerRadius="10dp"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       >
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="280dp"
-        android:background="#CDCDCD"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="510dp"
-        android:background="#CDCDCD"
-        />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="?attr/colorPrimary"
+        app:cardCornerRadius="10dp"
         >
-      <ImageView
-          android:layout_width="100dp"
-          android:layout_height="100dp"
-          android:contentDescription="@string/movies"
+
+      <RelativeLayout
+          android:id="@+id/relativeLayout"
+          android:layout_width="match_parent"
+          android:animateLayoutChanges="true"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="280dp"
+            android:background="#CDCDCD"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="510dp"
+            android:background="#CDCDCD"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/movieOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="350dp"
+            app:cardCornerRadius="5dp"
+            >
+          <ImageView
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:contentDescription="@string/movies"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/movieTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="350dp"
+            app:cardCornerRadius="5dp"
+            >
+          <ImageView
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:contentDescription="@string/movies"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/movieThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="255dp"
+            android:layout_marginTop="350dp"
+            app:cardCornerRadius="5dp"
+            >
+          <ImageView
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:contentDescription="@string/movies"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberOne"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="115dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberThree"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="115dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberSelf"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="115dp"
+            app:cardCornerRadius="60dp"
+            >
+
+          <ImageView
+              android:layout_width="120dp"
+              android:layout_height="120dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-4dp"
+              android:translationY="-4dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberFour"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="115dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberFive"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="171dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberTwo"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="171dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/memberSix"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="171dp"
+            app:cardCornerRadius="50dp"
+            >
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:contentDescription="@string/current_user_image"
+              android:translationX="-2dp"
+              android:translationY="-2dp"
+              />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userNameBold"
+            android:layout_width="112dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="235dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/your_name"
+            android:textSize="16sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userName"
+            android:layout_width="112dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="235dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/your_name"
+            android:textSize="16sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/viewAllMembers"
+            android:layout_width="170dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="152dp"
+            android:layout_marginTop="235dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/view_all"
+            android:textColor="?attr/colorError"
+            android:textSize="12sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/viewAllMovies"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="470dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/view_all"
+            android:textColor="?attr/colorError"
+            android:textSize="14sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="310dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/group_movies"
+            android:textSize="18sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="310dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/group_movies"
+            android:textSize="18sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="540dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/group_settings"
+            android:textSize="18sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="540dp"
+            android:fontFamily="@font/work_sans_bold"
+            android:gravity="center"
+            android:text="@string/group_settings"
+            android:textSize="18sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/addMember"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="580dp"
+            android:elevation="5dp"
+            android:fontFamily="@font/work_sans_light"
+            android:gravity="center_vertical"
+            android:paddingEnd="18dp"
+            android:paddingStart="25dp"
+            android:text="@string/add_a_member"
+            android:textFontWeight="1000"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/leaveGroup"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="640dp"
+            android:elevation="5dp"
+            android:fontFamily="@font/work_sans_light"
+            android:gravity="center_vertical"
+            android:paddingEnd="18dp"
+            android:paddingStart="25dp"
+            android:text="@string/leave_group"
+            android:textColor="#D32F2F"
+            android:textFontWeight="1000"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+            />
+      </RelativeLayout>
+
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/recyclerContainer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:animateLayoutChanges="true"
+          android:layout_marginEnd="10dp"
+          android:visibility="gone"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="115dp"
+          >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/membersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:padding="1dp"
+            tools:listitem="@layout/card_member_details"
+            />
+      </com.google.android.material.card.MaterialCardView>
+
+      <com.google.android.material.textview.MaterialTextView
+          android:layout_width="match_parent"
+          android:layout_height="25dp"
+          android:layout_marginTop="70dp"
+          android:fontFamily="@font/work_sans_bold"
+          android:gravity="center"
+          android:text="@string/group_members"
+          android:textSize="20sp"
           />
-    </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginStart="145dp"
-        >
-      <ImageView
-          android:layout_width="100dp"
-          android:layout_height="100dp"
-          android:contentDescription="@string/movies"
-          />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginStart="265dp"
-        >
-      <ImageView
-          android:layout_width="100dp"
-          android:layout_height="100dp"
-          android:contentDescription="@string/movies"
-          />
-    </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="115dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
+      <com.google.android.material.textview.MaterialTextView
+          android:layout_width="match_parent"
+          android:layout_height="25dp"
+          android:layout_marginTop="70dp"
+          android:fontFamily="@font/work_sans_bold"
+          android:gravity="center"
+          android:text="@string/group_members"
+          android:textSize="20sp"
           />
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="262dp"
-        android:layout_marginTop="115dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="318dp"
-        android:layout_marginTop="115dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="112dp"
-        android:layout_height="112dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="115dp"
-        app:cardCornerRadius="60dp"
-        >
-
-      <ImageView
-          android:layout_width="120dp"
-          android:layout_height="120dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-4dp"
-          android:translationY="-4dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="115dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="171dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="171dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="262dp"
-        android:layout_marginTop="171dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="318dp"
-        android:layout_marginTop="171dp"
-        app:cardCornerRadius="50dp"
-        >
-
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:contentDescription="@string/current_user_image"
-          android:translationX="-2dp"
-          android:translationY="-2dp"
-          />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="112dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="235dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/your_name"
-        android:textSize="16sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="112dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="235dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/your_name"
-        android:textSize="16sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="210dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="235dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/view_all"
-        android:textColor="?attr/colorAccent"
-        android:textSize="12sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="470dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/view_all"
-        android:textColor="?attr/colorAccent"
-        android:textSize="14sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="70dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_members"
-        android:textSize="20sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="70dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_members"
-        android:textSize="20sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="310dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_movies"
-        android:textSize="18sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="310dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_movies"
-        android:textSize="18sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="540dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_settings"
-        android:textSize="18sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="540dp"
-        android:fontFamily="@font/work_sans_bold"
-        android:gravity="center"
-        android:text="@string/group_settings"
-        android:textSize="18sp"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/addMember"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:elevation="5dp"
-        android:fontFamily="@font/work_sans_light"
-        android:gravity="center_vertical"
-        android:paddingEnd="18dp"
-        android:paddingStart="25dp"
-        android:layout_marginTop="580dp"
-        android:text="@string/add_a_member"
-        android:textFontWeight="1000"
-        android:textSize="16sp"
-        app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
-        />
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/leaveGroup"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:elevation="5dp"
-        android:fontFamily="@font/work_sans_light"
-        android:gravity="center_vertical"
-        android:paddingEnd="18dp"
-        android:paddingStart="25dp"
-        android:layout_marginTop="640dp"
-        android:textColor="#D32F2F"
-        android:text="@string/leave_group"
-        android:textFontWeight="1000"
-        android:textSize="16sp"
-        app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
-        />
-  </com.google.android.material.card.MaterialCardView>
   </ScrollView>
 
   <com.google.android.material.card.MaterialCardView
+      android:id="@+id/materialCardView"
       android:layout_width="90dp"
       android:layout_height="90dp"
+      android:layout_marginTop="10dp"
+      android:elevation="10dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      android:layout_marginTop="32dp"
-      android:elevation="10dp"
-      app:cardCornerRadius="50dp">
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:id="@+id/circleImageView"
-      android:contentDescription="@string/group_logo"
-      />
+      app:cardCornerRadius="50dp"
+      >
+    <ImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/group_logo"
+        />
   </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,7 @@ import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.string
 import com.socialbox.chat.ui.ChatActivity
+import com.socialbox.chat.ui.ChatSettingsActivity
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
@@ -146,6 +147,13 @@ class GroupDetailsActivity : AppCompatActivity() {
     val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
     toolbar.title = groupDTO?.name ?: (group?.name ?: getString(string.appName))
+
+    toolbar.setOnClickListener {
+      val intent = Intent(this, ChatSettingsActivity::class.java)
+      intent.putExtra("group", group)
+      intent.putExtra("user", user)
+      startActivity(intent)
+    }
 
     searchView.setOnMenuItemClickListener {
       search.visibility = View.VISIBLE
