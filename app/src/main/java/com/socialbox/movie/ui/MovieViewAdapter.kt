@@ -24,17 +24,8 @@ class MovieViewAdapter(
 ) :
   RecyclerView.Adapter<MovieViewAdapter.RecyclerViewHolder>() {
 
-  val views = listOf(
-    listOf(
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = ""),
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = "")
-    ),
-    listOf(
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = ""),
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = "")
-    )
-  )
-  val genres = listOf(PERSONAL, LATEST)
+  val views = listOf<List<Movie>>()
+  val genres = listOf(PERSONAL)
   private val movieListAdapter by lazy { MovieDisplayAdapter(context, movieViewModel) }
 
   class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
