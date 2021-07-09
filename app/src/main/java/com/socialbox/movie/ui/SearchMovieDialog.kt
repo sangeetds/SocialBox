@@ -36,11 +36,6 @@ class SearchMovieDialog(
   DialogFragment() {
 
   private var dialogView: View? = null
-  // private lateinit var adapter: MovieListAdapter
-  // private lateinit var recyclerView: RecyclerView
-  // private lateinit var topHeader: EditText
-  // private lateinit var updateCount: ((Int) -> Unit)
-  // private lateinit var selectedTopHeader: MaterialTextView
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     return MaterialAlertDialogBuilder(requireContext(), theme).apply {
@@ -116,29 +111,6 @@ class SearchMovieDialog(
 
     return inflate
   }
-
-  // private fun setUpViews(inflate: View) {
-  //   val clearSelection = inflate.findViewById<ImageView>(R.id.clear)
-  //   val addMovieButton = inflate.findViewById<MaterialButton>(R.id.addMovie)
-  //   // updateCount = updateCount(addMovieButton, clearSelection)
-  //   topHeader = inflate.findViewById(R.id.searchMovieName)
-  //   selectedTopHeader = inflate.findViewById(R.id.selected_top)
-  //
-  //   addMovieButton.setOnClickListener {
-  //     val groupMovies = toGroupMovies()
-  //     if (toGroupMovies().isNotEmpty()) {
-  //       groupViewModel.addMovies(groupMovies)
-  //       dismiss()
-  //     }
-  //   }
-  //
-  //   clearSelection.setOnClickListener {
-  //     adapter.selectedItemsList.clear()
-  //     adapter.selectedItems.clear()
-  //     selectedTopHeader.visibility = View.GONE
-  //     clearSelection.visibility = View.GONE
-  //   }
-  // }
 
   override fun getView(): View? {
     return dialogView

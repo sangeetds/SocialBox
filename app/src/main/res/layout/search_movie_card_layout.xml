@@ -30,6 +30,12 @@
         android:text="@string/this_can_be_a_big_movie_name_lets_see_how_it_looks_like_because_there_are_a_lot_of_comstraints"
         android:textSize="16sp"
         />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/selectedImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cardCornerRadius="25dp">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/cardSelected"
         android:layout_width="50dp"
@@ -40,6 +46,8 @@
         android:visibility="gone"
         android:contentDescription="@string/movie_image"
         />
+    </com.google.android.material.card.MaterialCardView>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMovieImage"
         android:animateLayoutChanges="true"
