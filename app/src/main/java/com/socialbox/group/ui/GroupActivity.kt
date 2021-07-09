@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager.LayoutParams
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -16,6 +17,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -27,6 +29,7 @@ import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.MoviesActivity
 import com.socialbox.user.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.CascadePopupWindow
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -92,6 +95,13 @@ class GroupActivity : AppCompatActivity() {
     toolbar = findViewById(id.topAppBar)
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(true)
+    toolbar.setNavigationOnClickListener {
+      val popup = CascadePopupWindow(this)
+      popup.contentView.addView(NotificationsDialog(this))
+      popup.contentView.y = 165F
+      popup.contentView.x = 10F
+      popup.show(toolbar)
+    }
   }
 
   private fun setUpViews() {

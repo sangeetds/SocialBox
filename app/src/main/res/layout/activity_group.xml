@@ -103,8 +103,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:menu="@menu/top_app_bar"
-        app:title="SocialBox"
         app:navigationIcon="@drawable/ic_baseline_notifications_24"
+        app:title="SocialBox"
         app:titleCentered="true"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
