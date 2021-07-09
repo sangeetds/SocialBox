@@ -60,7 +60,6 @@ class MessageAdapter(val id: String?, val photoUri: Uri?) : ListAdapter<Message,
         else {
           holder.otherUserName?.visibility = View.GONE
           holder.otherUserAvatar?.visibility = View.INVISIBLE
-          holder.otherUserLayout?.layoutParams = params
         }
       }
     }

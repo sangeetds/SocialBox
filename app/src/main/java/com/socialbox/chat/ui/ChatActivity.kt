@@ -1,5 +1,6 @@
 package com.socialbox.chat.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.EditText
@@ -45,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
       val date = Calendar.getInstance().time.toString().split(" ")
       if (messageInput.text.isNotBlank()) {
         val message = Message(
-          senderId = "user?.id!!",
+          senderId = user?.id!!,
           content = messageInput.text.toString().trim(),
           createdAt = "${date[1]} ${date[2]} ${date[3]}",
           senderName = user?.name!!
@@ -55,6 +56,11 @@ class ChatActivity : AppCompatActivity() {
         adapter.submitList(newMessages)
         messageInput.text.clear()
       }
+    }
+
+    toolbar.setOnClickListener {
+      val intent = Intent(this, ChatSettingsActivity::class.java)
+      startActivity(intent)
     }
   }
 
