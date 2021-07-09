@@ -27,7 +27,7 @@ class ChatActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.chat_activity_layout)
+    setContentView(R.layout.activity_chat)
     val toolbar = findViewById<MaterialToolbar>(id.chatNameBar)
     toolbar.title = group?.name ?: groupDTO?.name ?: getString(string.appName)
     setSupportActionBar(toolbar)

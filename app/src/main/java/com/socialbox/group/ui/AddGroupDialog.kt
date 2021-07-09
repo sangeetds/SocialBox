@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,7 +35,7 @@ class AddGroupDialog(
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(layout.add_group_dialog, container, false)
+    val inflate = inflater.inflate(layout.dialog_add_group, container, false)
     val createNewGroupButton = inflate.findViewById<MaterialButton>(R.id.add_movie)
     val groupName = inflate.findViewById<EditText>(R.id.group_name)
 

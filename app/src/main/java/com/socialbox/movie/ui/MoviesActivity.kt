@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.socialbox.R
@@ -23,9 +22,6 @@ import com.socialbox.R.style
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -37,7 +33,7 @@ class MoviesActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.movie_activity_layout)
+    setContentView(R.layout.activity_movie)
 
     movieViewsAdapter = MovieViewAdapter(this, user, movieViewModel, setSearchMode)
     movieViewRecyclerView.adapter = movieViewsAdapter

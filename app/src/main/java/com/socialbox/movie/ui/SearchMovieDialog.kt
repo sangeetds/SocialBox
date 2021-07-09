@@ -51,7 +51,7 @@ class SearchMovieDialog(
     savedInstanceState: Bundle?,
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(R.layout.search_movie_dialog, container, false)
+    val inflate = inflater.inflate(R.layout.dialog_search_movie, container, false)
     val recyclerView = inflate.findViewById<RecyclerView>(R.id.searchMovieRecycleView)
     val searchBar = inflate.findViewById<EditText>(R.id.searchMovieName)
     val addMovieButton = inflate.findViewById<MaterialButton>(R.id.addMovie)

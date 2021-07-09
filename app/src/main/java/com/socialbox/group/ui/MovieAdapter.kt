@@ -24,7 +24,7 @@ class MovieAdapter(val url: String) : ListAdapter<GroupMovie, MovieAdapter.ViewH
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
-      .inflate(R.layout.group_movie_card_layout, parent, false)
+      .inflate(R.layout.card_group_movie, parent, false)
     return ViewHolder(view)
   }
 

@@ -18,7 +18,7 @@ class UserActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.user_settings_layout)
+    setContentView(R.layout.activity_user_settings)
 
     val user = intent.getParcelableExtra<User>("user")
     val userWelcomeString = findViewById<TextView>(R.id.welcome_user)

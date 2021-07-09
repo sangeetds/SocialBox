@@ -2,10 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".group.ui.GroupDetailsActivity"
+    tools:context=".group.ui.GroupActivity"
     >
+
+  <TextView
+      android:id="@+id/place_holder"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/pattaya_regular"
+      android:text="@string/make_new_friends_form_a_new_group"
+      android:textSize="20sp"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/searchTopBar"
       android:layout_width="match_parent"
@@ -56,29 +72,23 @@
         />
   </androidx.constraintlayout.widget.ConstraintLayout>
 
-  <com.google.android.material.button.MaterialButton
-      android:id="@+id/button"
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/group_recycler_view"
       android:layout_width="match_parent"
-      android:layout_height="70dp"
-      android:text="@string/go_to_chatbox"
-      android:translationY="5dp"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="65dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="60dp"
+      android:elevation="2dp"
+      app:layout_constraintBottom_toTopOf="@+id/movies_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      />
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/movie_list"
-      android:layout_width="match_parent"
-      android:layout_height="570dp"
-      android:layout_margin="20dp"
-      android:orientation="vertical"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-      tools:listitem="@layout/group_movie_card_layout"
+      app:layout_constraintVertical_bias="1.0"
+      tools:listitem="@layout/card_group"
       />
-
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBarLayout"
       android:layout_width="match_parent"
@@ -89,25 +99,38 @@
       >
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/groupNameBar"
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:menu="@menu/top_app_bar"
+        app:title="SocialBox"
+        app:navigationIcon="@drawable/ic_baseline_notifications_24"
         app:titleCentered="true"
-        app:menu="@menu/group_top_app_bar"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
 
   </com.google.android.material.appbar.AppBarLayout>
-
-  <com.leinardi.android.speeddial.SpeedDialView
-      android:id="@+id/add_movie_floating_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|end"
-      app:sdMainFabClosedSrc="@drawable/ic_baseline_add_24"
-      app:layout_constraintBottom_toTopOf="@+id/button"
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/movies_button"
+      android:layout_width="match_parent"
+      android:layout_height="70dp"
+      android:text="@string/your_movies"
+      android:translationY="5dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+      android:id="@+id/new_group_button"
+      android:layout_width="200dp"
+      android:layout_height="50dp"
+      android:layout_marginBottom="80dp"
+      android:layout_marginEnd="16dp"
+      android:paddingEnd="10dp"
+      android:paddingStart="20dp"
+      android:text="@string/create_new_group"
+      app:layout_constraintBottom_toBottomOf="@+id/movies_button"
+      app:layout_constraintEnd_toEndOf="parent"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

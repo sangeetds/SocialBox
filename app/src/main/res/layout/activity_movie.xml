@@ -18,7 +18,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
       app:layout_constraintVertical_bias="0.0"
-      tools:listitem="@layout/movie_genre_list_layout"
+      tools:listitem="@layout/card_movie_genre"
       />
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/app_bar_layout"
@@ -76,7 +76,7 @@
       android:visibility="gone"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
-      tools:listitem="@layout/search_movie_card_layout"
+      tools:listitem="@layout/card_search_movie"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

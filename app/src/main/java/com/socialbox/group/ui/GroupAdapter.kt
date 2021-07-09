@@ -28,7 +28,7 @@ class GroupAdapter(val context: Context, val user: User?) :
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongSearchViewHolder {
     val layoutInflater = LayoutInflater.from(parent.context)
     val view = layoutInflater
-      .inflate(R.layout.group_card_layout, parent, false)
+      .inflate(R.layout.card_group, parent, false)
 
     return SongSearchViewHolder(view)
   }

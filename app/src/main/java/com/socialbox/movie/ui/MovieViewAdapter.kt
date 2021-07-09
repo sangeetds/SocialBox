@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
-import com.socialbox.common.enums.Genre.LATEST
 import com.socialbox.common.enums.Genre.PERSONAL
 import com.socialbox.group.data.model.Movie
 import com.socialbox.login.data.model.User
@@ -39,7 +38,7 @@ class MovieViewAdapter(
     viewType: Int
   ): RecyclerViewHolder {
     val view =
-      LayoutInflater.from(parent.context).inflate(R.layout.movie_genre_list_layout, parent, false)
+      LayoutInflater.from(parent.context).inflate(R.layout.card_movie_genre, parent, false)
 
     return RecyclerViewHolder(view)
   }

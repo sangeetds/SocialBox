@@ -53,7 +53,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.group_details_activity_layout)
+    setContentView(R.layout.activity_group_details)
     mToolbar = findViewById(id.groupNameBar)
     setSupportActionBar(mToolbar)
     mToolbar.showOverflowMenu()

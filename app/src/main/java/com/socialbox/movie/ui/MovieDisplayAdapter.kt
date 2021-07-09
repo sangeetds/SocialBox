@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,7 @@ class MovieDisplayAdapter(
     viewType: Int
   ):MovieHolder {
     val view =
-      LayoutInflater.from(parent.context).inflate(R.layout.movie_card_layout, parent, false)
+      LayoutInflater.from(parent.context).inflate(R.layout.card_movie, parent, false)
     return MovieHolder(view)
   }
 

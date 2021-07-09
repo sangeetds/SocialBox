@@ -7,25 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.ui.graphics.Color
 import androidx.core.util.forEach
-import androidx.core.util.size
-import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R.id
 import com.socialbox.R.layout
-import com.socialbox.R.string
 import com.socialbox.group.data.model.Movie
 import com.socialbox.movie.ui.FlipAnimator.flipView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import timber.log.Timber
 
 class MovieListAdapter(
   val context: Context,
@@ -61,7 +52,7 @@ class MovieListAdapter(
     viewType: Int,
   ): MovieHolder {
     val itemView: View = LayoutInflater.from(parent.context)
-      .inflate(layout.search_movie_card_layout, parent, false)
+      .inflate(layout.card_search_movie, parent, false)
 
     return MovieHolder(itemView)
   }

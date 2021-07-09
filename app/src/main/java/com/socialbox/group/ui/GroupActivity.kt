@@ -42,7 +42,7 @@ class GroupActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.group_activity_layout)
+    setContentView(layout.activity_group)
     setUpObservables()
     setUpToolbar()
     setUpViews()

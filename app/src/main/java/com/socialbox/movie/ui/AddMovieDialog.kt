@@ -52,7 +52,7 @@ class AddMovieDialog(
     savedInstanceState: Bundle?,
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(R.layout.add_movie_dialog, container, false)
+    val inflate = inflater.inflate(R.layout.dialog_add_movie, container, false)
 
     setUpViews(inflate)
     setUpObservables()
