@@ -61,12 +61,18 @@ class ChatSettingsActivity : AppCompatActivity() {
 
     viewAllMembers.setOnClickListener {
       val relativeLayout: RelativeLayout = findViewById(R.id.relativeLayout)
-      relativeLayout.visibility = View.GONE
-      findViewById<MaterialCardView>(R.id.recyclerContainer).visibility = View.VISIBLE
-
       val recyclerView: RecyclerView = findViewById(R.id.membersRecyclerView)
-      recyclerView.visibility = View.VISIBLE
       val adapter = MembersAdapter(listOf(user!!))
+      val backButton: MaterialTextView = findViewById(R.id.backButton)
+      val recyclerContainer = findViewById<MaterialCardView>(R.id.recyclerContainer)
+
+      backButton.setOnClickListener {
+        relativeLayout.visibility = View.VISIBLE
+        recyclerContainer.visibility = View.GONE
+      }
+
+      relativeLayout.visibility = View.GONE
+      recyclerContainer.visibility = View.VISIBLE
       recyclerView.adapter = adapter
       recyclerView.layoutManager = LinearLayoutManager(this)
       recyclerView.setHasFixedSize(true)

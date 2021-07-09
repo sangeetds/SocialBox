@@ -78,4 +78,5 @@
   <string name="add_a_member">Add a Member</string>
   <string name="leave_group">Leave Group</string>
   <string name="group_logo">Group Logo</string>
+  <string name="back">Back</string>
 </resources>
