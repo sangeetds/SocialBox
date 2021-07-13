@@ -41,7 +41,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun addGroup(group: Group) = viewModelScope.launch {
-    Timber.i("Saving group for admin: ${group.adminId}")
+    Timber.i("Saving group for admin: ${group.admin}")
     val result = groupRepository.createGroup(group)
     if (result is Success) {
       _groupState.value = result.data

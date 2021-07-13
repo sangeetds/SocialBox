@@ -41,7 +41,7 @@ class AddGroupDialog(
 
     createNewGroupButton.setOnClickListener {
       val group =
-        Group(name = groupName.text.toString(), memberCount = 1, adminId = user.id!!)
+        Group(name = groupName.text.toString(), memberCount = 1, admin = user.id!!)
       viewModel.addGroup(group)
       viewModel.groupState.observe(this@AddGroupDialog, Observer {
         val newGroup = it ?: return@Observer

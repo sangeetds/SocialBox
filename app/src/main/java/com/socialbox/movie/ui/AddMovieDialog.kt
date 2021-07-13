@@ -103,7 +103,7 @@ class AddMovieDialog(
   private fun toGroupMovies() = adapter.selectedItemsList.map { m: Movie ->
     GroupMovie(
       name = m.name,
-      groupId = groupId,
+      group = groupId,
       rating = m.rating,
       votes = m.votes
     )

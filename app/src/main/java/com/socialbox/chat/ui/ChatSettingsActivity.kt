@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -64,7 +65,7 @@ class ChatSettingsActivity : AppCompatActivity() {
       val recyclerView: RecyclerView = findViewById(R.id.membersRecyclerView)
       val adapter = MembersAdapter(listOf(user!!))
       val backButton: MaterialTextView = findViewById(R.id.backButton)
-      val recyclerContainer = findViewById<MaterialCardView>(R.id.recyclerContainer)
+      val recyclerContainer = findViewById<ConstraintLayout>(R.id.recyclerContainer)
 
       backButton.setOnClickListener {
         relativeLayout.visibility = View.VISIBLE

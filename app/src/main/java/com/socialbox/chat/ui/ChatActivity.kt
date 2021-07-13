@@ -37,7 +37,7 @@ class ChatActivity : AppCompatActivity() {
     val messageInput: EditText = findViewById(id.messageInput)
     val messageSendFab: FloatingActionButton = findViewById(id.sendButton)
 
-    val adapter = MessageAdapter(user?.id, user?.photoUri)
+    val adapter = MessageAdapter(user?.id, user?.photoURL)
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)

@@ -121,7 +121,7 @@ class SearchMovieDialog(
       GroupMovie(
         name = m.name,
         photoURL = m.photoURL ?: "",
-        groupId = groupId,
+        group = groupId,
         rating = m.rating,
         votes = m.votes
       )

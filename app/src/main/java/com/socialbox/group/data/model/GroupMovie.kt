@@ -5,10 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GroupMovie(
-  val id: String? = null,
-  val groupId: String,
+  val id: Int? = null,
+  val group: Group,
   val name: String = "",
   val photoURL: String? = "",
   val rating: Double = 0.0,
   val votes: Int = 0,
+  val reviews: List<Review> = listOf()
 ) : Parcelable
