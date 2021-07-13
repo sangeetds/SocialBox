@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager.LayoutParams
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -17,7 +16,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -133,7 +131,7 @@ class GroupActivity : AppCompatActivity() {
 
   private fun setUpObservables() {
     user = intent.extras?.getParcelable("user")!!
-    groupViewModel.getGroupsForUser(user.groupsId.toList())
+    groupViewModel.getGroupsForUser(user.groups.map { it.id!! })
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val groups = it ?: return@Observer
 

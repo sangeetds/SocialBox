@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class UserMovieRepository @Inject constructor(private val userService: UserService) {
 
-  suspend fun getUserMovies(id: String) =
+  suspend fun getUserMovies(id: Int?) =
     try {
-      userService.getUserMovies(id = id).run {
+      userService.getUserMovies(id = id!!).run {
         if (isSuccessful && body() != null) {
           Timber.i("Successfully fetched movies.")
           body()!!

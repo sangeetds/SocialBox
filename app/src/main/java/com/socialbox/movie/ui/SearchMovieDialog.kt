@@ -19,6 +19,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.ui.GroupViewModel
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 
 class SearchMovieDialog(
   private val movieViewModel: MovieViewModel,
-  val groupId: String,
+  private val group: Group,
   private val groupViewModel: GroupViewModel,
   private val url: String
 ) :
@@ -106,7 +107,7 @@ class SearchMovieDialog(
         groupViewModel.addMovies(groupMovies)
         dialog?.dismiss()
       }
-      groupViewModel.getGroup(groupId)
+      groupViewModel.getGroup(group.id)
     }
 
     return inflate
@@ -121,7 +122,7 @@ class SearchMovieDialog(
       GroupMovie(
         name = m.name,
         photoURL = m.photoURL ?: "",
-        group = groupId,
+        group = group,
         rating = m.rating,
         votes = m.votes
       )

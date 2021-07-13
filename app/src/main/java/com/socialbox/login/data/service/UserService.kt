@@ -14,5 +14,5 @@ interface UserService {
   suspend fun loginUser(@Body user: User): Response<User>
 
   @GET("/user/{id}/movies")
-  suspend fun getUserMovies(@Path("id") id: String): Response<List<UserMovieDTO>>
+  suspend fun getUserMovies(@Path("id") id: Int): Response<List<UserMovieDTO>>
 }

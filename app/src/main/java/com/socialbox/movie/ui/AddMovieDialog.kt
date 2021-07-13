@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
 import com.socialbox.group.ui.GroupViewModel
@@ -26,8 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddMovieDialog(
   private val userMovieViewModel: UserMovieViewModel,
   private val groupViewModel: GroupViewModel,
-  private val userId: String,
-  val groupId: String,
+  private val userId: Int,
+  val group: Group,
   private val url: String
 ) : DialogFragment() {
 
@@ -103,7 +104,7 @@ class AddMovieDialog(
   private fun toGroupMovies() = adapter.selectedItemsList.map { m: Movie ->
     GroupMovie(
       name = m.name,
-      group = groupId,
+      group = group,
       rating = m.rating,
       votes = m.votes
     )

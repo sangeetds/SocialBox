@@ -13,13 +13,13 @@ import retrofit2.http.Query
 interface GroupService {
 
   @GET("/group")
-  suspend fun getGroupsForUser(@Query("ids") groupIds: List<String>): Response<List<GroupDTO>>
+  suspend fun getGroupsForUser(@Query("ids") groupIds: List<Int>): Response<List<GroupDTO>>
 
   @POST("/group")
   suspend fun saveGroup(@Body group: Group): Response<Group>
 
   @GET("/group/{id}")
-  suspend fun getGroup(@Path("id") groupId: String): Response<Group>
+  suspend fun getGroup(@Path("id") groupId: Int): Response<Group>
 
   @POST("/group/movie")
   suspend fun saveGroupMovies(@Body groupMovies: List<GroupMovie>): Response<List<GroupMovie>>

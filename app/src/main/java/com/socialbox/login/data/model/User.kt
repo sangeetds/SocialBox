@@ -13,7 +13,7 @@ data class User(
   val name: String? = null,
   val personalMovieList: List<UserRatings>? = listOf(),
   val sharedMovieList: List<Movie>? = listOf(),
-  val groupsId: MutableList<Group> = mutableListOf(),
+  val groups: MutableList<Group> = mutableListOf(),
   val owningGroup: MutableList<Group> = mutableListOf(),
   @Transient val photoURL: Uri? = Uri.EMPTY,
   val email: String? = null,

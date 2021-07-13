@@ -1,9 +1,5 @@
 package com.socialbox.chat.ui
 
-import android.R.attr.bottom
-import android.R.attr.left
-import android.R.attr.right
-import android.R.attr.top
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.chat.data.model.Message
 
-class MessageAdapter(val id: String?, val photoUri: Uri?) : ListAdapter<Message, MessageAdapter.ViewHolder>(MessageItemDiffCallback()) {
+class MessageAdapter(val id: Int?, val photoUri: Uri?) : ListAdapter<Message, MessageAdapter.ViewHolder>(MessageItemDiffCallback()) {
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val otherUserAvatar: ImageView? = view.findViewById(R.id.imageChatProfileOther)

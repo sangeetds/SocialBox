@@ -25,7 +25,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   private val _groupState = MutableLiveData<Group>()
   val groupState: LiveData<Group> = _groupState
 
-  fun getGroupsForUser(groupId: List<String>) = viewModelScope.launch {
+  fun getGroupsForUser(groupId: List<Int>) = viewModelScope.launch {
     val groups = groupRepository.getGroupsForUser(groupId)
     _groupListState.value = when (groups) {
       is Success -> {
@@ -48,9 +48,9 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
     }
   }
 
-  fun getGroup(groupId: String) = viewModelScope.launch {
+  fun getGroup(groupId: Int?) = viewModelScope.launch {
     Timber.i("Fetching details about the group $groupId")
-    val result = groupRepository.getGroup(groupId)
+    val result = groupRepository.getGroup(groupId!!)
     if (result is Success) {
       _groupState.value = result.data
     }

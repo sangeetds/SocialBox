@@ -18,7 +18,7 @@ class UserMovieViewModel @Inject constructor(private val userMovieRepository: Us
   private val _userMovies = MutableLiveData<List<UserMovieDTO>>()
   val userMovies: LiveData<List<UserMovieDTO>> = _userMovies
 
-  fun getUserMovies(userId: String) = viewModelScope.launch {
+  fun getUserMovies(userId: Int) = viewModelScope.launch {
     Timber.i("Fetching movies for user: $userId")
     val result = userMovieRepository.getUserMovies(id = userId)
     if (result.isNotEmpty()) _userMovies.value = result

@@ -41,14 +41,14 @@ class AddGroupDialog(
 
     createNewGroupButton.setOnClickListener {
       val group =
-        Group(name = groupName.text.toString(), memberCount = 1, admin = user.id!!)
+        Group(name = groupName.text.toString(), memberCount = 1, admin = user)
       viewModel.addGroup(group)
       viewModel.groupState.observe(this@AddGroupDialog, Observer {
         val newGroup = it ?: return@Observer
 
         Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.id}")
-        user.groupsId.add(newGroup.id!!)
-        viewModel.getGroupsForUser(user.groupsId.toList())
+        user.groups.add(newGroup)
+        viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
         val intent = Intent(context, GroupDetailsActivity::class.java)
         intent.putExtra("group", newGroup)
         intent.putExtra("user", user)

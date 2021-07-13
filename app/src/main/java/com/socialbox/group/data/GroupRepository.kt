@@ -1,5 +1,6 @@
 package com.socialbox.group.data
 
+import com.socialbox.common.enums.Result
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
@@ -14,7 +15,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   private val errorString = "Error in connecting to the server"
 
-  suspend fun getGroupsForUser(groupId: List<String>) =
+  suspend fun getGroupsForUser(groupId: List<Int>) =
     try {
       Timber.i("Fetching groups for $groupId")
       groupService.getGroupsForUser(groupId).run {
@@ -49,7 +50,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
     Error(Exception("Error fetching group details."))
   }
 
-  suspend fun getGroup(groupId: String) =
+  suspend fun getGroup(groupId: Int): Result<Group> =
     try {
       Timber.i("Fetching group $groupId")
       groupService.getGroup(groupId).run {

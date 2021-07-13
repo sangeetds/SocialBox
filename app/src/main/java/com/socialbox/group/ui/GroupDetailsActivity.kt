@@ -106,7 +106,7 @@ class GroupDetailsActivity : AppCompatActivity() {
               userMovieViewModel,
               groupViewModel,
               user?.id!!,
-              groupId = groupDTO?.id ?: group?.id ?: "",
+              group = group!!,
               url = this.getString(string.image_base_url)
             )
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
@@ -114,7 +114,7 @@ class GroupDetailsActivity : AppCompatActivity() {
           id.fab_action2 -> {
             val searchMovieDialog = SearchMovieDialog(
               movieViewModel,
-              groupDTO?.id ?: group?.id ?: "",
+              group!!,
               url = getString(string.image_base_url),
               groupViewModel = groupViewModel
             )
@@ -126,7 +126,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id ?: "")
+    groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id)
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
