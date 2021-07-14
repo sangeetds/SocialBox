@@ -43,7 +43,7 @@ class ChatSettingsActivity : AppCompatActivity() {
     val addMember: MaterialTextView = findViewById(R.id.addMember)
     val leaveGroup: MaterialTextView = findViewById(R.id.leaveGroup)
 
-    val groupMembers = group?.usersId ?: setOf()
+    val groupMembers = group?.users ?: setOf()
     val groupMovies = group?.movieList ?: listOf()
 
     if (groupMembers.size < 6) memberSix.visibility = View.GONE

@@ -9,7 +9,7 @@ data class Group(
   val id: Int? = null,
   val name: String,
   val movieList: List<GroupMovie>? = listOf(),
-  val usersId: List<User>? = listOf(),
+  val users: List<User>? = listOf(),
   val memberCount: Int,
   val photoURL: String? = "",
   val admin: User,

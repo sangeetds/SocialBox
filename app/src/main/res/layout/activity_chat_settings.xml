@@ -255,7 +255,7 @@
             android:fontFamily="@font/work_sans_bold"
             android:gravity="center"
             android:text="@string/view_all"
-            android:textColor="?attr/colorError"
+            android:textColor="#880E4F"
             android:textSize="12sp"
             />
 
@@ -267,7 +267,7 @@
             android:fontFamily="@font/work_sans_bold"
             android:gravity="center"
             android:text="@string/view_all"
-            android:textColor="?attr/colorError"
+            android:textColor="#880E4F"
             android:textSize="14sp"
             />
 
@@ -337,7 +337,7 @@
             android:paddingEnd="18dp"
             android:paddingStart="25dp"
             android:text="@string/leave_group"
-            android:textColor="#D32F2F"
+            android:textColor="#880E4F"
             android:textFontWeight="1000"
             android:textSize="16sp"
             app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"

@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-  val id: Int? = null,
+  val userId: Int? = null,
   val name: String? = null,
   val personalMovieList: List<UserRatings>? = listOf(),
   val sharedMovieList: List<Movie>? = listOf(),

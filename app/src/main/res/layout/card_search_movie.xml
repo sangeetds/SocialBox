@@ -18,14 +18,14 @@
         android:id="@+id/movieName"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingEnd="5dp"
         android:layout_marginStart="50dp"
-        android:paddingStart="5dp"
+        android:animateLayoutChanges="true"
         android:ellipsize="end"
         android:fontFamily="@font/work_sans"
         android:gravity="center"
-        android:animateLayoutChanges="true"
         android:maxLines="1"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         android:scrollHorizontally="true"
         android:text="@string/this_can_be_a_big_movie_name_lets_see_how_it_looks_like_because_there_are_a_lot_of_comstraints"
         android:textSize="16sp"
@@ -34,25 +34,26 @@
         android:id="@+id/selectedImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:cardCornerRadius="25dp">
+        app:cardCornerRadius="25dp"
+        >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/cardSelected"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:animateLayoutChanges="true"
-        android:background="#333333"
-        android:src="@drawable/ic_baseline_done_24"
-        android:visibility="gone"
-        android:contentDescription="@string/movie_image"
-        />
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:id="@+id/cardSelected"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:animateLayoutChanges="true"
+          android:background="#333333"
+          android:contentDescription="@string/movie_image"
+          android:src="@drawable/ic_baseline_done_24"
+          android:visibility="gone"
+          />
     </com.google.android.material.card.MaterialCardView>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMovieImage"
-        android:animateLayoutChanges="true"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:animateLayoutChanges="true"
         android:contentDescription="@string/movie_selected"
         />
 

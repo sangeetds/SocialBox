@@ -28,10 +28,10 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="190dp"
-        android:elevation="1dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/settings"
+        android:elevation="1dp"
         android:src="@drawable/ic_baseline_settings_24"
         />
     <com.google.android.material.textview.MaterialTextView

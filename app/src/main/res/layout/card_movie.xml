@@ -28,18 +28,18 @@
       android:id="@+id/movieStarRatings"
       android:layout_width="100dp"
       android:layout_height="30dp"
-      android:text="@string/s_5_0"
-      app:layout_constraintStart_toStartOf="parent"
-      android:gravity="center"
-      android:fontFamily="@font/rene_bieder_milliard_medium"
-      app:drawableStartCompat="@drawable/ic_baseline_grade_24"
       android:layout_marginStart="5dp"
       android:layout_marginTop="2dp"
+      android:fontFamily="@font/rene_bieder_milliard_medium"
+      android:gravity="center"
       android:padding="2dp"
-      android:paddingStart="10dp"
       android:paddingEnd="12dp"
+      android:paddingStart="10dp"
+      android:text="@string/s_5_0"
+      android:textSize="13sp"
+      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/movieCard"
+      app:drawableStartCompat="@drawable/ic_baseline_grade_24"
       />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

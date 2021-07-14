@@ -46,7 +46,7 @@ class AddGroupDialog(
       viewModel.groupState.observe(this@AddGroupDialog, Observer {
         val newGroup = it ?: return@Observer
 
-        Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.id}")
+        Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.userId}")
         user.groups.add(newGroup)
         viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
         val intent = Intent(context, GroupDetailsActivity::class.java)

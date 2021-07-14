@@ -33,7 +33,7 @@ class UserRepository @Inject constructor(private val userService: UserService) {
       Error(Exception("Server Down. Please try again."))
     }
 
-  suspend fun getUserMovies(userId: String) =
+  suspend fun getUserMovies(userId: Int) =
     try {
       userService.getUserMovies(userId).run {
         when {

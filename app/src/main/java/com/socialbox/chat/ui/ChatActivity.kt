@@ -37,7 +37,7 @@ class ChatActivity : AppCompatActivity() {
     val messageInput: EditText = findViewById(id.messageInput)
     val messageSendFab: FloatingActionButton = findViewById(id.sendButton)
 
-    val adapter = MessageAdapter(user?.id, user?.photoURL)
+    val adapter = MessageAdapter(user?.userId, user?.photoURL)
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
@@ -46,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
       val date = Calendar.getInstance().time.toString().split(" ")
       if (messageInput.text.isNotBlank()) {
         val message = Message(
-          senderId = user?.id!!,
+          senderId = user?.userId!!,
           content = messageInput.text.toString().trim(),
           createdAt = "${date[1]} ${date[2]} ${date[3]}",
           senderName = user?.name!!
