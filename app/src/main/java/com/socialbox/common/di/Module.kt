@@ -1,16 +1,17 @@
 package com.socialbox.common.di
 
-import com.socialbox.group.data.service.MovieService
+// import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.socialbox.group.data.service.GroupService
+import com.socialbox.group.data.service.MovieService
 import com.socialbox.login.data.service.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-// import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -24,7 +25,11 @@ class Module {
 
   @Provides
   @Singleton
-  fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+  fun provideOkHttpClient(): OkHttpClient {
+    val interceptor = HttpLoggingInterceptor()
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+    return OkHttpClient.Builder().addInterceptor(interceptor).build()
+  }
 
   @Provides
   @Singleton

@@ -1,16 +1,14 @@
-package com.socialbox.group.data.model
+package com.socialbox.group.data.dto
 
-import android.os.Parcelable
+import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.login.data.model.User
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class Group(
+data class GroupRequestDTO(
   val id: Int? = null,
   val name: String,
   val movieList: List<GroupMovie>? = listOf(),
   val users: List<User>? = listOf(),
   val memberCount: Int,
   val photoURL: String? = "",
-  val admin: Int // Todo: See whether you require user and how it is possible
-) : Parcelable
+  val admin: User?
+)

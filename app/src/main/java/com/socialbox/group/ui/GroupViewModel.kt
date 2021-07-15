@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.dto.GroupDTO
+import com.socialbox.group.data.dto.GroupRequestDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +41,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
     }
   }
 
-  fun addGroup(group: Group) = viewModelScope.launch {
+  fun addGroup(group: GroupRequestDTO) = viewModelScope.launch {
     Timber.i("Saving group for admin: ${group.admin}")
     val result = groupRepository.createGroup(group)
     if (result is Success) {
@@ -57,7 +58,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun filterGroups(text: CharSequence) {
-    _groupListState.value = _groupListState.value?.filter { it.name.contains(text) }
+    _groupListState.value = cachedList.filter { it.name.contains(text) }
   }
 
   fun restoreGroups() {

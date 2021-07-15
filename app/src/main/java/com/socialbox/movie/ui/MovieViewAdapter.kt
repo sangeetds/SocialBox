@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.common.enums.Genre.LATEST
 import com.socialbox.common.enums.Genre.PERSONAL
 import com.socialbox.group.data.model.Movie
 import com.socialbox.login.data.model.User
@@ -23,8 +24,17 @@ class MovieViewAdapter(
 ) :
   RecyclerView.Adapter<MovieViewAdapter.RecyclerViewHolder>() {
 
-  val views = listOf<List<Movie>>()
-  val genres = listOf(PERSONAL)
+  val views = listOf(
+    listOf(
+      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0),
+      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0)
+    ),
+    listOf(
+      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0),
+      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0)
+    )
+  )
+  val genres = listOf(PERSONAL, LATEST)
   private val movieListAdapter by lazy { MovieDisplayAdapter(context, movieViewModel) }
 
   class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {

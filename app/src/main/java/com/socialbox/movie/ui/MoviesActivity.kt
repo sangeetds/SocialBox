@@ -30,6 +30,7 @@ class MoviesActivity : AppCompatActivity() {
   private val user: User? by lazy { intent.getParcelableExtra("user") }
   private val movieViewRecyclerView: RecyclerView by lazy { findViewById(R.id.movieViewRecyclerView) }
   private lateinit var movieViewsAdapter: MovieViewAdapter
+  private var searchScreenPresent: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,16 +48,28 @@ class MoviesActivity : AppCompatActivity() {
     }
   }
 
+  override fun onBackPressed() {
+    if (searchScreenPresent) {
+      collapseSearchView()
+      presentRecyclerView()
+    } else {
+      super.onBackPressed()
+      finish()
+    }
+  }
+
   private val setSearchMode = {
     fadeRecyclerView()
     expandSearchView()
-    val searchMovieListAdapter = MovieListAdapter(context = this, updateCount = null, url = getString(R.string.image_base_url))
+    val searchMovieListAdapter =
+      MovieListAdapter(context = this, updateCount = null, url = getString(R.string.image_base_url))
     val searchMoviesRecyclerView = findViewById<RecyclerView>(R.id.searchMoviesRecyclerView)
     searchMoviesRecyclerView.adapter = searchMovieListAdapter
     searchMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
   }
 
   private fun expandSearchView() {
+    searchScreenPresent = true
     val toolBarView: MaterialToolbar = findViewById(id.material_tool_bar)
     val slideAnimator = ValueAnimator
       .ofInt(toolBarView.height, toolBarView.height + 100)
@@ -77,6 +90,28 @@ class MoviesActivity : AppCompatActivity() {
     toolBarView.setTitleTextAppearance(this@MoviesActivity, style.Toolbar_TitleText)
   }
 
+  private fun collapseSearchView() {
+    searchScreenPresent = false
+    val toolBarView: MaterialToolbar = findViewById(id.material_tool_bar)
+    val slideAnimator = ValueAnimator
+      .ofInt(toolBarView.height, toolBarView.height - 100)
+      .setDuration(1000)
+
+    slideAnimator.addUpdateListener { animation1 ->
+      val value = animation1.animatedValue as Int
+      toolBarView.layoutParams.height = value
+      toolBarView.requestLayout()
+    }
+
+    val animationSet = AnimatorSet()
+    animationSet.interpolator = AccelerateDecelerateInterpolator()
+    animationSet.play(slideAnimator)
+    animationSet.start()
+    val editText: EditText = findViewById(id.searchMovieEditText)
+    editText.visibility = View.GONE
+    toolBarView.setTitleTextAppearance(this@MoviesActivity, style.Toolbar_ReverseTitleText)
+  }
+
   private fun fadeRecyclerView() {
     val transition: Transition = Fade()
     transition.duration = 300
@@ -86,5 +121,16 @@ class MoviesActivity : AppCompatActivity() {
       transition
     )
     movieViewRecyclerView.visibility = View.GONE
+  }
+
+  private fun presentRecyclerView() {
+    val transition: Transition = Fade()
+    transition.duration = 300
+    transition.addTarget(id.movieViewRecyclerView)
+    TransitionManager.beginDelayedTransition(
+      findViewById(id.movieConstraintLayout),
+      transition
+    )
+    movieViewRecyclerView.visibility = View.VISIBLE
   }
 }

@@ -6,6 +6,9 @@
   <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
     <item name="android:textSize">28sp</item>
   </style>
+  <style name="Toolbar.ReverseTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textSize">22sp</item>
+  </style>
   <style name="CustomDialog" parent="@android:style/Theme.Holo.Light" >
     <item name="android:windowBackground">@color/white</item>
     <item name="android:windowIsFloating">true</item>

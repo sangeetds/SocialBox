@@ -1,6 +1,7 @@
 package com.socialbox.group.data.service
 
 import com.socialbox.group.data.dto.GroupDTO
+import com.socialbox.group.data.dto.GroupRequestDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import retrofit2.Response
@@ -16,7 +17,7 @@ interface GroupService {
   suspend fun getGroupsForUser(@Query("ids") groupIds: List<Int>): Response<List<GroupDTO>>
 
   @POST("/group")
-  suspend fun saveGroup(@Body group: Group): Response<Group>
+  suspend fun saveGroup(@Body group: GroupRequestDTO): Response<Group>
 
   @GET("/group/{id}")
   suspend fun getGroup(@Path("id") groupId: Int): Response<Group>
