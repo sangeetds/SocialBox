@@ -94,11 +94,7 @@ class GroupActivity : AppCompatActivity() {
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(true)
     toolbar.setNavigationOnClickListener {
-      val popup = CascadePopupWindow(this)
-      popup.contentView.addView(NotificationsDialog(this))
-      popup.contentView.y = 165F
-      popup.contentView.x = 10F
-      popup.show(toolbar)
+      NotificationsDialog().show(supportFragmentManager.beginTransaction(), "Notifications")
     }
   }
 

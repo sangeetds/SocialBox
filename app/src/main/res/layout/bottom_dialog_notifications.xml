@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="240dp"
+    android:layout_width="match_parent"
     android:layout_height="325dp"
+    tools:context=".group.ui.NotificationsDialog"
     >
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/searchMovieRecycleView"
@@ -26,10 +27,10 @@
       app:layout_constraintTop_toTopOf="parent"
       >
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="190dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="5dp"
         android:contentDescription="@string/settings"
         android:elevation="1dp"
         android:src="@drawable/ic_baseline_settings_24"
@@ -45,7 +46,7 @@
         android:paddingEnd="50dp"
         android:paddingStart="10dp"
         android:text="@string/notifications"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,6 +57,7 @@
       android:layout_height="50dp"
       android:elevation="10dp"
       android:translationZ="10dp"
+      android:backgroundTint="?attr/colorPrimary"
       app:layout_constraintTop_toBottomOf="@+id/searchMovieRecycleView"
       >
     <com.google.android.material.button.MaterialButton
