@@ -1,22 +1,21 @@
 package com.socialbox.movie.ui
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
@@ -30,22 +29,12 @@ class AddMovieDialog(
   private val userId: Int,
   val group: Group,
   private val url: String
-) : DialogFragment() {
+) : BottomSheetDialogFragment() {
 
-  private var dialogView: View? = null
   private lateinit var adapter: MovieListAdapter
   private lateinit var topHeader: MaterialTextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var selectedTopHeader: MaterialTextView
-
-  override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    userMovieViewModel.getUserMovies(userId)
-    return MaterialAlertDialogBuilder(requireContext(), theme).apply {
-      dialogView = onCreateView(LayoutInflater.from(requireContext()), null, savedInstanceState)
-      dialogView?.let { onViewCreated(it, savedInstanceState) }
-      setView(dialogView)
-    }.create()
-  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -53,19 +42,22 @@ class AddMovieDialog(
     savedInstanceState: Bundle?,
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(R.layout.dialog_add_movie, container, false)
 
-    setUpViews(inflate)
+    return inflater.inflate(layout.dialog_add_movie, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setUpViews(view)
     setUpObservables()
-
-    return inflate
   }
 
   private fun setUpObservables() {
     userMovieViewModel.userMovies.observe(this@AddMovieDialog, Observer {
       val movies = it ?: return@Observer
 
-      adapter.movies = (movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
+      adapter.movies =
+        (movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
       (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
     })
   }
@@ -124,9 +116,5 @@ class AddMovieDialog(
       selectedTopHeader.visibility = View.GONE
       clearSelection.visibility = View.GONE
     }
-  }
-
-  override fun getView(): View? {
-    return dialogView
   }
 }

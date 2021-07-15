@@ -38,7 +38,7 @@
         android:fontFamily="@font/work_sans_bold"
         android:hint="@string/search_for_movies"
         android:inputType="text"
-        android:textColor="#004D40"
+        android:textColor="?attr/textColor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

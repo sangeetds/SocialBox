@@ -1,6 +1,5 @@
 package com.socialbox.movie.ui
 
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,16 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
@@ -34,17 +33,7 @@ class SearchMovieDialog(
   private val groupViewModel: GroupViewModel,
   private val url: String
 ) :
-  DialogFragment() {
-
-  private var dialogView: View? = null
-
-  override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    return MaterialAlertDialogBuilder(requireContext(), theme).apply {
-      dialogView = onCreateView(LayoutInflater.from(requireContext()), null, savedInstanceState)
-      dialogView?.let { onViewCreated(it, savedInstanceState) }
-      setView(dialogView)
-    }.create()
-  }
+  BottomSheetDialogFragment() {
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -52,12 +41,17 @@ class SearchMovieDialog(
     savedInstanceState: Bundle?,
   ): View? {
     super.onCreateView(inflater, container, savedInstanceState)
-    val inflate = inflater.inflate(R.layout.dialog_search_movie, container, false)
-    val recyclerView = inflate.findViewById<RecyclerView>(R.id.searchMovieRecycleView)
-    val searchBar = inflate.findViewById<EditText>(R.id.searchMovieName)
-    val addMovieButton = inflate.findViewById<MaterialButton>(R.id.addMovie)
-    val selectedTopHeader = inflate.findViewById<MaterialTextView>(R.id.selectedTopHeader)
-    val clearSelection = inflate.findViewById<ImageView>(R.id.clearSelection)
+
+    return inflater.inflate(layout.dialog_search_movie, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    val recyclerView = view.findViewById<RecyclerView>(R.id.searchMovieRecycleView)
+    val searchBar = view.findViewById<EditText>(R.id.searchMovieName)
+    val addMovieButton = view.findViewById<MaterialButton>(R.id.addMovie)
+    val selectedTopHeader = view.findViewById<MaterialTextView>(R.id.selectedTopHeader)
+    val clearSelection = view.findViewById<ImageView>(R.id.clearSelection)
     val updateCount = updateCount(addMovieButton, clearSelection, selectedTopHeader, searchBar)
 
     val movieListAdapter = MovieListAdapter(requireContext(), updateCount, url)
@@ -109,12 +103,6 @@ class SearchMovieDialog(
       }
       groupViewModel.getGroup(group.id)
     }
-
-    return inflate
-  }
-
-  override fun getView(): View? {
-    return dialogView
   }
 
   private fun toGroupMovies(movieListAdapter: MovieListAdapter) =

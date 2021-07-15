@@ -14,7 +14,7 @@ data class Movie(
   val votes: Int = 0,
   val reviews: List<Review>?,
   val photoURL: String?,
-  val genre: List<Genre> = listOf(),
+  val genre: List<Genre>? = listOf(),
   val user: User? = null,
   val userRatings: UserRatings? = null
 ) : Parcelable

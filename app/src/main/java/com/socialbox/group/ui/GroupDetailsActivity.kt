@@ -126,7 +126,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id)
+    // groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id)
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
