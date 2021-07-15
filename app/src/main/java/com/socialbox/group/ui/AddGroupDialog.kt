@@ -11,9 +11,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
 import com.socialbox.R.layout
 import com.socialbox.group.data.dto.GroupRequestDTO
+import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.model.User
 import timber.log.Timber
 
@@ -38,31 +40,30 @@ class AddGroupDialog(
   }
 
   private fun setUpViews(view: View) {
-    val createNewGroupButton = view.findViewById<Button>(R.id.add_movie)
+    val createNewGroupButton = view.findViewById<MaterialTextView>(R.id.addGroup)
     val groupName = view.findViewById<EditText>(R.id.group_name)
 
     createNewGroupButton.setOnClickListener {
       val group =
-        GroupRequestDTO(name = groupName.text.toString(), memberCount = 1, admin = user)
-      viewModel.addGroup(group)
-      viewModel.groupState.observe(this@AddGroupDialog, Observer {
-        val newGroup = it ?: return@Observer
+        Group(name = groupName.text.toString(), memberCount = 1, admin = user.userId!!)
+      // viewModel.addGroup(group)
+      // viewModel.groupState.observe(this@AddGroupDialog, Observer {
+      //   val newGroup = it ?: return@Observer
 
-        Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.userId}")
-        user.groups.add(newGroup)
-        viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
+        Timber.i("Adding Group ${group.name} with id: ${group.id} and userId: ${user.userId}")
+        user.groups.add(group)
+        // viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
         val intent = Intent(context, GroupDetailsActivity::class.java)
-        intent.putExtra("group", newGroup)
+        intent.putExtra("group", group)
         intent.putExtra("user", user)
         startActivity(intent)
         dismiss()
-      })
+      // })
       Toast.makeText(context, "Adding Group. Please wait.", Toast.LENGTH_SHORT).show()
     }
   }
 
   // companion object {
-  //   @JvmStatic
   //   fun newInstance(bundle: Bundle): AddGroupDialog {
   //     val fragment = AddGroupDialog()
   //     fragment.arguments = bundle
