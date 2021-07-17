@@ -13,6 +13,7 @@
     <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
     <item name="metaTextColor">#373944</item>
+    <item name="reverseMetaTextColor">@color/white</item>
     <item name="textColor">@color/white</item>
     <item name="bgColor">#3D3D3D</item>
     <item name="bgSettings">#FFA48E</item>
