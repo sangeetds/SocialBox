@@ -4,11 +4,14 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
@@ -19,9 +22,16 @@ import com.google.android.material.button.MaterialButton
 import com.socialbox.R
 import com.socialbox.R.id
 import com.socialbox.R.style
+import com.socialbox.common.enums.Genre
+import com.socialbox.common.enums.Result.Success
+import com.socialbox.group.data.model.Movie
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -46,6 +56,14 @@ class MoviesActivity : AppCompatActivity() {
       startActivity(intent)
       finish()
     }
+
+    movieViewModel.documentaryMovies.observe(this, Observer {
+      val movies = it ?: return@Observer
+      val views = movieViewsAdapter.views
+      val data: List<Movie> = (movies as Success).data
+      movieViewsAdapter.views = views + listOf(data)
+      movieViewsAdapter.notifyItemChanged(views.size + 1)
+    })
   }
 
   override fun onBackPressed() {
@@ -58,17 +76,22 @@ class MoviesActivity : AppCompatActivity() {
     }
   }
 
-  private val setSearchMode = {
+  private val setSearchMode = { genre: Genre ->
     fadeRecyclerView()
-    expandSearchView()
+    expandSearchView(genre)
     val searchMovieListAdapter =
       MovieListAdapter(context = this, updateCount = null, url = getString(R.string.image_base_url))
     val searchMoviesRecyclerView = findViewById<RecyclerView>(R.id.searchMoviesRecyclerView)
     searchMoviesRecyclerView.adapter = searchMovieListAdapter
     searchMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
+    movieViewModel.movies.observe(this, Observer {
+      val movieList = it ?: return@Observer
+      searchMovieListAdapter.movies = movieList
+      searchMovieListAdapter.notifyDataSetChanged()
+    })
   }
 
-  private fun expandSearchView() {
+  private fun expandSearchView(genre: Genre) {
     searchScreenPresent = true
     val toolBarView: MaterialToolbar = findViewById(id.material_tool_bar)
     val slideAnimator = ValueAnimator
@@ -87,6 +110,27 @@ class MoviesActivity : AppCompatActivity() {
     animationSet.start()
     val editText: EditText = findViewById(id.searchMovieEditText)
     editText.visibility = View.VISIBLE
+
+    editText.addTextChangedListener(object : TextWatcher {
+      private var searchFor = editText.text.toString()
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        val searchText = s.toString().trim()
+        if (searchFor != searchText) {
+          searchFor = searchText
+          CoroutineScope(Dispatchers.Main).launch {
+            delay(500)
+            if (searchText == searchFor) {
+              movieViewModel.searchAllMovies(searchText, genre)
+            }
+          }
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {}
+    })
+
     toolBarView.setTitleTextAppearance(this@MoviesActivity, style.Toolbar_TitleText)
   }
 

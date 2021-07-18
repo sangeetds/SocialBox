@@ -39,10 +39,7 @@ class MovieDisplayAdapter(
   }
 
   private fun setUpObservers() {
-    movieViewModel.latestMovies.observe(context as LifecycleOwner, Observer {
-      val movies = it ?: return@Observer
-      // movieListAdapter.submitList(movies)
-    })
+
   }
 }
 

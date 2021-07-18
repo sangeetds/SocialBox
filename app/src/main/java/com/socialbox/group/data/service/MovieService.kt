@@ -1,5 +1,6 @@
 package com.socialbox.group.data.service
 
+import com.socialbox.common.enums.Genre
 import com.socialbox.group.data.model.Movie
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,11 +13,11 @@ interface MovieService {
   suspend fun getMoviesForGroup(@Query("groupID") groupId: String): Response<List<Movie>>
 
   @GET("/movie")
-  suspend fun getAllMovies(): Response<List<Movie>>
+  suspend fun getMovies(@Query("genre") genre: Genre): Response<List<Movie>>
 
   @POST("/movie")
   suspend fun saveMovie(movie: Movie): Response<Movie>
 
   @GET("/movie/search")
-  suspend fun searchMovie(@Query("name") searchQuery: String): Response<List<Movie>>
+  suspend fun searchMovie(@Query("name") searchQuery: String, @Query("genre") genre: Genre? = null): Response<List<Movie>>
 }

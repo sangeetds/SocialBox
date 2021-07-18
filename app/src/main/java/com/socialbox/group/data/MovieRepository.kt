@@ -1,6 +1,6 @@
 package com.socialbox.group.data
 
-import com.socialbox.common.enums.Result
+import com.socialbox.common.enums.Genre
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.model.Movie
@@ -28,22 +28,6 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
       listOf()
     }
 
-  suspend fun getAllMovies() =
-    try {
-      movieService.getAllMovies().run {
-        when {
-          isSuccessful && body() != null -> body()!!
-          else -> {
-            Timber.d("Failed to fetch movies with error: ${errorBody()?.stringSuspending()}")
-            listOf()
-          }
-        }
-      }
-    } catch (exception: SocketTimeoutException) {
-      Timber.e("Failed to connect with error $exception")
-      listOf()
-    }
-
   suspend fun updateRatings(movie: Movie) =
     try {
       movieService.saveMovie(movie)
@@ -54,6 +38,26 @@ class MovieRepository @Inject constructor(private val movieService: MovieService
   suspend fun searchMovie(searchQuery: String) = try {
     Timber.i("Making query for $searchQuery")
     movieService.searchMovie(searchQuery).run {
+      when {
+        isSuccessful && body() != null -> {
+          Success(body()!!)
+        }
+        else -> {
+          val errorMessage = "Failed to fetch movies with error: ${errorBody()?.stringSuspending()}"
+          Timber.d(errorMessage)
+          Error(Exception(errorMessage))
+        }
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    val errorMessage = "Failed to connect with error $exception"
+    Timber.e(errorMessage)
+    Error(Exception(errorMessage))
+  }
+
+  suspend fun getDocumentaryMovies() = try {
+    Timber.i("Making query for ${Genre.DOCUMENTARY}")
+    movieService.getMovies(Genre.DOCUMENTARY).run {
       when {
         isSuccessful && body() != null -> {
           Success(body()!!)

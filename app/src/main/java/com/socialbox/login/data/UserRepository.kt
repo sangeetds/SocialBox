@@ -57,4 +57,23 @@ class UserRepository @Inject constructor(private val userService: UserService) {
       Timber.e("Error while logging in with error: $exception")
       Error(Exception("Server Down. Please try again."))
     }
+
+  suspend fun getMovies(id: Int) =
+    try {
+      userService.getUserMovies(id).run {
+        when {
+          isSuccessful && body() != null -> {
+            Timber.i("Fetched movies successful with response: ${raw()} ")
+            Success(body()!!)
+          }
+          else -> {
+            Timber.e("Error while fetching in with error: ${errorBody()?.stringSuspending()}")
+            Error(Exception(errorBody()?.stringSuspending()))
+          }
+        }
+      }
+    } catch (exception: SocketTimeoutException) {
+      Timber.e("Error while fetching in with error: $exception")
+      Error(Exception("Server Down. Please try again."))
+    }
 }

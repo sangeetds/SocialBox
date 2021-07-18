@@ -91,7 +91,7 @@ class SearchMovieDialog(
           CoroutineScope(Dispatchers.Main).launch {
             delay(500)
             if (searchText == searchFor) {
-              movieViewModel.getUserMovies(searchText)
+              movieViewModel.searchAllMovies(searchText)
             }
           }
         }

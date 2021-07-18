@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import com.leinardi.android.speeddial.SpeedDialActionItem.Builder
 import com.leinardi.android.speeddial.SpeedDialView
 import com.socialbox.R
@@ -59,7 +60,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
     addMovieButton = findViewById(id.add_movie_floating_button)
     moviesAdapter = MovieAdapter(url = getString(string.image_base_url))
-    recyclerView = findViewById(id.movie_list)
+    recyclerView = findViewById(id.movieList)
     recyclerView.adapter = moviesAdapter
     recyclerView.layoutManager = GridLayoutManager(this, 2)
     recyclerView.setHasFixedSize(true)
@@ -123,13 +124,20 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    // groupViewModel.getGroup(groupId = groupDTO?.id ?: group?.id)
+    groupViewModel.getGroup(groupId = group?.id)
+    val placeholderText = findViewById<MaterialTextView>(R.id.groupDetailsPlaceholder)
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
       supportActionBar?.title = groupDetails.name
       if (groupDetails.movieList?.isNotEmpty() == true) {
+        recyclerView.visibility = View.VISIBLE
+        placeholderText.visibility = View.GONE
         moviesAdapter.submitList(groupDetails.movieList)
+      }
+      else {
+        recyclerView.visibility = View.GONE
+        placeholderText.visibility = View.VISIBLE
       }
     })
   }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
+import com.socialbox.common.enums.Genre
 import com.socialbox.common.enums.Genre.LATEST
 import com.socialbox.common.enums.Genre.PERSONAL
 import com.socialbox.group.data.model.Movie
@@ -19,22 +20,13 @@ class MovieViewAdapter(
   val context: Context,
   val user: User?,
   private val movieViewModel: MovieViewModel,
-  private val setSearchMode: () -> Unit
+  private val setSearchMode: (Genre) -> Unit
 
 ) :
   RecyclerView.Adapter<MovieViewAdapter.RecyclerViewHolder>() {
 
-  val views = listOf(
-    listOf(
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0),
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0)
-    ),
-    listOf(
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0),
-      Movie(rating = 5.0, reviews = listOf(), photoURL = "", id = 0)
-    )
-  )
-  val genres = listOf(PERSONAL, LATEST)
+  var views = listOf<List<Movie>>()
+  val genres = listOf(Genre.DOCUMENTARY)
   private val movieListAdapter by lazy { MovieDisplayAdapter(context, movieViewModel) }
 
   class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -69,7 +61,7 @@ class MovieViewAdapter(
     movieListAdapter.submitList(view)
 
     holder.browseChip.setOnClickListener {
-      setSearchMode()
+      setSearchMode(genres[position])
     }
   }
 
