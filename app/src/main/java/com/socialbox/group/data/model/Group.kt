@@ -1,7 +1,6 @@
 package com.socialbox.group.data.model
 
 import android.os.Parcelable
-import com.socialbox.login.data.model.User
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -9,8 +8,7 @@ data class Group(
   val id: Int? = null,
   val name: String,
   val movieList: List<GroupMovie>? = listOf(),
-  val users: List<User>? = listOf(),
   val memberCount: Int,
   val photoURL: String? = "",
-  val admin: Int // Todo: See whether you require user and how it is possible
+  val adminId: Int
 ) : Parcelable

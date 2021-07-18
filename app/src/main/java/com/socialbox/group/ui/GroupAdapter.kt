@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
-import com.socialbox.group.data.dto.GroupDTO
+import com.socialbox.group.data.model.Group
 import com.socialbox.group.ui.GroupAdapter.SongSearchViewHolder
 import com.socialbox.login.data.model.User
 import timber.log.Timber
 
 class GroupAdapter(val context: Context, val user: User?) :
-  ListAdapter<GroupDTO, SongSearchViewHolder>(GroupItemDiffCallback()) {
+  ListAdapter<Group, SongSearchViewHolder>(GroupItemDiffCallback()) {
 
   class SongSearchViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {
     val image: ImageView = cardView.findViewById(R.id.user_movie_image)
@@ -52,9 +52,9 @@ class GroupAdapter(val context: Context, val user: User?) :
   }
 }
 
-class GroupItemDiffCallback : DiffUtil.ItemCallback<GroupDTO>() {
+class GroupItemDiffCallback : DiffUtil.ItemCallback<Group>() {
 
-  override fun areItemsTheSame(oldItem: GroupDTO, newItem: GroupDTO): Boolean = oldItem == newItem
+  override fun areItemsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem == newItem
 
-  override fun areContentsTheSame(oldItem: GroupDTO, newItem: GroupDTO): Boolean = oldItem == newItem
+  override fun areContentsTheSame(oldItem: Group, newItem: Group): Boolean = oldItem == newItem
 }

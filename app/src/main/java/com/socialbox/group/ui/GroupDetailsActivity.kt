@@ -105,7 +105,7 @@ class GroupDetailsActivity : AppCompatActivity() {
             val addMovieDialog = AddMovieDialog(
               userMovieViewModel,
               groupViewModel,
-              user?.userId!!,
+              user?.id!!,
               group = group!!,
               url = this.getString(string.image_base_url)
             )

@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
 import com.socialbox.R.layout
-import com.socialbox.group.data.dto.GroupRequestDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.model.User
 import timber.log.Timber
@@ -45,12 +41,12 @@ class AddGroupDialog(
 
     createNewGroupButton.setOnClickListener {
       val group =
-        Group(name = groupName.text.toString(), memberCount = 1, admin = user.userId!!)
+        Group(name = groupName.text.toString(), memberCount = 1, adminId = user.id!!)
       // viewModel.addGroup(group)
       // viewModel.groupState.observe(this@AddGroupDialog, Observer {
       //   val newGroup = it ?: return@Observer
 
-        Timber.i("Adding Group ${group.name} with id: ${group.id} and userId: ${user.userId}")
+        Timber.i("Adding Group ${group.name} with id: ${group.id} and userId: ${user.id}")
         user.groups.add(group)
         // viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
         val intent = Intent(context, GroupDetailsActivity::class.java)

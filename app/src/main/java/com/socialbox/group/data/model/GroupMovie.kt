@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GroupMovie(
   val id: Int? = null,
-  val group: Group,
+  val groupId: Int?,
   val name: String = "",
   val photoURL: String? = "",
   val rating: Double = 0.0,

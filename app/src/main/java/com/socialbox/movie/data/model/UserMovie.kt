@@ -1,6 +1,6 @@
-package com.socialbox.movie.data.dto
+package com.socialbox.movie.data.model
 
-data class UserMovieDTO(
+data class UserMovie(
   val id: Int,
   val userId: String,
   val name: String,

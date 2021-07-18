@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Review (
   private val id: Int? = null,
   private val userReviews: String? = null,
-  private val groupMovie: GroupMovie? = null,
-  private val movie: Movie? = null,
+  private val groupMovieId: Int? = null,
+  private val movieId: Int? = null,
 ) : Parcelable

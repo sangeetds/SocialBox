@@ -8,6 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class UserRatings(
   val id: Int,
   val ratings: Double,
-  val user: User,
-  val movie: Movie,
+  val userId: User,
+  val movieId: Movie,
 ) : Parcelable

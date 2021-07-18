@@ -1,6 +1,5 @@
 package com.socialbox.chat.ui
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
 import com.socialbox.chat.data.model.Message
 
-class MessageAdapter(val id: Int?, val photoUri: Uri?) : ListAdapter<Message, MessageAdapter.ViewHolder>(MessageItemDiffCallback()) {
+class MessageAdapter(val id: Int?, val photoUri: String?) : ListAdapter<Message, MessageAdapter.ViewHolder>(MessageItemDiffCallback()) {
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val otherUserAvatar: ImageView? = view.findViewById(R.id.imageChatProfileOther)
