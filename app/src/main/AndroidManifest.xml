@@ -25,7 +25,8 @@
     <activity
         android:name=".group.ui.GroupDetailsActivity"
         android:exported="true"
-        android:theme="@style/Theme.SocialBox.NoActionBar" />
+        android:theme="@style/Theme.SocialBox.NoActionBar"
+        android:windowSoftInputMode="adjustResize"/>
     <activity
         android:name=".login.ui.LoginActivity"
         android:exported="true"
@@ -40,7 +41,7 @@
     <activity
         android:name=".group.ui.GroupActivity"
         android:theme="@style/Theme.SocialBox.NoActionBar"
-        android:windowSoftInputMode="adjustPan"/>
+        android:windowSoftInputMode="adjustResize" />
     <activity
         android:name=".movie.ui.MoviesActivity"
         android:theme="@style/Theme.SocialBox.NoActionBar" />

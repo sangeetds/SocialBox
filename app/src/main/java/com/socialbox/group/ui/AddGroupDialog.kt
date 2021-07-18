@@ -1,13 +1,20 @@
 package com.socialbox.group.ui
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
@@ -29,6 +36,20 @@ class AddGroupDialog(
     super.onCreateView(inflater, container, savedInstanceState)
 
     return inflater.inflate(layout.bottom_dialog_add_group, container, false)
+  }
+
+  override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    val dialog = super.onCreateDialog(savedInstanceState)
+    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    dialog.setOnShowListener {
+      Handler().post {
+        val bottomSheet = (dialog as? BottomSheetDialog)?.findViewById<View>(R.id.design_bottom_sheet) as? FrameLayout
+        bottomSheet?.let {
+          BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+        }
+      }
+    }
+    return dialog
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
