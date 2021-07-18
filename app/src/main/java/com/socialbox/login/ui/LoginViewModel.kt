@@ -24,6 +24,17 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     val result = userRepository.login(user)
     _loginResult.value = when (result) {
       is Result.Success -> LoginResult(success = result.data)
+      is Result.Created -> LoginResult(created = result.data)
+      is Result.Error -> LoginResult(error = result.exception.localizedMessage)
+    }
+  }
+
+  fun updateSettings(user: User) = viewModelScope.launch {
+    Timber.i("Adding name and photo for user: $user")
+    val result = userRepository.updateSettings(user)
+    _loginResult.value = when (result) {
+      is Result.Success -> LoginResult(success = result.data)
+      is Result.Created -> LoginResult(created = result.data)
       is Result.Error -> LoginResult(error = result.exception.localizedMessage)
     }
   }

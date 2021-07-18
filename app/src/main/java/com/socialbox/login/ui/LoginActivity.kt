@@ -4,11 +4,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.transition.Fade
 import androidx.transition.Transition
@@ -26,6 +28,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.socialbox.R.drawable
 import com.socialbox.R.id
 import com.socialbox.R.layout
+import com.socialbox.R.string
 import com.socialbox.group.ui.GroupActivity
 import com.socialbox.login.data.model.User
 import com.squareup.picasso.Picasso
@@ -36,10 +39,11 @@ import timber.log.Timber
 class LoginActivity : AppCompatActivity() {
 
   private val loginViewModel: LoginViewModel by viewModels()
-  private val appImage: ImageView by lazy { findViewById(id.appImage)}
+  private val appImage: ImageView by lazy { findViewById(id.appImage) }
   private val googleLoginButton: SignInButton by lazy { findViewById(id.googleSignInButton) }
   private val progressIndicator: CircularProgressIndicator by lazy { findViewById(id.loading_icon) }
   private val signInButton: MaterialButton by lazy { findViewById(id.signInButton) }
+  private val loginLayout: ConstraintLayout by lazy { findViewById(id.loginView) }
   private lateinit var mGoogleSignInClient: GoogleSignInClient
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,8 +97,12 @@ class LoginActivity : AppCompatActivity() {
           Timber.e("Login not successful")
           showLoginFailed(error)
         }
+        created?.let {
+          Timber.i("Created user.")
+          proceedForDisplaySettings(created)
+        }
         success?.let {
-          Timber.i("Successfully logged in")
+          Timber.i("Logged in successfully")
           updateUiWithUser(success)
         }
         setResult(RESULT_OK)
@@ -111,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     signInButton.setOnClickListener {
-      findViewById<ImageView>(id.appImage).animate().alpha(0.4f)
+      appImage.animate().alpha(0.4f)
 
       val transition: Transition = Fade()
       transition.duration = 600
@@ -120,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
       TransitionManager.beginDelayedTransition(findViewById(id.loginConstraintLayout), transition)
 
       it.visibility = View.GONE
-      findViewById<ConstraintLayout>(id.loginView).visibility = View.VISIBLE
+      loginLayout.visibility = View.VISIBLE
     }
   }
 
@@ -133,13 +141,51 @@ class LoginActivity : AppCompatActivity() {
   private fun updateUiWithUser(model: User) {
     Timber.i("Login successful for $model")
 
-    Toast.makeText(applicationContext, "Welcome ${model.name}!", Toast.LENGTH_LONG).show()
+    Toast.makeText(applicationContext, "Welcome ${model.displayName}!", Toast.LENGTH_LONG).show()
 
     Timber.i("Starting HomeActivity with user: $model")
     val intent = Intent(this@LoginActivity, GroupActivity::class.java)
     intent.putExtra("user", model)
     startActivity(intent)
     finish()
+  }
+
+  private fun proceedForDisplaySettings(created: User) {
+    appImage.animate().alpha(0.2f)
+    progressIndicator.visibility = View.GONE
+
+    val transition: Transition = Fade()
+    transition.duration = 600
+    transition.addTarget(id.loginView)
+    transition.addTarget(id.signInButton)
+    transition.addTarget(id.displayLayout)
+    TransitionManager.beginDelayedTransition(findViewById(id.loginConstraintLayout), transition)
+
+    loginLayout.visibility = View.GONE
+    signInButton.text = getString(string.continueLogin)
+    signInButton.visibility = View.VISIBLE
+    signInButton.isEnabled = false
+    findViewById<ConstraintLayout>(id.displayLayout).visibility = View.VISIBLE
+
+    val displayName = findViewById<EditText>(id.displayName)
+    displayName.doOnTextChanged { text, _, _, _ ->
+      when(text?.isBlank()) {
+        true -> signInButton.isEnabled = false
+        false -> signInButton.isEnabled = true
+      }
+    }
+
+    signInButton.setOnClickListener {
+      progressIndicator.visibility = View.VISIBLE
+      loginViewModel.updateSettings(
+        User(
+          created.id,
+          displayName = displayName.text.toString(),
+          photoURL = null,
+          groups = created.groups
+        )
+      )
+    }
   }
 
   private fun showLoginFailed(errorString: String) {

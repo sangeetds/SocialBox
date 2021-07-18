@@ -81,5 +81,8 @@
   <string name="back">Back</string>
   <string name="notifications">Notifications</string>
   <string name="settings">Settings</string>
+  <string name="continueLogin">Continue</string>
   <string name="clear_notifications">Clear Notifications</string>
+  <string name="enter_profile_name">Enter Profile Name</string>
+  <string name="please_select_an_image_and_name_for_your_profile">Please Select an Image and Name for your profile</string>
 </resources>

@@ -15,4 +15,7 @@ interface UserService {
 
   @GET("/user/{id}/movies")
   suspend fun getUserMovies(@Path("id") id: Int): Response<List<UserMovie>>
+
+  @POST("/user/{id}/settings")
+  suspend fun updateSettings(@Body user: User, @Path("id") id: Int): Response<User>
 }

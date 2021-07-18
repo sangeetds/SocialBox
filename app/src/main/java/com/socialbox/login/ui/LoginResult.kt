@@ -7,5 +7,6 @@ import com.socialbox.login.data.model.User
  */
 data class LoginResult(
   val success: User? = null,
+  val created: User? = null,
   val error: String? = null
 )

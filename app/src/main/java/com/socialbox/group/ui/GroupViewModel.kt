@@ -56,7 +56,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun filterGroups(text: CharSequence) {
-    _groupListState.value = cachedList.filter { it.name.contains(text) }
+    _groupListState.value = cachedList.filter { it.name!!.contains(text) }
   }
 
   fun restoreGroups() {

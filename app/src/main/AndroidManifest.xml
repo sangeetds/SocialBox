@@ -39,7 +39,8 @@
     </activity>
     <activity
         android:name=".group.ui.GroupActivity"
-        android:theme="@style/Theme.SocialBox.NoActionBar" />
+        android:theme="@style/Theme.SocialBox.NoActionBar"
+        android:windowSoftInputMode="adjustPan"/>
     <activity
         android:name=".movie.ui.MoviesActivity"
         android:theme="@style/Theme.SocialBox.NoActionBar" />

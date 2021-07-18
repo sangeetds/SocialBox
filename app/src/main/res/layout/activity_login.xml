@@ -24,7 +24,6 @@
       android:layout_width="wrap_content"
       android:layout_height="100dp"
       android:layout_marginTop="40dp"
-      android:alpha="1"
       android:fontFamily="@font/pattaya_regular"
       android:text="@string/appName"
       android:textSize="80sp"
@@ -115,5 +114,76 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/displayLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="56dp"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/app_name">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/pattaya_regular"
+        android:text="@string/welcome"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/materialTextView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/pattaya_regular"
+      android:text="@string/please_select_an_image_and_name_for_your_profile"
+      android:textSize="18sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+      />
+
+  <com.google.android.material.card.MaterialCardView
+      android:id="@+id/profileImage"
+      android:layout_width="140dp"
+      android:layout_height="140dp"
+      android:layout_marginTop="60dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
+      app:cardCornerRadius="90dp"
+      app:strokeColor="@color/teal_200"
+      app:strokeWidth="1dp"
+      >
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/current_user_image"
+        android:translationX="-4dp"
+        android:translationY="-4dp"
+        />
+  </com.google.android.material.card.MaterialCardView>
+
+  <EditText
+      android:id="@+id/displayName"
+      android:layout_width="200dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="66dp"
+      android:hint="@string/enter_profile_name"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/profileImage"
+      android:autofillHints="name"
+      android:inputType="text"
+      />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

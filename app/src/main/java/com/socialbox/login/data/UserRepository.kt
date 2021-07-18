@@ -1,10 +1,11 @@
 package com.socialbox.login.data
 
+import com.socialbox.common.enums.Result.Created
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
+import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import com.socialbox.login.data.model.User
 import com.socialbox.login.data.service.UserService
-import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
 import timber.log.Timber
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -19,8 +20,13 @@ class UserRepository @Inject constructor(private val userService: UserService) {
       userService.loginUser(user = user).run {
         when {
           isSuccessful && body() != null -> {
-            Timber.i("Login successful with response: ${raw()} ")
-            Success(body()!!)
+            if (code() == 200) {
+              Timber.i("Login successful with response: ${raw()} ")
+              Success(body()!!)
+            } else {
+              Timber.i("Created a new user with response: ${raw()} ")
+              Created(body()!!)
+            }
           }
           else -> {
             Timber.e("Error while logging in with error: ${errorBody()?.stringSuspending()}")
@@ -33,22 +39,22 @@ class UserRepository @Inject constructor(private val userService: UserService) {
       Error(Exception("Server Down. Please try again."))
     }
 
-  suspend fun getUserMovies(userId: Int) =
+  suspend fun updateSettings(user: User) =
     try {
-      userService.getUserMovies(userId).run {
+      userService.updateSettings(user = user, id = user.id!!).run {
         when {
           isSuccessful && body() != null -> {
-            Timber.i("Fetched movies successful with response: ${raw()} ")
+            Timber.i("Login successful with response: ${raw()} ")
             Success(body()!!)
           }
           else -> {
-            Timber.e("Error while fetch movies for the user with error: ${errorBody()?.stringSuspending()}")
+            Timber.e("Error while logging in with error: ${errorBody()?.stringSuspending()}")
             Error(Exception(errorBody()?.stringSuspending()))
           }
         }
       }
     } catch (exception: SocketTimeoutException) {
-      Timber.e("Error while fetching movies with error: $exception")
+      Timber.e("Error while logging in with error: $exception")
       Error(Exception("Server Down. Please try again."))
     }
 }
