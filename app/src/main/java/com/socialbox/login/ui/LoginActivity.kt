@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
     account?.apply {
       progressIndicator.visibility = View.VISIBLE
       Toast.makeText(this@LoginActivity, "Logging in. Please Wait.", Toast.LENGTH_SHORT).show()
-      val user = User(name = displayName, email = email, photoURL = photoUrl)
+      val user = User(name = displayName, email = email)
       Timber.i("User $displayName already signed in")
       loginViewModel.login(user)
     }
@@ -164,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
     try {
       val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
 
-      val user = User(name = account?.displayName, email = account?.email, photoURL = account?.photoUrl)
+      val user = User(name = account?.displayName, email = account?.email)
       loginViewModel.login(user)
     } catch (e: ApiException) {
       Timber.e("signInResult:failed code=%s with message:%s", e.statusCode, e.message)

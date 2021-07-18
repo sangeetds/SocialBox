@@ -26,7 +26,6 @@ import com.socialbox.R.string
 import com.socialbox.chat.ui.ChatActivity
 import com.socialbox.chat.ui.ChatSettingsActivity
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
-import com.socialbox.group.data.dto.GroupDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.AddMovieDialog
@@ -47,7 +46,6 @@ class GroupDetailsActivity : AppCompatActivity() {
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
   private lateinit var addMovieButton: SpeedDialView
-  private val groupDTO by lazy { intent.getParcelableExtra<GroupDTO>("groupDTO") }
   private val group by lazy { intent.getParcelableExtra<Group>("group") }
   private val user by lazy { intent.getParcelableExtra<User>("user") }
 
@@ -70,7 +68,6 @@ class GroupDetailsActivity : AppCompatActivity() {
       val intent = Intent(this, ChatActivity::class.java)
       intent.putExtra("user", user)
       intent.putExtra("group", group)
-      intent.putExtra("groupDTO", groupDTO)
       startActivity(intent)
     }
 
@@ -146,7 +143,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
     val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
-    toolbar.title = groupDTO?.name ?: (group?.name ?: getString(string.appName))
+    toolbar.title = group?.name ?: getString(string.appName)
 
     toolbar.setOnClickListener {
       val intent = Intent(this, ChatSettingsActivity::class.java)

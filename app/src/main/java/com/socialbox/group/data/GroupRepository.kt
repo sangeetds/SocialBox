@@ -4,7 +4,6 @@ import com.socialbox.common.enums.Result
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
-import com.socialbox.group.data.dto.GroupRequestDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.service.GroupService
@@ -33,7 +32,7 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
       Error(Exception(errorString))
     }
 
-  suspend fun createGroup(group: GroupRequestDTO) = try {
+  suspend fun createGroup(group: Group) = try {
     val saveGroup = groupService.saveGroup(group)
     saveGroup.run {
       when {

@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.group.data.GroupRepository
-import com.socialbox.group.data.dto.GroupDTO
-import com.socialbox.group.data.dto.GroupRequestDTO
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +17,9 @@ import javax.inject.Inject
 class GroupViewModel @Inject constructor(private val groupRepository: GroupRepository) :
   ViewModel() {
 
-  private val cachedList: MutableList<GroupDTO> = mutableListOf()
-  private val _groupListState = MutableLiveData<List<GroupDTO>>()
-  val groupListState: LiveData<List<GroupDTO>> = _groupListState
+  private val cachedList: MutableList<Group> = mutableListOf()
+  private val _groupListState = MutableLiveData<List<Group>>()
+  val groupListState: LiveData<List<Group>> = _groupListState
 
   private val _groupState = MutableLiveData<Group>()
   val groupState: LiveData<Group> = _groupState
@@ -41,8 +39,8 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
     }
   }
 
-  fun addGroup(group: GroupRequestDTO) = viewModelScope.launch {
-    Timber.i("Saving group for admin: ${group.admin}")
+  fun addGroup(group: Group) = viewModelScope.launch {
+    Timber.i("Saving group for admin: ${group.adminId}")
     val result = groupRepository.createGroup(group)
     if (result is Success) {
       _groupState.value = result.data
