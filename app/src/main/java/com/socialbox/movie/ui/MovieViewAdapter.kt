@@ -27,7 +27,7 @@ class MovieViewAdapter(
 
   var views = listOf<List<Movie>>()
   val genres = listOf(Genre.DOCUMENTARY)
-  private val movieListAdapter by lazy { MovieDisplayAdapter(context, movieViewModel) }
+  private val movieListAdapter by lazy { MovieDisplayAdapter(context) }
 
   class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val browseChip: Chip = view.findViewById(R.id.browseMovies)

@@ -17,7 +17,7 @@ import javax.inject.Inject
 class GroupViewModel @Inject constructor(private val groupRepository: GroupRepository) :
   ViewModel() {
 
-  private val cachedList: MutableList<Group> = mutableListOf()
+  private val cachedGroups: MutableList<Group> = mutableListOf()
   private val _groupListState = MutableLiveData<List<Group>>()
   val groupListState: LiveData<List<Group>> = _groupListState
 
@@ -28,12 +28,12 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
     val groups = groupRepository.getGroupsForUser(groupId)
     _groupListState.value = when (groups) {
       is Success -> {
-        cachedList.clear()
-        cachedList.addAll(groups.data)
+        cachedGroups.clear()
+        cachedGroups.addAll(groups.data)
         groups.data
       }
       else -> {
-        cachedList.clear()
+        cachedGroups.clear()
         listOf()
       }
     }
@@ -56,11 +56,11 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun filterGroups(text: CharSequence) {
-    _groupListState.value = cachedList.filter { it.name!!.contains(text) }
+    _groupListState.value = cachedGroups.filter { it.name!!.contains(text) }
   }
 
   fun restoreGroups() {
-    _groupListState.value = cachedList
+    _groupListState.value = cachedGroups
   }
 
   fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {

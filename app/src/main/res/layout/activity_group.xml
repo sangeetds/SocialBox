@@ -83,10 +83,8 @@
       android:elevation="2dp"
       app:layout_constraintBottom_toTopOf="@+id/movies_button"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-      app:layout_constraintVertical_bias="1.0"
       tools:listitem="@layout/card_group"
       />
   <com.google.android.material.appbar.AppBarLayout

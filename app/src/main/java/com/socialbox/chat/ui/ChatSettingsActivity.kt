@@ -3,7 +3,6 @@ package com.socialbox.chat.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,8 +35,6 @@ class ChatSettingsActivity : AppCompatActivity() {
     val memberFive: MaterialCardView = findViewById(R.id.memberFive)
     val memberSix: MaterialCardView = findViewById(R.id.memberSix)
     val layout = findViewById<ConstraintLayout>(R.id.membersConstrainView)
-    val marginLayoutParams =
-      layout.layoutParams as ViewGroup.MarginLayoutParams
 
     val movieTwo: MaterialCardView = findViewById(R.id.movieTwo)
     val movieThree: MaterialCardView = findViewById(R.id.movieThree)
@@ -47,18 +44,28 @@ class ChatSettingsActivity : AppCompatActivity() {
     val viewAllMovies: MaterialTextView = findViewById(R.id.viewAllMovies)
 
     val groupMembers = setOf<User>()
-      // group?.users ?: setOf()  Todo: Fetch Users for the group
+    // group?.users ?: setOf()  Todo: Fetch Users for the group
     val groupMovies = group?.movieList ?: listOf()
 
     if (groupMembers.size < 6) memberSix.visibility = View.GONE
     if (groupMembers.size < 5) {
       memberFive.visibility = View.GONE
-      marginLayoutParams.setMargins(layout.marginStart, layout.marginTop, layout.marginEnd + layout.marginEnd, layout.marginBottom)
+      layout.setPadding(
+        layout.paddingStart,
+        layout.paddingTop,
+        layout.paddingEnd * 2,
+        layout.paddingBottom
+      )
     }
     if (groupMembers.size < 4) memberFour.visibility = View.GONE
     if (groupMembers.size < 3) {
       memberThree.visibility = View.GONE
-      marginLayoutParams.setMargins(layout.marginStart, layout.marginTop, layout.marginEnd + layout.marginEnd, layout.marginBottom)
+      layout.setPadding(
+        layout.paddingStart,
+        layout.paddingTop,
+        layout.paddingEnd * 2,
+        layout.paddingBottom
+      )
     }
     if (groupMembers.size < 2) memberTwo.visibility = View.GONE
     if (groupMembers.isEmpty()) memberOne.visibility = View.GONE

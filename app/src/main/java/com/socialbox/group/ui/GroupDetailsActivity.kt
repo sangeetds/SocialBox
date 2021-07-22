@@ -171,7 +171,8 @@ class GroupDetailsActivity : AppCompatActivity() {
     val eraseQuery = search.findViewById<ImageButton>(id.eraseQuery)
 
     searchQueryView.doOnTextChanged { text, _, _, _ ->
-      groupViewModel.filterGroups(text ?: "")
+      // groupViewModel.filterGroupMovies(text ?: "")
+      // TODO: Make a GroupDetailsViewModel
     }
 
     cancelSearch.setOnClickListener {

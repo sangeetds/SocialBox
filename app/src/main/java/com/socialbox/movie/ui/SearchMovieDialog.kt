@@ -74,9 +74,9 @@ class SearchMovieDialog(
     val clearSelection = view.findViewById<ImageView>(R.id.clearSelection)
     val updateCount = updateCount(addMovieButton, clearSelection, selectedTopHeader, searchBar)
 
-    val movieListAdapter = MovieListAdapter(requireContext(), updateCount, url)
+    val movieListAdapter = MovieListAdapter(context, updateCount, url)
     recyclerView.adapter = movieListAdapter
-    recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    recyclerView.layoutManager = LinearLayoutManager(context)
     recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     recyclerView.itemAnimator = DefaultItemAnimator()
 
@@ -104,6 +104,7 @@ class SearchMovieDialog(
       movieListAdapter.clearSelection()
       selectedTopHeader.visibility = View.GONE
       clearSelection.visibility = View.GONE
+      addMovieButton.isEnabled = false
       searchBar.visibility = View.VISIBLE
     }
 
