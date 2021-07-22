@@ -12,7 +12,6 @@ import com.socialbox.R
 import com.socialbox.group.data.model.GroupMovie
 import com.squareup.picasso.Picasso
 
-// Todo: Should it be a list of Group Movie?
 class MovieAdapter(val url: String) : ListAdapter<GroupMovie, MovieAdapter.ViewHolder>(MovieItemDiffCallback()) {
 
   class ViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView) {

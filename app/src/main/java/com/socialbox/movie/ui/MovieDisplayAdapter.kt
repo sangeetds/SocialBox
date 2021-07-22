@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
 import com.socialbox.group.data.model.Movie
+import com.squareup.picasso.Picasso
 
 class MovieDisplayAdapter(
-  val context: Context,
-  private val movieViewModel: MovieViewModel,
+  val context: Context
 ) : ListAdapter<Movie, MovieDisplayAdapter.MovieHolder>(MovieDiffCallback()) {
 
   class MovieHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,6 +36,7 @@ class MovieDisplayAdapter(
   override fun onBindViewHolder(holder: MovieHolder, position: Int) {
     val movie = getItem(position)
     holder.ratings.text = String.format(holder.ratings.text.toString(), movie.rating)
+    Picasso.get().load("${context.getString(R.string.image_base_url)}${movie.photoURL}").into(holder.image)
   }
 
   private fun setUpObservers() {

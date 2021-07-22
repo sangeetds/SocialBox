@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
@@ -19,6 +20,7 @@ import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import com.socialbox.R
 import com.socialbox.R.id
 import com.socialbox.R.style
@@ -38,7 +40,9 @@ class MoviesActivity : AppCompatActivity() {
 
   private val movieViewModel: MovieViewModel by viewModels()
   private val user: User? by lazy { intent.getParcelableExtra("user") }
-  private val movieViewRecyclerView: RecyclerView by lazy { findViewById(R.id.movieViewRecyclerView) }
+  private val movieViewRecyclerView: RecyclerView by lazy { findViewById(id.movieViewRecyclerView) }
+  private val searchMoviesRecyclerView: RecyclerView by lazy { findViewById(id.searchMoviesRecyclerView) }
+  private val searchTextHolder: MaterialTextView by lazy { findViewById(id.searchPlaceHolder) }
   private lateinit var movieViewsAdapter: MovieViewAdapter
   private var searchScreenPresent: Boolean = false
 
@@ -80,14 +84,16 @@ class MoviesActivity : AppCompatActivity() {
     fadeRecyclerView()
     expandSearchView(genre)
     val searchMovieListAdapter =
-      MovieListAdapter(context = this, updateCount = null, url = getString(R.string.image_base_url))
-    val searchMoviesRecyclerView = findViewById<RecyclerView>(R.id.searchMoviesRecyclerView)
+      MovieDisplayAdapter(context = this)
     searchMoviesRecyclerView.adapter = searchMovieListAdapter
-    searchMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
+    searchMoviesRecyclerView.layoutManager = GridLayoutManager(this, 3)
+    searchMoviesRecyclerView.visibility = View.VISIBLE
     movieViewModel.movies.observe(this, Observer {
       val movieList = it ?: return@Observer
-      searchMovieListAdapter.movies = movieList
-      searchMovieListAdapter.notifyDataSetChanged()
+      if (movieList.isNotEmpty()) {
+        searchTextHolder.visibility = View.GONE
+      }
+      searchMovieListAdapter.submitList(movieList)
     })
   }
 
@@ -122,6 +128,7 @@ class MoviesActivity : AppCompatActivity() {
           CoroutineScope(Dispatchers.Main).launch {
             delay(500)
             if (searchText == searchFor) {
+              searchTextHolder.visibility = View.VISIBLE
               movieViewModel.searchAllMovies(searchText, genre)
             }
           }
@@ -136,6 +143,7 @@ class MoviesActivity : AppCompatActivity() {
 
   private fun collapseSearchView() {
     searchScreenPresent = false
+    searchMoviesRecyclerView.visibility = View.GONE
     val toolBarView: MaterialToolbar = findViewById(id.material_tool_bar)
     val slideAnimator = ValueAnimator
       .ofInt(toolBarView.height, toolBarView.height - 100)

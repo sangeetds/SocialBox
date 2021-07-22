@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MovieListAdapter(
-  val context: Context,
+  val context: Context?,
   val updateCount: ((Int) -> Unit)?,
   private val url: String,
   private var reverseAllAnimations: Boolean = false,
