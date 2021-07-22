@@ -86,4 +86,5 @@
   <string name="enter_profile_name">Enter Profile Name</string>
   <string name="please_select_an_image_and_name_for_your_profile">Please Select an Image and Name for your profile</string>
   <string name="add_movies_and_strike_conversations">Add Movies and Strike Conversations!</string>
+  <string name="searching">Searching…</string>
 </resources>

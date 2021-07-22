@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/movieConstraintLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movieConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".movie.ui.MoviesActivity"
@@ -20,6 +20,17 @@
       app:layout_constraintVertical_bias="0.0"
       tools:listitem="@layout/card_movie_genre"
       />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/searchMoviesRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:visibility="gone"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+      tools:listitem="@layout/card_search_movie"
+      />
+
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/app_bar_layout"
       android:layout_width="match_parent"
@@ -35,8 +46,8 @@
         android:id="@+id/material_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="SocialBox"
         android:animateLayoutChanges="true"
+        app:title="SocialBox"
         app:titleCentered="true"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
@@ -60,7 +71,6 @@
         android:textColorHint="#9B9B9B"
         />
   </com.google.android.material.appbar.AppBarLayout>
-
   <com.google.android.material.button.MaterialButton
       android:id="@+id/browseGroupsButton"
       android:layout_width="match_parent"
@@ -71,15 +81,18 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       />
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/searchMoviesRecyclerView"
-      android:layout_width="match_parent"
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/searchPlaceHolder"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
       android:visibility="gone"
+      android:fontFamily="@font/pattaya_regular"
+      android:text="@string/searching"
+      android:textSize="20sp"
+      app:layout_constraintBottom_toTopOf="@+id/browseGroupsButton"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
-      tools:listitem="@layout/card_search_movie"
+      app:layout_constraintTop_toTopOf="@+id/app_bar_layout"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
