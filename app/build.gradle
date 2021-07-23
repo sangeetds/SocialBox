@@ -44,6 +44,10 @@ kapt {
     option("-Adagger.fastInit=ENABLED")
     option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
   }
+  arguments {
+    arg("deepLink.incremental", "true")
+    arg("deepLink.customAnnotations", "com.airbnb.AppDeepLink|com.airbnb.WebDeepLink")
+  }
 }
 
 dependencies {
@@ -54,19 +58,19 @@ dependencies {
   implementation 'com.jakewharton.timber:timber:4.7.1'
 
   // AndroidX
-  implementation 'androidx.appcompat:appcompat:1.3.1'
+  implementation 'androidx.appcompat:appcompat:1.3.0'
   implementation 'androidx.annotation:annotation:1.2.0'
-  implementation 'androidx.activity:activity-compose:1.3.0-rc02'
+  implementation 'androidx.activity:activity-compose:1.3.0-beta02'
   implementation 'androidx.core:core-ktx:1.6.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
   implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
   implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
   implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
-  implementation 'com.google.android.material:material:1.5.0-alpha01'
+  implementation 'com.google.android.material:material:1.4.0'
 
   // Google sign in
-  implementation 'com.google.android.gms:play-services-auth:19.2.0'
+  implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
   // Cascade drop down
   implementation "me.saket.cascade:cascade:1.3.0"
@@ -111,6 +115,7 @@ dependencies {
 
   // DeepLink
   implementation 'com.airbnb:deeplinkdispatch:5.4.3'
+  kapt 'com.airbnb:deeplinkdispatch-processor:5.4.3'
 
   // Android tests
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -119,7 +119,7 @@ class ChatSettingsActivity : AppCompatActivity() {
 
       val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "${inviteLink.content} ${inviteLink.link}/${group!!.id}")
+        putExtra(Intent.EXTRA_TEXT, "${inviteLink.content} ${inviteLink.link!!.url}/${group!!.id}")
         type = "text/plain"
       }
 

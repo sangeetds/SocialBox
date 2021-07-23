@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.socialbox.common.enums.Result.Created
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
-import com.socialbox.common.enums.ResultData
+import com.socialbox.login.ui.LoginResult
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
@@ -21,8 +21,8 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   ViewModel() {
 
   private val cachedGroups: MutableList<Group> = mutableListOf()
-  private val _groupListState = MutableLiveData<ResultData<List<Group>>>()
-  val groupListState: LiveData<ResultData<List<Group>>> = _groupListState
+  private val _groupListState = MutableLiveData<GroupResult>()
+  val groupListState: LiveData<GroupResult> = _groupListState
 
   private val _groupState = MutableLiveData<Group>()
   val groupState: LiveData<Group> = _groupState
@@ -33,14 +33,15 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
       is Success -> {
         cachedGroups.clear()
         cachedGroups.addAll(groups.data)
-        ResultData(success = groups.data)
-      }
-      is Created -> {
-        ResultData(created = groups.data)
+        GroupResult(success = groups.data)
       }
       is Error -> {
         cachedGroups.clear()
-        ResultData(success = listOf(), error = groups.exception.localizedMessage)
+        GroupResult(success = listOf(), error = groups.exception.localizedMessage)
+      }
+      else -> {
+        cachedGroups.clear()
+        GroupResult(error = "Error loading groups")
       }
     }
   }
@@ -62,11 +63,11 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun filterGroups(text: CharSequence) {
-    _groupListState.value!!.success = cachedGroups.filter { it.name!!.contains(text) }
+    _groupListState.value = GroupResult(success = cachedGroups.filter { it.name!!.contains(text) })
   }
 
   fun restoreGroups() {
-    _groupListState.value!!.success = cachedGroups
+    _groupListState.value = GroupResult(success = cachedGroups)
   }
 
   fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {
@@ -76,7 +77,7 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   fun addUserToGroup(groupId: Int, id: Int?) = viewModelScope.launch {
     val result = groupRepository.addUserToGroup(groupId, userId = id)
     if (result is Created) {
-      _groupListState.value!!.success = _groupListState.value!!.success!! + result.data
+      _groupListState.value = GroupResult(created = result.data)
     }
   }
 }

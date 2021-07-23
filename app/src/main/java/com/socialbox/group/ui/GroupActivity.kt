@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,6 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
-import com.socialbox.common.enums.Result.Success
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.MoviesActivity
@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-@DeepLink("https://social-boxx.herokuapp.com/invite/{random}/{id}")
 class GroupActivity : AppCompatActivity() {
 
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
@@ -48,8 +47,8 @@ class GroupActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
-      val parameters = intent.extras
-      invitedGroupId = parameters!!.getString("id")!!.toInt()
+      invitedGroupId = intent.extras!!.getInt("inviteId")
+      Toast.makeText(this, "Adding to the new group", Toast.LENGTH_SHORT).show()
       groupViewModel.addUserToGroup(invitedGroupId, user!!.id)
     }
 
@@ -136,29 +135,33 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun setUpObservables() {
+    // Timber.i("${intent.getParcelableExtra<User>("user")}")
     groupViewModel.getGroupsForUser(user!!.groups.map { it.id!! })
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val result = it ?: return@Observer
 
-      result.success?.let { groups ->
-        recyclerView.visibility = View.VISIBLE
-        emptyText.visibility = View.GONE
-        Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.name!! }}")
-        groupAdapter.submitList(groups)
-      }
-      result.created?.let { groups ->
-        if (invitedGroupId != -1) {
-          val newGroup = groups.find { g -> g.id == invitedGroupId }
-          val intent = Intent(this, GroupDetailsActivity::class.java)
-          intent.putExtra("group", newGroup)
-          intent.putExtra("user", user)
-          startActivity(intent)
+      result.apply {
+        success?.let { groups ->
+          recyclerView.visibility = View.VISIBLE
+          emptyText.visibility = View.GONE
+          Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.name!! }}")
+          groupAdapter.submitList(groups)
         }
-      }
-      result.error?.let {
-        Timber.i("No groups present for the user")
-        recyclerView.visibility = View.GONE
-        emptyText.visibility = View.VISIBLE
+        created?.let { group ->
+          if (invitedGroupId != -1) {
+            val intent = Intent(this@GroupActivity, GroupDetailsActivity::class.java)
+            user!!.groups.add(group)
+            groupViewModel.getGroupsForUser(user!!.groups.map { g -> g.id!! })
+            intent.putExtra("group", group)
+            intent.putExtra("user", user)
+            startActivity(intent)
+          }
+        }
+        error?.let {
+          Timber.i("No groups present for the user")
+          recyclerView.visibility = View.GONE
+          emptyText.visibility = View.VISIBLE
+        }
       }
     })
   }

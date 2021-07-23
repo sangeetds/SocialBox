@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
+import com.airbnb.deeplinkdispatch.DeepLink
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -36,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
+@DeepLink("https://social-boxx.herokuapp.com/invite/{random}/{id}")
 class LoginActivity : AppCompatActivity() {
 
   private val loginViewModel: LoginViewModel by viewModels()
@@ -103,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
         }
         success?.let {
           Timber.i("Logged in successfully")
-          updateUiWithUser(success)
+          updateUiWithUser(success as User)
         }
         setResult(RESULT_OK)
       }
@@ -144,9 +146,15 @@ class LoginActivity : AppCompatActivity() {
     Toast.makeText(applicationContext, "Welcome ${model.displayName}!", Toast.LENGTH_LONG).show()
 
     Timber.i("Starting HomeActivity with user: $model")
-    val intent = Intent(this@LoginActivity, GroupActivity::class.java)
-    intent.putExtra("user", model)
-    startActivity(intent)
+    val groupIntent = Intent(this@LoginActivity, GroupActivity::class.java)
+    groupIntent.putExtra("user", model)
+    if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
+      val parameters = intent.extras
+      val invitedGroupId = parameters!!.getString("id")!!.toInt()
+      groupIntent.putExtra("inviteId", invitedGroupId)
+      groupIntent.putExtra(DeepLink.IS_DEEP_LINK, true)
+    }
+    startActivity(groupIntent)
     finish()
   }
 
