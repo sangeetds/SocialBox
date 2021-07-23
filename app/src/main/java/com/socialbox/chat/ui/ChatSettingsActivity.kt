@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -18,11 +20,14 @@ import com.socialbox.R
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.ui.GroupDetailsActivity
 import com.socialbox.login.data.model.User
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatSettingsActivity : AppCompatActivity() {
 
-  private val group by lazy { intent.getParcelableExtra<Group>("group") }
-  private val user by lazy { intent.getParcelableExtra<User>("user") }
+  private val group: Group? by lazy { intent.getParcelableExtra("group") }
+  private val user: User? by lazy { intent.getParcelableExtra("user") }
+  private val chatViewModel: ChatViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -104,5 +109,22 @@ class ChatSettingsActivity : AppCompatActivity() {
       startActivity(intent)
       finish()
     }
+
+    findViewById<MaterialTextView>(R.id.addMember).setOnClickListener {
+      chatViewModel.getInviteLink(groupId = group!!.id!!, userId = user!!.id!!)
+    }
+
+    chatViewModel.inviteState.observe(this, Observer {
+      val inviteLink = it ?: return@Observer
+
+      val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "${inviteLink.content} ${inviteLink.link}/${group!!.id}")
+        type = "text/plain"
+      }
+
+      val shareIntent = Intent.createChooser(sendIntent, null)
+      startActivity(shareIntent)
+    })
   }
 }

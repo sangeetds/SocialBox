@@ -1,5 +1,6 @@
 package com.socialbox.group.data.service
 
+import com.socialbox.chat.data.model.Invite
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import retrofit2.Response
@@ -22,4 +23,16 @@ interface GroupService {
 
   @POST("/group/movie")
   suspend fun saveGroupMovies(@Body groupMovies: List<GroupMovie>): Response<List<GroupMovie>>
+
+  @GET("/group/invite")
+  suspend fun getInviteLink(
+    @Query("groupId") groupId: Int,
+    @Query("userId") userId: Int
+  ): Response<Invite>
+
+  @GET("/group/{id}")
+  suspend fun addUserToGroup(
+    @Path("id") groupId: Int,
+    @Query("userId") userId: Int?
+  ): Response<Group>
 }

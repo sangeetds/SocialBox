@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.socialbox.common.enums.Result.Created
+import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
+import com.socialbox.common.enums.ResultData
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
@@ -18,8 +21,8 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   ViewModel() {
 
   private val cachedGroups: MutableList<Group> = mutableListOf()
-  private val _groupListState = MutableLiveData<List<Group>>()
-  val groupListState: LiveData<List<Group>> = _groupListState
+  private val _groupListState = MutableLiveData<ResultData<List<Group>>>()
+  val groupListState: LiveData<ResultData<List<Group>>> = _groupListState
 
   private val _groupState = MutableLiveData<Group>()
   val groupState: LiveData<Group> = _groupState
@@ -30,11 +33,14 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
       is Success -> {
         cachedGroups.clear()
         cachedGroups.addAll(groups.data)
-        groups.data
+        ResultData(success = groups.data)
       }
-      else -> {
+      is Created -> {
+        ResultData(created = groups.data)
+      }
+      is Error -> {
         cachedGroups.clear()
-        listOf()
+        ResultData(success = listOf(), error = groups.exception.localizedMessage)
       }
     }
   }
@@ -56,14 +62,21 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   }
 
   fun filterGroups(text: CharSequence) {
-    _groupListState.value = cachedGroups.filter { it.name!!.contains(text) }
+    _groupListState.value!!.success = cachedGroups.filter { it.name!!.contains(text) }
   }
 
   fun restoreGroups() {
-    _groupListState.value = cachedGroups
+    _groupListState.value!!.success = cachedGroups
   }
 
   fun addMovies(groupMovies: List<GroupMovie>) = viewModelScope.launch {
     groupRepository.saveGroupMovies(groupMovies)
+  }
+
+  fun addUserToGroup(groupId: Int, id: Int?) = viewModelScope.launch {
+    val result = groupRepository.addUserToGroup(groupId, userId = id)
+    if (result is Created) {
+      _groupListState.value!!.success = _groupListState.value!!.success!! + result.data
+    }
   }
 }

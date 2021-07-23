@@ -1,6 +1,7 @@
 package com.socialbox.group.data
 
 import com.socialbox.common.enums.Result
+import com.socialbox.common.enums.Result.Created
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
 import com.socialbox.common.util.RepositoryUtils.Companion.stringSuspending
@@ -75,5 +76,35 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
         else -> Timber.d("Failed in saving group with error: ${errorBody()?.stringSuspending()}")
       }
     }
+  }
+
+  suspend fun getInviteLink(groupId: Int, userId: Int) = try {
+    groupService.getInviteLink(groupId, userId).run {
+      if (isSuccessful && body() != null) {
+        Timber.i("Successfully fetched group invite link")
+        Success(body()!!)
+      } else {
+        Timber.d("Error in fetching invite link")
+        Error(Exception(errorBody()?.stringSuspending()))
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    Timber.d(errorString)
+    Error(Exception("Error fetching invite link."))
+  }
+
+  suspend fun addUserToGroup(groupId: Int, userId: Int?) = try {
+    this.groupService.addUserToGroup(groupId, userId).run {
+      if (isSuccessful && body() != null) {
+        Timber.i("Successfully added User to Group.")
+        Created(body()!!)
+      } else {
+        Timber.d("Error in adding user to the group.")
+        Error(Exception(errorBody()?.stringSuspending()))
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    Timber.d(errorString)
+    Error(Exception("Error adding user."))
   }
 }

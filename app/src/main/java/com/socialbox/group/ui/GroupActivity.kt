@@ -16,21 +16,23 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.deeplinkdispatch.DeepLink
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.socialbox.R.id
 import com.socialbox.R.layout
 import com.socialbox.R.menu.top_app_bar
+import com.socialbox.common.enums.Result.Success
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.ui.MoviesActivity
 import com.socialbox.user.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupWindow
 import timber.log.Timber
 
 @AndroidEntryPoint
+@DeepLink("https://social-boxx.herokuapp.com/invite/{random}/{id}")
 class GroupActivity : AppCompatActivity() {
 
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
@@ -39,10 +41,18 @@ class GroupActivity : AppCompatActivity() {
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var toolbar: MaterialToolbar
-  private lateinit var user: User
+  private val user: User? by lazy { intent.getParcelableExtra("user") }
+  private var invitedGroupId: Int = -1
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
+      val parameters = intent.extras
+      invitedGroupId = parameters!!.getString("id")!!.toInt()
+      groupViewModel.addUserToGroup(invitedGroupId, user!!.id)
+    }
+
     setContentView(layout.activity_group)
     setUpObservables()
     setUpToolbar()
@@ -113,7 +123,7 @@ class GroupActivity : AppCompatActivity() {
     findViewById<ExtendedFloatingActionButton>(id.new_group_button).setOnClickListener {
       AddGroupDialog(
         viewModel = groupViewModel,
-        user = user
+        user = user!!
       ).show(supportFragmentManager.beginTransaction(), "MovieDialog")
     }
 
@@ -126,17 +136,26 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun setUpObservables() {
-    user = intent.extras?.getParcelable("user")!!
-    groupViewModel.getGroupsForUser(user.groups.map { it.id!! })
+    groupViewModel.getGroupsForUser(user!!.groups.map { it.id!! })
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
-      val groups = it ?: return@Observer
+      val result = it ?: return@Observer
 
-      if (groups.isNotEmpty()) {
+      result.success?.let { groups ->
         recyclerView.visibility = View.VISIBLE
         emptyText.visibility = View.GONE
         Timber.i("New groups load up: ${groups.joinToString(",") { s -> s.name!! }}")
         groupAdapter.submitList(groups)
-      } else {
+      }
+      result.created?.let { groups ->
+        if (invitedGroupId != -1) {
+          val newGroup = groups.find { g -> g.id == invitedGroupId }
+          val intent = Intent(this, GroupDetailsActivity::class.java)
+          intent.putExtra("group", newGroup)
+          intent.putExtra("user", user)
+          startActivity(intent)
+        }
+      }
+      result.error?.let {
         Timber.i("No groups present for the user")
         recyclerView.visibility = View.GONE
         emptyText.visibility = View.VISIBLE
