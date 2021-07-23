@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.socialbox.login.data.UserRepository
 import com.socialbox.common.enums.Result
-import com.socialbox.common.enums.ResultData
 import com.socialbox.login.data.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,16 +16,16 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val userRepository: UserRepository) :
   ViewModel() {
 
-  private val _loginResult = MutableLiveData<ResultData<User>>()
-  val loginResult: LiveData<ResultData<User>> = _loginResult
+  private val _loginResult = MutableLiveData<LoginResult>()
+  val loginResult: LiveData<LoginResult> = _loginResult
 
   fun login(user: User) = viewModelScope.launch {
     Timber.i("Making request to the server for user: $user")
     val result = userRepository.login(user)
     _loginResult.value = when (result) {
-      is Result.Success -> ResultData(success = result.data)
-      is Result.Created -> ResultData(created = result.data)
-      is Result.Error -> ResultData(error = result.exception.localizedMessage)
+      is Result.Success -> LoginResult(success = result.data)
+      is Result.Created -> LoginResult(created = result.data)
+      is Result.Error -> LoginResult(error = result.exception.localizedMessage)
     }
   }
 
@@ -34,9 +33,9 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     Timber.i("Adding name and photo for user: $user")
     val result = userRepository.updateSettings(user)
     _loginResult.value = when (result) {
-      is Result.Success -> ResultData(success = result.data)
-      is Result.Created -> ResultData(created = result.data)
-      is Result.Error -> ResultData(error = result.exception.localizedMessage)
+      is Result.Success -> LoginResult(success = result.data)
+      is Result.Created -> LoginResult(created = result.data)
+      is Result.Error -> LoginResult(error = result.exception.localizedMessage)
     }
   }
 }
