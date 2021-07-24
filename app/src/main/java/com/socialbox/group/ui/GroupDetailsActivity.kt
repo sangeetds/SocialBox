@@ -47,7 +47,7 @@ class GroupDetailsActivity : AppCompatActivity() {
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
   private lateinit var addMovieButton: SpeedDialView
-  private val group by lazy { intent.getParcelableExtra<Group>("group") }
+  private lateinit var group: Group
   private val user by lazy { intent.getParcelableExtra<User>("user") }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +57,8 @@ class GroupDetailsActivity : AppCompatActivity() {
     setSupportActionBar(mToolbar)
     mToolbar.showOverflowMenu()
     supportActionBar?.setDisplayShowTitleEnabled(true)
+
+    group = intent.getParcelableExtra("group")!!
 
     addMovieButton = findViewById(id.add_movie_floating_button)
     moviesAdapter = MovieAdapter(url = getString(string.image_base_url))
@@ -104,7 +106,7 @@ class GroupDetailsActivity : AppCompatActivity() {
               userMovieViewModel,
               groupViewModel,
               user?.id!!,
-              group = group!!,
+              group = group,
               url = this.getString(string.image_base_url)
             )
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
@@ -112,7 +114,7 @@ class GroupDetailsActivity : AppCompatActivity() {
           id.fab_action2 -> {
             val searchMovieDialog = SearchMovieDialog(
               movieViewModel,
-              group!!,
+              group,
               url = getString(string.image_base_url),
               groupViewModel = groupViewModel
             )
@@ -124,12 +126,13 @@ class GroupDetailsActivity : AppCompatActivity() {
   }
 
   private fun setUpObservable() {
-    groupViewModel.getGroup(groupId = group?.id)
-    val placeholderText = findViewById<MaterialTextView>(R.id.groupDetailsPlaceholder)
+    groupViewModel.getGroup(groupId = group.id)
+    val placeholderText = findViewById<MaterialTextView>(id.groupDetailsPlaceholder)
     groupViewModel.groupState.observe(this@GroupDetailsActivity, Observer {
       val groupDetails = it ?: return@Observer
 
       supportActionBar?.title = groupDetails.name
+      group = groupDetails
       if (groupDetails.movieList?.isNotEmpty() == true) {
         recyclerView.visibility = View.VISIBLE
         placeholderText.visibility = View.GONE
@@ -151,12 +154,13 @@ class GroupDetailsActivity : AppCompatActivity() {
     menuInflater.inflate(R.menu.group_top_app_bar, menu)
     val searchView: MenuItem = menu!!.findItem(id.search)
     val toolbar: MaterialToolbar = findViewById(id.groupNameBar)
-    toolbar.title = group?.name ?: getString(string.appName)
+    toolbar.title = group.name ?: getString(string.appName)
 
     toolbar.setOnClickListener {
       val intent = Intent(this, ChatSettingsActivity::class.java)
       intent.putExtra("group", group)
       intent.putExtra("user", user)
+      intent.putExtra("finishActivity", true)
       startActivity(intent)
     }
 

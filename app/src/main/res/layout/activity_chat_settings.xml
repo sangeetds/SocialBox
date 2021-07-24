@@ -60,6 +60,7 @@
                 app:cardCornerRadius="5dp"
                 >
               <ImageView
+                  android:id="@+id/movieOneImage"
                   android:layout_width="100dp"
                   android:layout_height="100dp"
                   android:contentDescription="@string/movies"
@@ -75,6 +76,7 @@
                 app:cardCornerRadius="5dp"
                 >
               <ImageView
+                  android:id="@+id/movieThreeImage"
                   android:layout_width="100dp"
                   android:layout_height="100dp"
                   android:contentDescription="@string/movies"
@@ -90,6 +92,7 @@
                 app:cardCornerRadius="5dp"
                 >
               <ImageView
+                  android:id="@+id/movieTwoImage"
                   android:layout_width="100dp"
                   android:layout_height="100dp"
                   android:contentDescription="@string/movies"

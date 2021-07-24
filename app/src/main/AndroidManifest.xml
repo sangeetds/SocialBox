@@ -5,9 +5,9 @@
   <application
       android:name=".SocialBoxApplication"
       android:allowBackup="true"
-      android:icon="@mipmap/ic_launcher"
+      android:icon="@mipmap/ic_launcher_social_box"
       android:label="@string/appName"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:roundIcon="@mipmap/ic_launcher_social_box_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.SocialBox">
     <activity
