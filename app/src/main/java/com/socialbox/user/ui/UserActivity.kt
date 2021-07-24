@@ -1,5 +1,6 @@
 package com.socialbox.user.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -48,5 +49,16 @@ class UserActivity : AppCompatActivity() {
     val gso = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
       .build()
     return GoogleSignIn.getClient(this, gso)
+  }
+
+  companion object {
+
+    private const val USER = "user"
+
+    fun createIntent(context: Context, user: User?): Intent {
+      val intent = Intent(context, UserActivity::class.java)
+      intent.putExtra(USER, user)
+      return intent
+    }
   }
 }

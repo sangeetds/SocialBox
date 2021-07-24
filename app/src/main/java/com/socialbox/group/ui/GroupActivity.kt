@@ -1,5 +1,6 @@
 package com.socialbox.group.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -36,18 +37,18 @@ class GroupActivity : AppCompatActivity() {
 
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
+  private val user: User? by lazy { intent.getParcelableExtra(USER) }
+  private var invitedGroupId: Int = -1
   private lateinit var groupAdapter: GroupAdapter
   private lateinit var emptyText: TextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var toolbar: MaterialToolbar
-  private val user: User? by lazy { intent.getParcelableExtra("user") }
-  private var invitedGroupId: Int = -1
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
-      invitedGroupId = intent.extras!!.getInt("inviteId")
+      invitedGroupId = intent.extras!!.getInt(INVITE_ID)
       Toast.makeText(this, "Adding to the new group", Toast.LENGTH_SHORT).show()
       groupViewModel.addUserToGroup(invitedGroupId, user!!.id)
     }
@@ -64,8 +65,7 @@ class GroupActivity : AppCompatActivity() {
     val searchView: MenuItem = menu.findItem(id.search)
 
     userView.setOnMenuItemClickListener {
-      val intent = Intent(this, UserActivity::class.java)
-      intent.putExtra("user", user)
+      val intent = UserActivity.createIntent(this, user)
       startActivity(intent)
       if (search.isVisible) {
         groupViewModel.restoreGroups()
@@ -127,15 +127,13 @@ class GroupActivity : AppCompatActivity() {
     }
 
     findViewById<MaterialButton>(id.movies_button).setOnClickListener {
-      val intent = Intent(this, MoviesActivity::class.java)
-      intent.putExtra("user", user)
+      val intent = MoviesActivity.createIntent(this, user!!)
       startActivity(intent)
       finish()
     }
   }
 
   private fun setUpObservables() {
-    // Timber.i("${intent.getParcelableExtra<User>("user")}")
     groupViewModel.getGroupsForUser(user!!.groups.map { it.id!! })
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val result = it ?: return@Observer
@@ -149,11 +147,9 @@ class GroupActivity : AppCompatActivity() {
         }
         created?.let { group ->
           if (invitedGroupId != -1) {
-            val intent = Intent(this@GroupActivity, GroupDetailsActivity::class.java)
             user!!.groups.add(group)
             groupViewModel.getGroupsForUser(user!!.groups.map { g -> g.id!! })
-            intent.putExtra("group", group)
-            intent.putExtra("user", user)
+            val intent = GroupDetailsActivity.createIntent(this@GroupActivity, group, user!!)
             startActivity(intent)
           }
         }
@@ -164,6 +160,19 @@ class GroupActivity : AppCompatActivity() {
         }
       }
     })
+  }
+
+  companion object {
+
+    private const val USER = "user"
+    private const val INVITE_ID = "inviteId"
+
+    fun createIntent(context: Context, user: User, groupId: Int?, isDeepLink: Boolean) =
+      Intent(context, GroupActivity::class.java).apply {
+        putExtra(USER, user)
+        if (isDeepLink) putExtra(DeepLink.IS_DEEP_LINK, true)
+        groupId?.let { putExtra(INVITE_ID, groupId) }
+      }
   }
 }
 

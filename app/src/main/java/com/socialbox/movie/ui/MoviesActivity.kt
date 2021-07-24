@@ -2,6 +2,7 @@ package com.socialbox.movie.ui
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -39,12 +40,12 @@ import kotlinx.coroutines.launch
 class MoviesActivity : AppCompatActivity() {
 
   private val movieViewModel: MovieViewModel by viewModels()
-  private val user: User? by lazy { intent.getParcelableExtra("user") }
+  private val user: User? by lazy { intent.getParcelableExtra(USER) }
   private val movieViewRecyclerView: RecyclerView by lazy { findViewById(id.movieViewRecyclerView) }
   private val searchMoviesRecyclerView: RecyclerView by lazy { findViewById(id.searchMoviesRecyclerView) }
   private val searchTextHolder: MaterialTextView by lazy { findViewById(id.searchPlaceHolder) }
-  private lateinit var movieViewsAdapter: MovieViewAdapter
   private var searchScreenPresent: Boolean = false
+  private lateinit var movieViewsAdapter: MovieViewAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -55,8 +56,7 @@ class MoviesActivity : AppCompatActivity() {
     movieViewRecyclerView.layoutManager = LinearLayoutManager(this)
 
     findViewById<MaterialButton>(id.browseGroupsButton).setOnClickListener {
-      val intent = Intent(this, GroupActivity::class.java)
-      intent.putExtra("user", user)
+      val intent = GroupActivity.createIntent(this, user!!, null, false)
       startActivity(intent)
       finish()
     }
@@ -184,5 +184,16 @@ class MoviesActivity : AppCompatActivity() {
       transition
     )
     movieViewRecyclerView.visibility = View.VISIBLE
+  }
+
+  companion object {
+
+    private const val USER = "user"
+
+    fun createIntent(context: Context, user: User): Intent {
+      val intent = Intent(context, MoviesActivity::class.java)
+      intent.putExtra(USER, user)
+      return intent
+    }
   }
 }

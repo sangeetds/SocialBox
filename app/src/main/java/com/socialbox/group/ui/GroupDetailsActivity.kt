@@ -1,5 +1,6 @@
 package com.socialbox.group.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -43,12 +44,12 @@ class GroupDetailsActivity : AppCompatActivity() {
   private val groupViewModel: GroupViewModel by viewModels()
   private val movieViewModel: MovieViewModel by viewModels()
   private val userMovieViewModel: UserMovieViewModel by viewModels()
+  private val user: User? by lazy { intent.getParcelableExtra(USER) }
   private lateinit var mToolbar: MaterialToolbar
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
   private lateinit var addMovieButton: SpeedDialView
   private lateinit var group: Group
-  private val user by lazy { intent.getParcelableExtra<User>("user") }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,7 +59,7 @@ class GroupDetailsActivity : AppCompatActivity() {
     mToolbar.showOverflowMenu()
     supportActionBar?.setDisplayShowTitleEnabled(true)
 
-    group = intent.getParcelableExtra("group")!!
+    group = intent.getParcelableExtra(GROUP)!!
 
     addMovieButton = findViewById(id.add_movie_floating_button)
     moviesAdapter = MovieAdapter(url = getString(string.image_base_url))
@@ -137,8 +138,7 @@ class GroupDetailsActivity : AppCompatActivity() {
         recyclerView.visibility = View.VISIBLE
         placeholderText.visibility = View.GONE
         moviesAdapter.submitList(groupDetails.movieList)
-      }
-      else {
+      } else {
         recyclerView.visibility = View.GONE
         placeholderText.visibility = View.VISIBLE
       }
@@ -190,5 +190,17 @@ class GroupDetailsActivity : AppCompatActivity() {
     }
 
     return super.onCreateOptionsMenu(menu)
+  }
+
+  companion object {
+
+    private const val USER = "group"
+    private const val GROUP = "user"
+
+    fun createIntent(context: Context, newGroup: Group, user: User) =
+      Intent(context, GroupDetailsActivity::class.java).apply {
+        putExtra(USER, newGroup)
+        putExtra(GROUP, user)
+      }
   }
 }

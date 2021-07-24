@@ -1,5 +1,6 @@
 package com.socialbox.chat.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -25,9 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChatSettingsActivity : AppCompatActivity() {
 
-  private val group: Group? by lazy { intent.getParcelableExtra("group") }
-  private val user: User? by lazy { intent.getParcelableExtra("user") }
-  private val finishActivity: Boolean? by lazy { intent.getBooleanExtra("finishActivity", false) }
+  private val group: Group? by lazy { intent.getParcelableExtra(GROUP) }
+  private val user: User? by lazy { intent.getParcelableExtra(USER) }
+  private val finishActivity: Boolean? by lazy { intent.getBooleanExtra(FINISH_ACTIVITY, false) }
   private val chatViewModel: ChatViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +56,7 @@ class ChatSettingsActivity : AppCompatActivity() {
     viewAllMovies.setOnClickListener {
       if (finishActivity!!) {
         finish()
-      }
-      else {
+      } else {
         val intent = Intent(this, GroupDetailsActivity::class.java)
         intent.putExtra("group", group)
         intent.putExtra("user", user)
@@ -152,6 +152,24 @@ class ChatSettingsActivity : AppCompatActivity() {
       recyclerView.adapter = adapter
       recyclerView.layoutManager = LinearLayoutManager(this)
       recyclerView.setHasFixedSize(true)
+    }
+  }
+
+  companion object {
+
+    private const val GROUP = "group"
+    private const val USER = "user"
+    private const val FINISH_ACTIVITY = "finishActivity"
+
+    fun createIntent(
+      context: Context,
+      group: Group?,
+      user: User?,
+      finishActivity: Boolean? = null
+    ) = Intent(context, ChatSettingsActivity::class.java).apply {
+      putExtra(GROUP, group)
+      putExtra(USER, user)
+      finishActivity?.let { putExtra(FINISH_ACTIVITY, finishActivity) }
     }
   }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.socialbox.R
+import com.socialbox.chat.ui.ChatActivity
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.ui.GroupAdapter.SongSearchViewHolder
 import com.socialbox.login.data.model.User
@@ -38,9 +39,7 @@ class GroupAdapter(val context: Context, val user: User?) :
 
     holder.itemView.setOnClickListener {
       Timber.i("Opening groups $group")
-      val intent = Intent(context, GroupDetailsActivity::class.java)
-      intent.putExtra("group", group)
-      intent.putExtra("user", user)
+      val intent = ChatActivity.createIntent(context, group, user)
       context.startActivity(intent)
     }
 

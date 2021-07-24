@@ -1,5 +1,6 @@
 package com.socialbox.chat.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -20,8 +21,8 @@ import java.util.Calendar
 class ChatActivity : AppCompatActivity() {
 
   private var messages: List<Message> = listOf()
-  private val group by lazy { intent.getParcelableExtra<Group>("group") }
-  private val user by lazy { intent.getParcelableExtra<User>("user") }
+  private val group by lazy { intent.getParcelableExtra<Group>(GROUP) }
+  private val user by lazy { intent.getParcelableExtra<User>(USER) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -57,14 +58,25 @@ class ChatActivity : AppCompatActivity() {
     }
 
     toolbar.setOnClickListener {
-      val intent = Intent(this, ChatSettingsActivity::class.java)
-      intent.putExtra("group", group)
-      intent.putExtra("user", user)
+      val intent = ChatSettingsActivity.createIntent(this, group, user)
       startActivity(intent)
     }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     return super.onCreateOptionsMenu(menu)
+  }
+
+  companion object {
+
+    private const val GROUP = "group"
+    private const val USER = "user"
+
+    fun createIntent(context: Context, group: Group?, user: User?): Intent {
+      val intent = Intent(context, ChatActivity::class.java)
+      intent.putExtra(GROUP, group)
+      intent.putExtra(USER, user)
+      return intent
+    }
   }
 }

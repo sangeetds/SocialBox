@@ -1,7 +1,6 @@
 package com.socialbox.group.ui
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -71,9 +69,7 @@ class AddGroupDialog(
         Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.id}")
         user.groups.add(newGroup)
         viewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
-        val intent = Intent(context, GroupDetailsActivity::class.java)
-        intent.putExtra("group", newGroup)
-        intent.putExtra("user", user)
+        val intent = GroupDetailsActivity.createIntent(requireContext(), newGroup, user)
         startActivity(intent)
         dismiss()
       })

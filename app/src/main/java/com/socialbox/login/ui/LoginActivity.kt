@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
         }
         created?.let {
           Timber.i("Created user.")
-          proceedForDisplaySettings(created)
+          updateDisplaySettings(created)
         }
         success?.let {
           Timber.i("Logged in successfully")
@@ -146,19 +146,15 @@ class LoginActivity : AppCompatActivity() {
     Toast.makeText(applicationContext, "Welcome ${model.displayName}!", Toast.LENGTH_LONG).show()
 
     Timber.i("Starting HomeActivity with user: $model")
-    val groupIntent = Intent(this@LoginActivity, GroupActivity::class.java)
-    groupIntent.putExtra("user", model)
-    if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
-      val parameters = intent.extras
-      val invitedGroupId = parameters!!.getString("id")!!.toInt()
-      groupIntent.putExtra("inviteId", invitedGroupId)
-      groupIntent.putExtra(DeepLink.IS_DEEP_LINK, true)
-    }
+
+    val invitedGroupId = intent.extras!!.getString("id")?.toInt()
+    val deepLink = invitedGroupId != null
+    val groupIntent = GroupActivity.createIntent(this, model, invitedGroupId, deepLink)
     startActivity(groupIntent)
     finish()
   }
 
-  private fun proceedForDisplaySettings(created: User) {
+  private fun updateDisplaySettings(created: User) {
     appImage.animate().alpha(0.2f)
     progressIndicator.visibility = View.GONE
 
