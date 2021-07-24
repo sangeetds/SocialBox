@@ -29,8 +29,9 @@ class UserRepository @Inject constructor(private val userService: UserService) {
             }
           }
           else -> {
-            Timber.e("Error while logging in with error: ${errorBody()?.stringSuspending()}")
-            Error(Exception(errorBody()?.stringSuspending()))
+            val message = errorBody()?.stringSuspending()
+            Timber.e("Error while logging in with error: $message")
+            Error(Exception(message))
           }
         }
       }
@@ -48,8 +49,9 @@ class UserRepository @Inject constructor(private val userService: UserService) {
             Success(body()!!)
           }
           else -> {
-            Timber.e("Error while logging in with error: ${errorBody()?.stringSuspending()}")
-            Error(Exception(errorBody()?.stringSuspending()))
+            val message = errorBody()?.stringSuspending()
+            Timber.e("Error while logging in with error: $message")
+            Error(Exception("User Name already taken. Please pick a new one"))
           }
         }
       }
@@ -67,8 +69,9 @@ class UserRepository @Inject constructor(private val userService: UserService) {
             Success(body()!!)
           }
           else -> {
-            Timber.e("Error while fetching in with error: ${errorBody()?.stringSuspending()}")
-            Error(Exception(errorBody()?.stringSuspending()))
+            val message = errorBody()?.stringSuspending()
+            Timber.e("Error while fetching in with error: $message")
+            Error(Exception(message))
           }
         }
       }

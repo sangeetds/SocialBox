@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserRatings(
-  val id: Int,
+  val id: Int? = null,
   val ratings: Double,
   val userId: User,
   val movieId: Movie,

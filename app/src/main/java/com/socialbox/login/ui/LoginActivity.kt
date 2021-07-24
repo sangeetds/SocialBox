@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
   private val progressIndicator: CircularProgressIndicator by lazy { findViewById(id.loading_icon) }
   private val signInButton: MaterialButton by lazy { findViewById(id.signInButton) }
   private val loginLayout: ConstraintLayout by lazy { findViewById(id.loginView) }
+  private val displayName: EditText by lazy { findViewById(id.displayName) }
   private lateinit var mGoogleSignInClient: GoogleSignInClient
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
     setContentView(layout.activity_login)
     setUpObserver()
     darkModeConfigure()
-    setUpViews()
+    setUpButtons()
     mGoogleSignInClient = googleSignInClient()
   }
 
@@ -79,11 +80,11 @@ class LoginActivity : AppCompatActivity() {
     val account = GoogleSignIn.getLastSignedInAccount(this)
 
     account?.apply {
-      progressIndicator.visibility = View.VISIBLE
       Toast.makeText(this@LoginActivity, "Logging in. Please Wait.", Toast.LENGTH_SHORT).show()
-      val user = User(name = displayName, email = email)
       Timber.i("User $displayName already signed in")
+      val user = User(name = displayName ?: "", email = email)
       loginViewModel.login(user)
+      progressIndicator.visibility = View.VISIBLE
     }
 
     if (account == null) signInButton.isEnabled = true
@@ -112,12 +113,12 @@ class LoginActivity : AppCompatActivity() {
     })
   }
 
-  private fun setUpViews() {
+  private fun setUpButtons() {
     googleLoginButton.setOnClickListener {
-      val signInIntent: Intent = mGoogleSignInClient.signInIntent
-      startActivityForResult(signInIntent, 1)
       progressIndicator.visibility = View.VISIBLE
       Toast.makeText(this@LoginActivity, "Logging in. Please Wait.", Toast.LENGTH_SHORT).show()
+      val signInIntent: Intent = mGoogleSignInClient.signInIntent
+      startActivityForResult(signInIntent, 1)
     }
 
     signInButton.setOnClickListener {
@@ -135,19 +136,16 @@ class LoginActivity : AppCompatActivity() {
   }
 
   override fun onBackPressed() {
-    Timber.i("User chose to close the screen")
     super.onBackPressed()
     finish()
   }
 
   private fun updateUiWithUser(model: User) {
     Timber.i("Login successful for $model")
-
+    Timber.i("Starting HomeActivity with user: $model")
     Toast.makeText(applicationContext, "Welcome ${model.displayName}!", Toast.LENGTH_LONG).show()
 
-    Timber.i("Starting HomeActivity with user: $model")
-
-    val invitedGroupId = intent.extras!!.getString("id")?.toInt()
+    val invitedGroupId = intent.extras?.getString("id")?.toInt()
     val deepLink = invitedGroupId != null
     val groupIntent = GroupActivity.createIntent(this, model, invitedGroupId, deepLink)
     startActivity(groupIntent)
@@ -171,12 +169,8 @@ class LoginActivity : AppCompatActivity() {
     signInButton.isEnabled = false
     findViewById<ConstraintLayout>(id.displayLayout).visibility = View.VISIBLE
 
-    val displayName = findViewById<EditText>(id.displayName)
     displayName.doOnTextChanged { text, _, _, _ ->
-      when(text?.isBlank()) {
-        true -> signInButton.isEnabled = false
-        false -> signInButton.isEnabled = true
-      }
+      signInButton.isEnabled = text?.isNotBlank() ?: false
     }
 
     signInButton.setOnClickListener {
@@ -196,28 +190,28 @@ class LoginActivity : AppCompatActivity() {
     Timber.d("Logging failed.")
     Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
     progressIndicator.visibility = View.GONE
+    if (displayName.visibility == View.VISIBLE) {
+      displayName.error = errorString
+    }
     signInButton.isEnabled = true
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
-    when (requestCode) {
-      1 -> {
-        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-        handleSignInResult(task)
-      }
+    if (requestCode == 1) {
+      val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+      handleSignInResult(task)
     }
   }
 
   private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
     try {
       val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
-
-      val user = User(name = account?.displayName, email = account?.email)
+      val user = User(name = account?.displayName ?: "", email = account?.email)
       loginViewModel.login(user)
     } catch (e: ApiException) {
-      Timber.e("signInResult:failed code=%s with message:%s", e.statusCode, e.message)
+      Timber.e("signInResult:failed code = ${e.statusCode} with message: ${e.message}")
       showLoginFailed(e.message ?: "Error Connecting to Google")
     }
   }
