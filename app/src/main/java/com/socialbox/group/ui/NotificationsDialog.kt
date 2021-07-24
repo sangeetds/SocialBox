@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.socialbox.R
 
-class NotificationsDialog : BottomSheetDialogFragment() {
+class NotificationsDialog : BottomSheetDialog() {
 
   override fun onCreateView(
     inflater: LayoutInflater,

@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,9 +34,9 @@ import timber.log.Timber
 @AndroidEntryPoint
 class GroupActivity : AppCompatActivity() {
 
+  private val user: User by lazy { intent.getParcelableExtra(USER)!! }
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
-  private val user: User? by lazy { intent.getParcelableExtra(USER) }
   private var invitedGroupId: Int = -1
   private lateinit var groupAdapter: GroupAdapter
   private lateinit var emptyText: TextView
@@ -50,7 +49,7 @@ class GroupActivity : AppCompatActivity() {
     if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
       invitedGroupId = intent.extras!!.getInt(INVITE_ID)
       Toast.makeText(this, "Adding to the new group", Toast.LENGTH_SHORT).show()
-      groupViewModel.addUserToGroup(invitedGroupId, user!!.id)
+      groupViewModel.addUserToGroup(invitedGroupId, user.id)
     }
 
     setContentView(layout.activity_group)
@@ -67,9 +66,6 @@ class GroupActivity : AppCompatActivity() {
     userView.setOnMenuItemClickListener {
       val intent = UserActivity.createIntent(this, user)
       startActivity(intent)
-      if (search.isVisible) {
-        groupViewModel.restoreGroups()
-      }
       true
     }
 
@@ -79,19 +75,16 @@ class GroupActivity : AppCompatActivity() {
     }
 
     val searchQueryView = search.findViewById<EditText>(id.searchGroup)
-    val cancelSearch = search.findViewById<ImageButton>(id.cancelSearch)
-    val eraseQuery = search.findViewById<ImageButton>(id.eraseQuery)
-
-    searchQueryView.doOnTextChanged { text, _, _, _ ->
+    search.findViewById<EditText>(id.searchGroup).doOnTextChanged { text, _, _, _ ->
       groupViewModel.filterGroups(text ?: "")
     }
 
-    cancelSearch.setOnClickListener {
+    search.findViewById<ImageButton>(id.cancelSearch).setOnClickListener {
       search.circleReveal(false)
       groupViewModel.restoreGroups()
     }
 
-    eraseQuery.setOnClickListener {
+    search.findViewById<ImageButton>(id.eraseQuery).setOnClickListener {
       searchQueryView.text.clear()
     }
 
@@ -114,27 +107,23 @@ class GroupActivity : AppCompatActivity() {
     recyclerView.adapter = groupAdapter
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
-    Timber.i("Recycler view laid out.")
-
     recyclerView.visibility = View.GONE
     emptyText.visibility = View.VISIBLE
 
     findViewById<ExtendedFloatingActionButton>(id.new_group_button).setOnClickListener {
-      AddGroupDialog(
-        viewModel = groupViewModel,
-        user = user!!
-      ).show(supportFragmentManager.beginTransaction(), "MovieDialog")
+      AddGroupDialog.newInstance(user)
+        .show(supportFragmentManager.beginTransaction(), "MovieDialog")
     }
 
     findViewById<MaterialButton>(id.movies_button).setOnClickListener {
-      val intent = MoviesActivity.createIntent(this, user!!)
+      val intent = MoviesActivity.createIntent(this, user)
       startActivity(intent)
       finish()
     }
   }
 
   private fun setUpObservables() {
-    groupViewModel.getGroupsForUser(user!!.groups.map { it.id!! })
+    groupViewModel.getGroupsForUser(user.groups.map { it.id!! })
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val result = it ?: return@Observer
 
@@ -147,9 +136,9 @@ class GroupActivity : AppCompatActivity() {
         }
         created?.let { group ->
           if (invitedGroupId != -1) {
-            user!!.groups.add(group)
-            groupViewModel.getGroupsForUser(user!!.groups.map { g -> g.id!! })
-            val intent = GroupDetailsActivity.createIntent(this@GroupActivity, group, user!!)
+            user.groups.add(group)
+            groupViewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
+            val intent = GroupDetailsActivity.createIntent(this@GroupActivity, group, user)
             startActivity(intent)
           }
         }

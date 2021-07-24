@@ -30,10 +30,6 @@ import com.socialbox.chat.ui.ChatSettingsActivity
 import com.socialbox.common.util.AnimationUtils.Companion.circleReveal
 import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.model.User
-import com.socialbox.movie.ui.AddMovieDialog
-import com.socialbox.movie.ui.MovieViewModel
-import com.socialbox.movie.ui.SearchMovieDialog
-import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -42,9 +38,7 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   private val search: ConstraintLayout by lazy { findViewById(id.searchTopBar) }
   private val groupViewModel: GroupViewModel by viewModels()
-  private val movieViewModel: MovieViewModel by viewModels()
-  private val userMovieViewModel: UserMovieViewModel by viewModels()
-  private val user: User? by lazy { intent.getParcelableExtra(USER) }
+  private val user: User? by lazy { intent.getParcelableExtra(GROUP) }
   private lateinit var mToolbar: MaterialToolbar
   private lateinit var moviesAdapter: MovieAdapter
   private lateinit var recyclerView: RecyclerView
@@ -103,22 +97,13 @@ class GroupDetailsActivity : AppCompatActivity() {
             return@OnActionSelectedListener true // false will close it without animation
           }
           id.fab_action1 -> {
-            val addMovieDialog = AddMovieDialog(
-              userMovieViewModel,
-              groupViewModel,
-              user?.id!!,
-              group = group,
-              url = this.getString(string.image_base_url)
-            )
+            val addMovieDialog =
+              AddMovieDialog.newInstance(group, this.getString(string.image_base_url))
             addMovieDialog.show(supportFragmentManager.beginTransaction(), "AddMovieDialog")
           }
           id.fab_action2 -> {
-            val searchMovieDialog = SearchMovieDialog(
-              movieViewModel,
-              group,
-              url = getString(string.image_base_url),
-              groupViewModel = groupViewModel
-            )
+            val searchMovieDialog =
+              SearchMovieDialog.newInstance(group, getString(string.image_base_url))
             searchMovieDialog.show(supportFragmentManager.beginTransaction(), "SearchMovieDialog")
           }
         }
@@ -194,13 +179,13 @@ class GroupDetailsActivity : AppCompatActivity() {
 
   companion object {
 
-    private const val USER = "group"
-    private const val GROUP = "user"
+    private const val GROUP = "group"
+    private const val USER = "user"
 
-    fun createIntent(context: Context, newGroup: Group, user: User) =
+    fun createIntent(context: Context, newGroup: Group, user: User?) =
       Intent(context, GroupDetailsActivity::class.java).apply {
-        putExtra(USER, newGroup)
-        putExtra(GROUP, user)
+        putExtra(GROUP, newGroup)
+        putExtra(USER, user)
       }
   }
 }

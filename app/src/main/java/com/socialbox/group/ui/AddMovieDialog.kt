@@ -1,22 +1,17 @@
-package com.socialbox.movie.ui
+package com.socialbox.group.ui
 
-import android.app.Dialog
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
@@ -25,22 +20,30 @@ import com.socialbox.R.layout
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
 import com.socialbox.group.data.model.Movie
-import com.socialbox.group.ui.GroupViewModel
+import com.socialbox.login.data.model.User
+import com.socialbox.movie.ui.MovieListAdapter
+import com.socialbox.movie.ui.UserMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class AddMovieDialog(
-  private val userMovieViewModel: UserMovieViewModel,
-  private val groupViewModel: GroupViewModel,
-  private val userId: Int,
-  val group: Group,
-  private val url: String
-) : BottomSheetDialogFragment() {
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
-  private lateinit var adapter: MovieListAdapter
+@AndroidEntryPoint
+class AddMovieDialog : BottomSheetDialog() {
+
+  private val userMovieViewModel: UserMovieViewModel by viewModels()
+  private val groupViewModel: GroupViewModel by viewModels()
   private lateinit var topHeader: MaterialTextView
   private lateinit var recyclerView: RecyclerView
   private lateinit var selectedTopHeader: MaterialTextView
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    arguments?.let {
+      group = it.getParcelable(ARG_PARAM1)!!
+      url = it.getString(ARG_PARAM2)!!
+    }
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -58,25 +61,11 @@ class AddMovieDialog(
     setUpObservables()
   }
 
-  override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    val dialog = super.onCreateDialog(savedInstanceState)
-    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    dialog.setOnShowListener {
-      Handler().post {
-        val bottomSheet = (dialog as? BottomSheetDialog)?.findViewById<View>(R.id.design_bottom_sheet) as? FrameLayout
-        bottomSheet?.let {
-          BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
-        }
-      }
-    }
-    return dialog
-  }
-
   private fun setUpObservables() {
     userMovieViewModel.userMovies.observe(this@AddMovieDialog, Observer {
       val movies = it ?: return@Observer
 
-      adapter.movies =
+      movieListAdapter.movies =
         (movies.map { m -> Movie(id = m.id, name = m.name, photoURL = m.photoURL, reviews = null) })
       (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
     })
@@ -90,10 +79,10 @@ class AddMovieDialog(
     val updateCount = updateCount(addMovieButton, clearSelection)
     topHeader = inflate.findViewById(R.id.searchMoviesText)
     selectedTopHeader = inflate.findViewById(R.id.selected_top_header)
-    adapter = MovieListAdapter(requireContext(), updateCount, url = url)
+    movieListAdapter = MovieListAdapter(requireContext(), updateCount, url = url)
 
     recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-    recyclerView.adapter = adapter
+    recyclerView.adapter = movieListAdapter
     recyclerView.layoutManager = mLayoutManager
     recyclerView.itemAnimator = DefaultItemAnimator()
     recyclerView.setHasFixedSize(true)
@@ -106,20 +95,11 @@ class AddMovieDialog(
     }
 
     clearSelection.setOnClickListener {
-      adapter.selectedItemsList.clear()
-      adapter.selectedItems.clear()
+      movieListAdapter.selectedItemsList.clear()
+      movieListAdapter.selectedItems.clear()
       selectedTopHeader.visibility = View.GONE
       clearSelection.visibility = View.GONE
     }
-  }
-
-  private fun toGroupMovies() = adapter.selectedItemsList.map { m: Movie ->
-    GroupMovie(
-      name = m.name,
-      groupId = group.id,
-      rating = m.rating,
-      votes = m.votes
-    )
   }
 
   private fun updateCount(
@@ -136,5 +116,18 @@ class AddMovieDialog(
       selectedTopHeader.visibility = View.GONE
       clearSelection.visibility = View.GONE
     }
+  }
+
+  companion object {
+    /**
+     * @return A new instance of fragment AddMovieDialog.
+     */
+    @JvmStatic fun newInstance(param1: Group, param2: String) =
+      AddGroupDialog().apply {
+        arguments = Bundle().apply {
+          putParcelable(ARG_PARAM1, param1)
+          putString(ARG_PARAM2, param2)
+        }
+      }
   }
 }

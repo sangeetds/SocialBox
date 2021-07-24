@@ -20,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class MovieListAdapter(
   val context: Context?,
-  val updateCount: ((Int) -> Unit)?,
+  private val updateCount: ((Int) -> Unit)?,
   private val url: String,
   private var reverseAllAnimations: Boolean = false,
   private var currentSelectedIndex: Int = -1,
