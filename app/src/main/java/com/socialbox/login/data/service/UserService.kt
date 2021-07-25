@@ -1,5 +1,6 @@
 package com.socialbox.login.data.service
 
+import com.socialbox.group.data.model.Group
 import com.socialbox.login.data.model.User
 import com.socialbox.movie.data.model.UserMovie
 import retrofit2.Response
@@ -18,4 +19,7 @@ interface UserService {
 
   @POST("/user/{id}/settings")
   suspend fun updateSettings(@Body user: User, @Path("id") id: Int): Response<User>
+
+  @GET("/user/{id}/groups")
+  suspend fun getGroupsForUser(@Path("id") userId: Int): Response<List<Group>>
 }

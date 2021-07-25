@@ -3,6 +3,7 @@ package com.socialbox.group.data.service
 import com.socialbox.chat.data.model.Invite
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
+import com.socialbox.login.data.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,4 +36,7 @@ interface GroupService {
     @Path("id") groupId: Int,
     @Query("userId") userId: Int?
   ): Response<Group>
+
+  @GET("/group/{id}/users")
+  suspend fun getUsers(@Path("id") groupId: Int): Response<List<User>>
 }

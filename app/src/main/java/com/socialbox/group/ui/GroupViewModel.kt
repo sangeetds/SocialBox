@@ -7,17 +7,20 @@ import androidx.lifecycle.viewModelScope
 import com.socialbox.common.enums.Result.Created
 import com.socialbox.common.enums.Result.Error
 import com.socialbox.common.enums.Result.Success
-import com.socialbox.login.ui.LoginResult
 import com.socialbox.group.data.GroupRepository
 import com.socialbox.group.data.model.Group
 import com.socialbox.group.data.model.GroupMovie
+import com.socialbox.login.data.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class GroupViewModel @Inject constructor(private val groupRepository: GroupRepository) :
+class GroupViewModel @Inject constructor(
+  private val groupRepository: GroupRepository,
+  private val userRepository: UserRepository
+) :
   ViewModel() {
 
   private val cachedGroups: MutableList<Group> = mutableListOf()
@@ -27,8 +30,8 @@ class GroupViewModel @Inject constructor(private val groupRepository: GroupRepos
   private val _groupState = MutableLiveData<Group>()
   val groupState: LiveData<Group> = _groupState
 
-  fun getGroupsForUser(groupId: List<Int>) = viewModelScope.launch {
-    val groups = groupRepository.getGroupsForUser(groupId)
+  fun getGroupsForUser(userId: Int) = viewModelScope.launch {
+    val groups = userRepository.getGroupsForUser(userId)
     _groupListState.value = when (groups) {
       is Success -> {
         cachedGroups.clear()

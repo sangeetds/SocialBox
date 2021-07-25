@@ -123,7 +123,7 @@ class GroupActivity : AppCompatActivity() {
   }
 
   private fun setUpObservables() {
-    groupViewModel.getGroupsForUser(user.groups.map { it.id!! })
+    groupViewModel.getGroupsForUser(user.id!!)
     groupViewModel.groupListState.observe(this@GroupActivity, Observer {
       val result = it ?: return@Observer
 
@@ -137,7 +137,7 @@ class GroupActivity : AppCompatActivity() {
         created?.let { group ->
           if (invitedGroupId != -1) {
             user.groups.add(group)
-            groupViewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
+            groupViewModel.getGroupsForUser(user.id!!)
             val intent = GroupDetailsActivity.createIntent(this@GroupActivity, group, user)
             startActivity(intent)
           }

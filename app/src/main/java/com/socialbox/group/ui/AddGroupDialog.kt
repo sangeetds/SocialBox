@@ -58,7 +58,7 @@ class AddGroupDialog : com.socialbox.group.ui.BottomSheetDialog() {
 
         Timber.i("Adding Group ${newGroup.name} with id: ${newGroup.id} and userId: ${user.id}")
         user.groups.add(newGroup)
-        groupViewModel.getGroupsForUser(user.groups.map { g -> g.id!! })
+        groupViewModel.getGroupsForUser(user.id!!)
         val intent = GroupDetailsActivity.createIntent(requireContext(), newGroup, user)
         startActivity(intent)
         dismiss()

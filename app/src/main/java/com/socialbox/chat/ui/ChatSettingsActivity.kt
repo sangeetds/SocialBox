@@ -34,8 +34,6 @@ class ChatSettingsActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_chat_settings)
-    // group?.users ?: setOf()  Todo: Fetch Users for the group
-
     setMembersLayout()
     setUpMovies()
     setUpObservers()
@@ -96,9 +94,14 @@ class ChatSettingsActivity : AppCompatActivity() {
       val shareIntent = Intent.createChooser(sendIntent, null)
       startActivity(shareIntent)
     })
+
+    chatViewModel.membersState.observe(this, Observer {
+      val users = it ?: return@Observer
+      setMembersLayout(users)
+    })
   }
 
-  private fun setMembersLayout() {
+  private fun setMembersLayout(groupMembers: List<User> = listOf()) {
     val memberOne: MaterialCardView = findViewById(id.memberOne)
     val memberTwo: MaterialCardView = findViewById(id.memberTwo)
     val memberThree: MaterialCardView = findViewById(id.memberThree)
@@ -108,7 +111,6 @@ class ChatSettingsActivity : AppCompatActivity() {
     val layout = findViewById<ConstraintLayout>(id.membersConstrainView)
     val userName: MaterialTextView = findViewById(id.userName)
     val viewAllMembers: MaterialTextView = findViewById(id.viewAllMembers)
-    val groupMembers = setOf<User>() // Todo: Fetch Users
 
     if (groupMembers.size < 6) memberSix.visibility = View.GONE
     if (groupMembers.size < 5) {

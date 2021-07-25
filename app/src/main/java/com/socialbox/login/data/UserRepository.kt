@@ -79,4 +79,22 @@ class UserRepository @Inject constructor(private val userService: UserService) {
       Timber.e("Error while fetching in with error: $exception")
       Error(Exception("Server Down. Please try again."))
     }
+
+  suspend fun getGroupsForUser(userId: Int) =
+    try {
+      Timber.i("Fetching groups for $userId")
+      userService.getGroupsForUser(userId).run {
+        if (isSuccessful && body() != null) {
+          Timber.i("Successfully fetched groups from server.")
+          Success(body()!!)
+        } else {
+          val message = errorBody()?.stringSuspending()
+          Timber.e(message)
+          Error(Exception(message))
+        }
+      }
+  } catch (exception: SocketTimeoutException) {
+      Timber.e("Error while fetching in with error: $exception")
+      Error(Exception("Server Down. Please try again."))
+    }
 }

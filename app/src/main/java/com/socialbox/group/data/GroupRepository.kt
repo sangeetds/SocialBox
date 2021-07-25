@@ -16,23 +16,6 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   private val errorString = "Error in connecting to the server"
 
-  suspend fun getGroupsForUser(groupId: List<Int>) =
-    try {
-      Timber.i("Fetching groups for $groupId")
-      groupService.getGroupsForUser(groupId).run {
-        if (isSuccessful && body() != null) {
-          Timber.i("Successfully fetched groups from server.")
-          Success(body()!!)
-        } else {
-          Timber.e(errorBody()?.stringSuspending())
-          Error(Exception(errorBody()?.stringSuspending()))
-        }
-      }
-    } catch (exception: SocketTimeoutException) {
-      Timber.e(errorString)
-      Error(Exception(errorString))
-    }
-
   suspend fun createGroup(group: Group) = try {
     val saveGroup = groupService.saveGroup(group)
     saveGroup.run {
@@ -42,8 +25,9 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
           Success(body()!!)
         }
         else -> {
-          Timber.d("Failed in saving group with error: ${errorBody()?.stringSuspending()}")
-          Error(Exception(errorBody()?.stringSuspending()))
+          val errorMessage = errorBody()?.stringSuspending()
+          Timber.d("Failed in saving group with error: $errorMessage")
+          Error(Exception(errorMessage))
         }
       }
     }
@@ -95,6 +79,21 @@ class GroupRepository @Inject constructor(private val groupService: GroupService
 
   suspend fun addUserToGroup(groupId: Int, userId: Int?) = try {
     this.groupService.addUserToGroup(groupId, userId).run {
+      if (isSuccessful && body() != null) {
+        Timber.i("Successfully added User to Group.")
+        Created(body()!!)
+      } else {
+        Timber.d("Error in adding user to the group.")
+        Error(Exception(errorBody()?.stringSuspending()))
+      }
+    }
+  } catch (exception: SocketTimeoutException) {
+    Timber.d(errorString)
+    Error(Exception("Error adding user."))
+  }
+
+  suspend fun getUsers(groupId: Int) = try {
+    this.groupService.getUsers(groupId).run {
       if (isSuccessful && body() != null) {
         Timber.i("Successfully added User to Group.")
         Created(body()!!)
